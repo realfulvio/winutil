@@ -1,3 +1,115 @@
+# WinUtil – redesigned interface (personal fork)
+
+**English** | [Italiano](README.it.md)
+
+This is a personal fork of [ChrisTitusTech/winutil](https://github.com/ChrisTitusTech/winutil) with an optional, redesigned interface. It is **not** the official project and it is not affiliated with it. The tweaks, installs and updates still run on upstream's engine: the logic was not changed.
+
+> **Status:** the interface was built and checked without access to a Windows test machine. It compiles, loads as a WPF window, and its logic was exercised against simulated data, but it has **not been run end to end as the real program**. See [Project status](#project-status) before you use it.
+
+## What is this fork, and why does it exist
+
+WinUtil is powerful, but its default window is a long list of terse checkboxes. This fork adds a second interface, built to be easier to read and safer to use for people who are new to this kind of tool:
+
+- A modern dark interface with a sidebar, search, filters and cards.
+- Every tweak explained in plain words: what it changes, what could go wrong, and whether it can be undone.
+- A preview before you apply: what each change touches, counted from the tweak's own data.
+- Visible progress while changes are applied.
+- Italian and English, switchable from the sidebar.
+
+It is a fork, compatible with upstream. The original interface is still there (it is the default build), and the redesign is opt-in. Upstream files were left alone as far as possible, so merging upstream updates stays simple. **The logic of the tweaks, the app installs and the updates was not changed**; the redesign only adds a new window, styles and the code that fills it.
+
+## What is improved
+
+> Screenshots of the real program are **coming soon**. None are shown here on purpose: a mockup would not be the program, and the interface has not been run on a Windows machine yet.
+
+### Sidebar and navigation
+One place to move between Programs, Tweaks, Repair, Updates, Windows apps and Create ISO, each with a one-line description, plus a status card, Settings, About and the language button. These are the same tabs as upstream (Repair is upstream's Config tab).
+
+> 📷 *Screenshot coming soon (sidebar and navigation).*
+
+### Filters and search
+Four filter chips with counters (Recommended, Privacy, System, Advanced) and a search box that looks at every tweak by name and description, in the language you picked.
+
+> 📷 *Screenshot coming soon (filters and search).*
+
+### Cards with safety tags
+Each tweak is a card with a checkbox, an icon, a plain-language name and description, and tags: its category plus *Recommended*, *Safe* or *Advanced*. *Recommended* means the tweak is in upstream's Standard preset; *Advanced* means it is in upstream's "CAUTION" category (for example removing Edge, OneDrive or the Windows AI components) or it is a risky change of its own: services, Widgets removal, turning BitLocker off.
+
+> 📷 *Screenshot coming soon (cards with safety tags).*
+
+### "Before you apply" panel
+Click a card to see, on the right: what changes, possible effects, whether it can be undone, and a warning when there is one. Whether a tweak can be undone is read from its own data (an undo script, an original registry value or an original service type), not typed by hand.
+
+> 📷 *Screenshot coming soon ("Before you apply" panel).*
+
+### Estimated impact
+For the selected tweaks, how many services and registry values they touch, against everything the cards touch. A bar is shown only when the selection has that kind of data. There are no figures for memory, disk space or a privacy score because the repository has no data for them, and none are invented.
+
+> 📷 *Screenshot coming soon (estimated impact).*
+
+### Progress
+While tweaks are applied, the panel shows the real step the engine is on and a percentage, then a "New selection" button when it ends. The step name is the one the engine reports (it still uses the tweak's internal name).
+
+> 📷 *Screenshot coming soon (progress).*
+
+### Language switch
+Italian or English from the sidebar. All labels, descriptions, warnings and steps of the redesign come from one dictionary, [`ui/redesign/strings.json`](ui/redesign/strings.json). It starts in your Windows display language.
+
+> 📷 *Screenshot coming soon (language switch).*
+
+### What was not redesigned
+Only the Tweaks tab has the new card layout. Programs, Repair, Updates, Windows apps and Create ISO keep their upstream layout inside the new window and sidebar, with the new dark palette. Switches, buttons and the Multiplane Overlay list apply immediately as upstream does and appear under "Other settings"; the DNS list is applied with the Apply button.
+
+## Install and run
+
+You need Windows with PowerShell and Git. WinUtil asks to relaunch itself as Administrator.
+
+```powershell
+git clone -b ui-redesign https://github.com/realfulvio/winutil.git
+cd winutil
+.\Compile.ps1 -Interface Redesign -Run
+```
+
+`Compile.ps1` builds `winutil.ps1` from the sources (the file is generated and is not committed). If PowerShell refuses to run it, allow scripts for this window only with `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`, then run it again.
+
+## Go back to the original interface
+
+The redesign is opt-in. Build without the switch, or use the official command:
+
+```powershell
+.\Compile.ps1 -Run
+```
+
+```powershell
+irm https://christitus.com/win | iex
+```
+
+## Warning
+
+**Tweaks change your system**: the registry, services, installed components and, for some, how drives and the network work. Not all of them can be undone, and some need a restart. Create a **restore point** before you apply anything (the *Restore point* tweak does it) and read each description first. **You use this at your own risk**; the software is provided as is, without warranty.
+
+## Project status
+
+What was checked (on a Windows host, without applying any tweak):
+
+- `Compile.ps1` builds both variants; the default build is byte for byte what it was before this fork's changes.
+- The generated script parses in PowerShell 7 and Windows PowerShell 5.1, and is ASCII only.
+- The window loads as a WPF window with every control of upstream's window still present.
+- The tab logic ran against simulated data: the 38 cards, selection, filters, search, language switch, the Apply button state, the impact figures, and the progress panel states.
+- Images of the window rendered in memory with sample data were used to review the layout.
+
+What was not checked: a real run on a Windows machine (opening the window, applying a tweak, undoing it), the Pester suite (it needs Pester 5.8.0, not available here), Script Analyzer and the docs site build. Details and decisions are in [`NOTE-LAVORO.md`](NOTE-LAVORO.md).
+
+## Credits and license
+
+All the engine, the tweaks, the app list and the original interface are the work of **[Chris Titus Tech](https://github.com/ChrisTitusTech)** and the contributors of [ChrisTitusTech/winutil](https://github.com/ChrisTitusTech/winutil); see its [contributors](https://github.com/ChrisTitusTech/winutil/graphs/contributors) and the [official documentation](https://winutil.christitus.com/). This fork keeps the upstream license: [MIT](LICENSE), copyright (c) 2022 CT Tech Group LLC. The redesign adds files under `ui/redesign/` and a `-Interface` switch in `Compile.ps1`.
+
+---
+
+# About the upstream project
+
+*The rest of this page is upstream's README, kept as it is. Its commands run the official, unmodified WinUtil, not this fork's interface.*
+
 # Chris Titus Tech's Windows Utility
 
 [![Version](https://img.shields.io/github/v/release/ChrisTitusTech/winutil?color=%230567ff&label=Latest%20Release&style=for-the-badge)](https://github.com/ChrisTitusTech/winutil/releases/latest)
