@@ -120,6 +120,45 @@ Describe "Redesign strings" {
     }
 }
 
+Describe "Compiled redesign build" {
+    BeforeAll {
+        Push-Location $repoRoot
+        try {
+            & (Join-Path $repoRoot 'Compile.ps1') -Interface Redesign
+        } finally {
+            Pop-Location
+        }
+        $compiled = Get-Content -LiteralPath (Join-Path $repoRoot 'winutil.ps1') -Raw
+    }
+
+    AfterAll {
+        # Leave the default build behind, as the other test files expect
+        Push-Location $repoRoot
+        try {
+            & (Join-Path $repoRoot 'Compile.ps1')
+        } finally {
+            Pop-Location
+        }
+    }
+
+    It "relaunches as Administrator from the fork's release, not from upstream's" {
+        $compiled | Should -Match ([regex]::Escape("Invoke-RestMethod 'https://github.com/realfulvio/winutil/releases/latest/download/winutil.ps1'"))
+        $compiled | Should -Not -Match ([regex]::Escape('ChrisTitusTech/winutil/releases/latest/download/winutil.ps1'))
+    }
+
+    It "exports an autorun command that points to the fork's release" {
+        $compiled | Should -Match ([regex]::Escape('irm https://github.com/realfulvio/winutil/releases/latest/download/winutil.ps1)'))
+        $compiled | Should -Not -Match ([regex]::Escape('irm https://christitus.com/win)'))
+    }
+
+    It "embeds the redesign dictionary and wrappers" {
+        $compiled | Should -Match ([regex]::Escape('$sync.configs.redesignstrings = @'))
+        foreach ($name in 'Initialize-WinUtilTabContent', 'Find-TweaksByNameOrDescription', 'Invoke-WinUtilFontScaling') {
+            $compiled | Should -Match "(?m)^function ${name}Upstream \{"
+        }
+    }
+}
+
 Describe "Compile.ps1 interface switch" {
     It "defaults to the upstream interface" {
         $compile = Get-Content -LiteralPath (Join-Path (Split-Path -Parent $PSScriptRoot) 'Compile.ps1') -Raw

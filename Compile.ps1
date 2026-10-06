@@ -1,7 +1,11 @@
 param (
     [switch]$Run,
     [ValidateSet('Upstream', 'Redesign')]
-    [string]$Interface = 'Upstream'
+    [string]$Interface = 'Upstream',
+
+    # Where a Redesign build downloads itself from when it relaunches as Administrator, and what
+    # the exported autorun command points to. Upstream's own address would start upstream's interface.
+    [string]$ReleaseUrl = 'https://github.com/realfulvio/winutil/releases/latest/download/winutil.ps1'
 )
 
 if ($Interface -eq 'Redesign') {
@@ -33,6 +37,19 @@ if ($Interface -eq 'Redesign') {
     $functionSources += Get-ChildItem -Path ui\redesign\functions -File | ForEach-Object {
         Get-Content -Path $_.FullName -Raw
     }
+
+    # Two places point at upstream's published script. Both are redirected, and the build fails if
+    # either is gone, so a change upstream cannot silently send the redesign back to upstream's UI.
+    $upstreamScriptUrl = 'https://github.com/ChrisTitusTech/winutil/releases/latest/download/winutil.ps1'
+    $upstreamAutorun = 'irm https://christitus.com/win)'
+    if (-not (($script -join "`n").Contains($upstreamScriptUrl))) {
+        throw 'scripts/start.ps1 no longer downloads upstream''s script from the expected address; update the redesign redirect.'
+    }
+    if (-not (($functionSources -join "`n").Contains($upstreamAutorun))) {
+        throw 'The exported autorun command no longer uses the expected upstream address; update the redesign redirect.'
+    }
+    $script = $script -replace [regex]::Escape($upstreamScriptUrl), $ReleaseUrl
+    $functionSources = @($functionSources | ForEach-Object { $_.Replace($upstreamAutorun, "irm $ReleaseUrl)") })
 }
 $script += $functionSources
 

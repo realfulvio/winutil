@@ -1,0 +1,49 @@
+name: Release redesigned interface
+
+# Fork only. Builds winutil.ps1 with the redesigned interface and publishes it as the latest release, so
+#   irm https://github.com/realfulvio/winutil/releases/latest/download/winutil.ps1 | iex
+# starts it. Run it by hand from the Actions tab; nothing else triggers it.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: github.repository == 'realfulvio/winutil'
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Sources
+        uses: actions/checkout@v7
+
+      - name: Compile (redesigned interface)
+        shell: pwsh
+        run: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force; ./Compile.ps1 -Interface Redesign
+
+      - name: Check that the compiled script parses
+        shell: pwsh
+        run: |
+          $errors = $null
+          [void][System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path ./winutil.ps1).Path, [ref]$null, [ref]$errors)
+          if ($errors) {
+            $errors | ForEach-Object { Write-Host $_.Message }
+            exit 1
+          }
+
+      - name: Publish release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = "redesign-" + (Get-Date -Format 'yy.MM.dd-HHmm')
+          $notes = @"
+          Unofficial build of ChrisTitusTech/winutil with an optional redesigned interface (personal fork).
+          Built from commit ${{ github.sha }}. Tweaks change your system: read the README for the warning and for what was and was not verified.
+          Run it in PowerShell:
+
+              irm https://github.com/realfulvio/winutil/releases/latest/download/winutil.ps1 | iex
+          "@
+          gh release create $tag ./winutil.ps1 --title "Redesigned interface $tag" --notes $notes --latest --target ${{ github.sha }}
