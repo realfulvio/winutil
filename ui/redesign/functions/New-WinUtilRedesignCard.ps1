@@ -48,24 +48,24 @@ function New-WinUtilRedesignCard {
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0" Width="56" Height="56" CornerRadius="14" BorderThickness="1" BorderBrush="#243558" Background="#16223C" VerticalAlignment="Center">
-                    <TextBlock x:Name="CardIcon" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="26" Foreground="#7FD3FF" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="CardIcon" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="{DynamicResource RdIconXL}" Foreground="#7FD3FF" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
                 <StackPanel Grid.Column="1" Margin="16,0,8,0" VerticalAlignment="Center">
-                    <TextBlock x:Name="CardTitle" FontSize="17" FontWeight="Bold" Foreground="#EAF0FA" Background="Transparent" TextWrapping="Wrap" HorizontalAlignment="Left"/>
-                    <TextBlock x:Name="CardDesc" FontSize="14" Foreground="#9FB0C9" Background="Transparent" TextWrapping="Wrap" Margin="0,3,0,0" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="CardTitle" FontSize="{DynamicResource RdFontLarge}" FontWeight="Bold" Foreground="#EAF0FA" Background="Transparent" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="CardDesc" FontSize="{DynamicResource RdFontBody}" Foreground="#9FB0C9" Background="Transparent" TextWrapping="Wrap" Margin="0,3,0,0" HorizontalAlignment="Left"/>
                     <WrapPanel Margin="0,10,0,0" HorizontalAlignment="Left">
                         <Border Style="{DynamicResource RdTagBorderStyle}" Background="#16223C" BorderBrush="#22304D">
-                            <TextBlock x:Name="CardCatText" FontSize="12" FontWeight="SemiBold" Foreground="#CFE0F5" Background="Transparent"/>
+                            <TextBlock x:Name="CardCatText" FontSize="{DynamicResource RdFontSmall}" FontWeight="SemiBold" Foreground="#CFE0F5" Background="Transparent"/>
                         </Border>
                         <Border x:Name="CardStateTag" Style="{DynamicResource RdTagBorderStyle}">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock x:Name="CardStateGlyph" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="12" Margin="0,1,6,0" Background="Transparent" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="CardStateText" FontSize="12" FontWeight="SemiBold" Background="Transparent"/>
+                                <TextBlock x:Name="CardStateGlyph" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="{DynamicResource RdFontSmall}" Margin="0,1,6,0" Background="Transparent" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="CardStateText" FontSize="{DynamicResource RdFontSmall}" FontWeight="SemiBold" Background="Transparent"/>
                             </StackPanel>
                         </Border>
                     </WrapPanel>
                 </StackPanel>
-                <TextBlock Grid.Column="2" Text="&#xE76C;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="18" Foreground="#9FB0C9" Background="Transparent" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                <TextBlock Grid.Column="2" Text="&#xE76C;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="{DynamicResource RdIconS}" Foreground="#9FB0C9" Background="Transparent" VerticalAlignment="Center" Margin="0,0,6,0"/>
             </Grid>
         </Button>
     </Grid>

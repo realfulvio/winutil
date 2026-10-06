@@ -18,6 +18,8 @@ function Initialize-WinUtilRedesignTweaks {
     )
 
     $items = Get-WinUtilRedesignTweakItems
+    # Other code skips the cards until the whole set exists, since a yielding build lets the user click
+    $sync.RedesignCardsReady = $false
     $sync.RedesignItemsByName = @{}
     $sync.RedesignCards = @{}
     $sync.RedesignTotals = [pscustomobject]@{
@@ -82,6 +84,7 @@ function Initialize-WinUtilRedesignTweaks {
         })
     }
 
+    $sync.RedesignCardsReady = $true
     Update-WinUtilRedesignCardTexts
     Update-WinUtilRedesignChipCounts
     Update-WinUtilRedesignFilter

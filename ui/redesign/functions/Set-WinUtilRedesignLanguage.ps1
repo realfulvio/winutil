@@ -88,7 +88,7 @@ function Set-WinUtilRedesignLanguage {
 
     Update-WinUtilRedesignPageHeader
     Update-WinUtilRedesignStatus
-    if ($sync.RedesignCards) {
+    if ($sync.RedesignCardsReady) {
         Update-WinUtilRedesignCardTexts
         Update-WinUtilRedesignChipCounts
         Update-WinUtilRedesignFilter

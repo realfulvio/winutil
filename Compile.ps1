@@ -22,8 +22,8 @@ $functionSources = Get-ChildItem -Path functions -Recurse -File | ForEach-Object
     Get-Content -Path $_.FullName -Raw
 }
 if ($Interface -eq 'Redesign') {
-    # The redesign wraps these two upstream functions: upstream's becomes <Name>Upstream
-    $wrapped = @('Initialize-WinUtilTabContent', 'Find-TweaksByNameOrDescription')
+    # The redesign wraps these upstream functions: upstream's becomes <Name>Upstream
+    $wrapped = @('Initialize-WinUtilTabContent', 'Find-TweaksByNameOrDescription', 'Invoke-WinUtilFontScaling')
     $functionSources = @($functionSources | ForEach-Object { Convert-WinUtilRedesignFunctionSource -Source $_ -Name $wrapped })
     foreach ($name in $wrapped) {
         if (-not ($functionSources -match "(?m)^function ${name}Upstream \{")) {

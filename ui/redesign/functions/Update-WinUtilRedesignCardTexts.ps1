@@ -4,7 +4,7 @@ function Update-WinUtilRedesignCardTexts {
         Writes the current language into every tweak card and re-sorts the list by name.
     #>
 
-    if (-not $sync.RedesignCards) {
+    if (-not $sync.RedesignCardsReady) {
         return
     }
 

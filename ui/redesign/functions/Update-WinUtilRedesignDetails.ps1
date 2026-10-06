@@ -11,7 +11,7 @@ function Update-WinUtilRedesignDetails {
     #>
 
     $item = $null
-    if ($sync.RedesignFocus -and $sync.RedesignItemsByName) {
+    if ($sync.RedesignCardsReady -and $sync.RedesignFocus) {
         $item = $sync.RedesignItemsByName[$sync.RedesignFocus]
     }
 

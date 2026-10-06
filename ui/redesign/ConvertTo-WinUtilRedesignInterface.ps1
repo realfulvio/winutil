@@ -233,6 +233,14 @@ function ConvertTo-WinUtilRedesignThemes {
         }
         $copy.shared.($property.Name) = $property.Value
     }
+    # Sizes the redesign adds. They live in "shared" so the theme code applies them as numbers,
+    # and the wrapped Invoke-WinUtilFontScaling scales the ones named Rd*.
+    foreach ($property in $tokens.sharedNew.PSObject.Properties) {
+        if ($copy.shared.PSObject.Properties[$property.Name]) {
+            throw "Upstream theme contract changed: shared.$($property.Name) now exists upstream; rename the redesign token."
+        }
+        $copy.shared | Add-Member -NotePropertyName $property.Name -NotePropertyValue $property.Value
+    }
     foreach ($theme in 'Light', 'Dark') {
         foreach ($property in $tokens.colors.PSObject.Properties) {
             if (-not $copy.$theme.PSObject.Properties[$property.Name]) {

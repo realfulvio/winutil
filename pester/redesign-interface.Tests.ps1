@@ -74,8 +74,8 @@ Describe "Redesign function wrapping" {
         { Convert-WinUtilRedesignFunctionSource -Source $source -Name 'A' } | Should -Throw "*more than once*"
     }
 
-    It "wraps the two upstream functions the redesign overrides" {
-        foreach ($name in 'Initialize-WinUtilTabContent', 'Find-TweaksByNameOrDescription') {
+    It "wraps the upstream functions the redesign overrides" {
+        foreach ($name in 'Initialize-WinUtilTabContent', 'Find-TweaksByNameOrDescription', 'Invoke-WinUtilFontScaling') {
             $file = Get-ChildItem -Path (Join-Path $repoRoot 'functions') -Recurse -File | Where-Object { $_.BaseName -eq $name }
             $file | Should -Not -BeNullOrEmpty
             $text = Convert-WinUtilRedesignFunctionSource -Source (Get-Content -LiteralPath $file.FullName -Raw) -Name $name

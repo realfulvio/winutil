@@ -21,7 +21,7 @@ function Update-WinUtilRedesignSelection {
         [switch]$UserAction
     )
 
-    if (-not $sync.RedesignCards) {
+    if (-not $sync.RedesignCardsReady) {
         return
     }
 

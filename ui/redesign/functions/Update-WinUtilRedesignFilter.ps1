@@ -16,7 +16,7 @@ function Update-WinUtilRedesignFilter {
         [string]$SearchString
     )
 
-    if (-not $sync.RedesignItems -or -not $sync.RedesignCards) {
+    if (-not $sync.RedesignCardsReady) {
         return
     }
 

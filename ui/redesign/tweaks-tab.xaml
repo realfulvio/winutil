@@ -37,10 +37,10 @@
         <StackPanel>
             <!-- Cards are added here by Initialize-WinUtilRedesignTweaks -->
             <StackPanel Name="WPFRedesignCardList"/>
-            <TextBlock Name="WPFRedesignNoResults" Text="" FontSize="15" Foreground="#9FB0C9" Margin="4,12,0,0" Visibility="Collapsed"/>
+            <TextBlock Name="WPFRedesignNoResults" Text="" FontSize="{DynamicResource RdFontMedium}" Foreground="#9FB0C9" Margin="4,12,0,0" Visibility="Collapsed"/>
 
             <StackPanel Name="WPFRedesignQuickSection" Margin="0,24,0,0">
-                <TextBlock Name="WPFRedesignQuickTitle" Text="Quick selections" FontSize="13" FontWeight="Bold" Foreground="#9FB0C9" Margin="4,0,0,8"/>
+                <TextBlock Name="WPFRedesignQuickTitle" Text="Quick selections" FontSize="{DynamicResource RdFontBody}" FontWeight="Bold" Foreground="#9FB0C9" Margin="4,0,0,8"/>
                 <WrapPanel>
                     <ContentControl Slot="WPFstandard"/>
                     <ContentControl Slot="WPFminimal"/>
@@ -51,8 +51,8 @@
             </StackPanel>
 
             <StackPanel Name="WPFRedesignOtherSection" Margin="0,24,0,0">
-                <TextBlock Name="WPFRedesignOtherTitle" Text="Other settings" FontSize="13" FontWeight="Bold" Foreground="#9FB0C9" Margin="4,0,0,4"/>
-                <TextBlock Name="WPFRedesignOtherNote" Text="" FontSize="13" Foreground="#9FB0C9" TextWrapping="Wrap" Margin="4,0,0,10"/>
+                <TextBlock Name="WPFRedesignOtherTitle" Text="Other settings" FontSize="{DynamicResource RdFontBody}" FontWeight="Bold" Foreground="#9FB0C9" Margin="4,0,0,4"/>
+                <TextBlock Name="WPFRedesignOtherNote" Text="" FontSize="{DynamicResource RdFontBody}" Foreground="#9FB0C9" TextWrapping="Wrap" Margin="4,0,0,10"/>
                 <Grid Name="WPFRedesignOtherGrid"/>
             </StackPanel>
 

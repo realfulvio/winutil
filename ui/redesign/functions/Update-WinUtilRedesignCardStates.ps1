@@ -8,7 +8,7 @@ function Update-WinUtilRedesignCardStates {
         border than an idle one.
     #>
 
-    if (-not $sync.RedesignCards) {
+    if (-not $sync.RedesignCardsReady) {
         return
     }
 
