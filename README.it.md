@@ -15,7 +15,7 @@ WinUtil è potente, ma la finestra predefinita è un lungo elenco di caselle con
 - Un'anteprima prima di applicare: cosa tocca ogni modifica, contato dai dati dell'ottimizzazione stessa.
 - Avanzamento visibile mentre le modifiche vengono applicate.
 - Italiano e inglese, selezionabili dalla barra laterale.
-- Testi che seguono lo scaling dei caratteri di WinUtil (Ctrl +/-), aree di tocco di almeno 44 px, focus da tastiera visibile e contrasto del testo di almeno 4,5:1.
+- Nella nuova finestra e nella scheda Ottimizzazioni: testi che seguono lo scaling dei caratteri di WinUtil (Ctrl +/-), controlli di almeno 44 px, focus da tastiera visibile e contrasto del testo di almeno 4,5:1. Le schede che mantengono il layout di upstream mantengono le sue dimensioni.
 
 È un fork compatibile con upstream. L'interfaccia originale c'è ancora (è la build predefinita) e il ridisegno è opzionale. I file di upstream sono stati lasciati intatti per quanto possibile, così integrare gli aggiornamenti di upstream resta semplice. **La logica di ottimizzazioni, installazione delle app e aggiornamenti non è stata cambiata**: il ridisegno aggiunge solo una nuova finestra, gli stili e il codice che la riempie.
 
@@ -98,6 +98,8 @@ Cosa è stato controllato (su un host Windows, senza applicare nessuna ottimizza
 - La finestra si carica come finestra WPF con tutti i controlli della finestra di upstream ancora presenti.
 - La logica della scheda è stata eseguita su dati simulati: le 38 schede, selezione, filtri, ricerca, cambio lingua, stato del pulsante Applica, valori di impatto e gli stati del pannello di avanzamento.
 - Immagini della finestra renderizzate in memoria con dati di esempio sono servite a rivedere il layout.
+
+`ui/redesign/tools/Test-RedesignHeadless.ps1` ripete i controlli in memoria su qualsiasi macchina Windows, senza avviare WinUtil e senza cambiare nulla.
 
 Cosa non è stato controllato: un'esecuzione reale su una macchina Windows (aprire la finestra, applicare un'ottimizzazione, annullarla), la suite Pester (richiede Pester 5.8.0, non disponibile qui), Script Analyzer e la build del sito della documentazione. Dettagli e decisioni sono in [`NOTE-LAVORO.md`](NOTE-LAVORO.md).
 

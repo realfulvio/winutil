@@ -15,7 +15,7 @@ WinUtil is powerful, but its default window is a long list of terse checkboxes. 
 - A preview before you apply: what each change touches, counted from the tweak's own data.
 - Visible progress while changes are applied.
 - Italian and English, switchable from the sidebar.
-- Text that follows WinUtil's font scaling (Ctrl +/-), tap targets of at least 44 px, visible keyboard focus and text contrast of at least 4.5:1.
+- In the new window and the Tweaks tab: text that follows WinUtil's font scaling (Ctrl +/-), controls of at least 44 px, visible keyboard focus and text contrast of at least 4.5:1. The tabs that keep upstream's layout keep upstream's sizes.
 
 It is a fork, compatible with upstream. The original interface is still there (it is the default build), and the redesign is opt-in. Upstream files were left alone as far as possible, so merging upstream updates stays simple. **The logic of the tweaks, the app installs and the updates was not changed**; the redesign only adds a new window, styles and the code that fills it.
 
@@ -98,6 +98,8 @@ What was checked (on a Windows host, without applying any tweak):
 - The window loads as a WPF window with every control of upstream's window still present.
 - The tab logic ran against simulated data: the 38 cards, selection, filters, search, language switch, the Apply button state, the impact figures, and the progress panel states.
 - Images of the window rendered in memory with sample data were used to review the layout.
+
+`ui/redesign/tools/Test-RedesignHeadless.ps1` repeats the in-memory checks on any Windows machine without starting WinUtil or changing anything.
 
 What was not checked: a real run on a Windows machine (opening the window, applying a tweak, undoing it), the Pester suite (it needs Pester 5.8.0, not available here), Script Analyzer and the docs site build. Details and decisions are in [`NOTE-LAVORO.md`](NOTE-LAVORO.md).
 
