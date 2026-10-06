@@ -15,6 +15,7 @@ WinUtil is powerful, but its default window is a long list of terse checkboxes. 
 - A preview before you apply: what each change touches, counted from the tweak's own data.
 - Visible progress while changes are applied.
 - Italian and English, switchable from the sidebar.
+- Text that follows WinUtil's font scaling (Ctrl +/-), tap targets of at least 44 px, visible keyboard focus and text contrast of at least 4.5:1.
 
 It is a fork, compatible with upstream. The original interface is still there (it is the default build), and the redesign is opt-in. Upstream files were left alone as far as possible, so merging upstream updates stays simple. **The logic of the tweaks, the app installs and the updates was not changed**; the redesign only adds a new window, styles and the code that fills it.
 

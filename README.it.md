@@ -15,6 +15,7 @@ WinUtil è potente, ma la finestra predefinita è un lungo elenco di caselle con
 - Un'anteprima prima di applicare: cosa tocca ogni modifica, contato dai dati dell'ottimizzazione stessa.
 - Avanzamento visibile mentre le modifiche vengono applicate.
 - Italiano e inglese, selezionabili dalla barra laterale.
+- Testi che seguono lo scaling dei caratteri di WinUtil (Ctrl +/-), aree di tocco di almeno 44 px, focus da tastiera visibile e contrasto del testo di almeno 4,5:1.
 
 È un fork compatibile con upstream. L'interfaccia originale c'è ancora (è la build predefinita) e il ridisegno è opzionale. I file di upstream sono stati lasciati intatti per quanto possibile, così integrare gli aggiornamenti di upstream resta semplice. **La logica di ottimizzazioni, installazione delle app e aggiornamenti non è stata cambiata**: il ridisegno aggiunge solo una nuova finestra, gli stili e il codice che la riempie.
 

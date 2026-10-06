@@ -65,7 +65,7 @@ WinUtil is a Windows PowerShell utility with a WPF interface. The repository is 
 
 `Compile.ps1 -Interface Redesign` changes the build as follows, and `-Interface Upstream` (the default) is identical to the list above:
 
-- In step 2, `Initialize-WinUtilTabContent` and `Find-TweaksByNameOrDescription` are renamed to `<Name>Upstream` and the files under `ui/redesign/functions/` are appended, which define the wrappers.
+- In step 2, `Initialize-WinUtilTabContent`, `Find-TweaksByNameOrDescription` and `Invoke-WinUtilFontScaling` are renamed to `<Name>Upstream` and the files under `ui/redesign/functions/` are appended, which define the wrappers.
 - In step 3, `config/themes.json` gets the palette of `ui/redesign/tokens.json`, and `ui/redesign/strings.json` is embedded as `$sync.configs.redesignstrings` (non-ASCII written as `\uXXXX`).
 - In step 5, the XAML is the output of `ConvertTo-WinUtilRedesignInterface`, which keeps every named control of `xaml/inputXML.xaml` and fails the build if a control it depends on is gone.
 
