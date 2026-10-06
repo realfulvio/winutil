@@ -63,19 +63,27 @@ Only the Tweaks tab has the new card layout. Programs, Repair, Updates, Windows 
 
 ## Install and run
 
-You need Windows with PowerShell and Git. WinUtil asks to relaunch itself as Administrator.
+Open PowerShell and run, like upstream's one-liner (WinUtil asks to relaunch itself as Administrator):
 
 ```powershell
-git clone -b ui-redesign https://github.com/realfulvio/winutil.git
+irm https://github.com/realfulvio/winutil/releases/latest/download/winutil.ps1 | iex
+```
+
+This downloads the latest build of this fork's redesigned interface (published by the [Release redesigned interface](.github/workflows/redesign-release.yaml) workflow) and, when it relaunches as Administrator, downloads that same build again, not upstream's.
+
+To build it yourself instead (Windows with PowerShell and Git):
+
+```powershell
+git clone https://github.com/realfulvio/winutil.git
 cd winutil
 .\Compile.ps1 -Interface Redesign -Run
 ```
 
-`Compile.ps1` builds `winutil.ps1` from the sources (the file is generated and is not committed). If PowerShell refuses to run it, allow scripts for this window only with `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`, then run it again.
+`Compile.ps1` builds `winutil.ps1` from the sources (the file is generated and is not committed). If PowerShell refuses to run it, allow scripts for this window only with `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`, then run it again. A build made this way relaunches from the address in `-ReleaseUrl` (the fork's latest release by default).
 
 ## Go back to the original interface
 
-The redesign is opt-in. Build without the switch, or use the official command:
+The redesign is opt-in. Use the official command, or build without the switch:
 
 ```powershell
 .\Compile.ps1 -Run

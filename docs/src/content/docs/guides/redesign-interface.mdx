@@ -17,15 +17,13 @@ This interface exists in a personal fork of WinUtil, not in the official project
 
 An opt-in interface for the Tweaks tab (and a new window around every tab): a sidebar, search, filter chips, tweak cards, a "Before you apply" panel, an estimated impact and a visible progress. The tweak, install and update logic is upstream's and was not changed. The original interface remains the default build.
 
-## Build and run
+## Run
 
 ```powershell
-git clone -b ui-redesign https://github.com/realfulvio/winutil.git
-cd winutil
-.\Compile.ps1 -Interface Redesign -Run
+irm https://github.com/realfulvio/winutil/releases/latest/download/winutil.ps1 | iex
 ```
 
-Build without `-Interface Redesign` (or use the official command) to get the original interface.
+To build it yourself: `git clone https://github.com/realfulvio/winutil.git`, then `.\Compile.ps1 -Interface Redesign -Run` in the folder. Build without `-Interface Redesign` (or use the official command) to get the original interface.
 
 ## How to read a tweak card
 
@@ -51,15 +49,13 @@ Questa interfaccia esiste in un fork personale di WinUtil, non nel progetto uffi
 
 Un'interfaccia opzionale per la scheda Ottimizzazioni (e una nuova finestra attorno a ogni scheda): barra laterale, ricerca, filtri, schede delle ottimizzazioni, pannello "Prima di applicare", impatto stimato e avanzamento visibile. La logica di ottimizzazioni, installazioni e aggiornamenti è quella di upstream e non è stata cambiata. L'interfaccia originale resta la build predefinita.
 
-### Compilare e avviare
+### Avvio
 
 ```powershell
-git clone -b ui-redesign https://github.com/realfulvio/winutil.git
-cd winutil
-.\Compile.ps1 -Interface Redesign -Run
+irm https://github.com/realfulvio/winutil/releases/latest/download/winutil.ps1 | iex
 ```
 
-Compila senza `-Interface Redesign` (oppure usa il comando ufficiale) per avere l'interfaccia originale.
+Per compilarla da sé: `git clone https://github.com/realfulvio/winutil.git`, poi `.\Compile.ps1 -Interface Redesign -Run` nella cartella. Compila senza `-Interface Redesign` (oppure usa il comando ufficiale) per avere l'interfaccia originale.
 
 ### Come leggere una scheda
 

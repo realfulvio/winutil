@@ -63,19 +63,27 @@ Solo la scheda Ottimizzazioni ha il nuovo layout a schede. Programmi, Riparazion
 
 ## Installazione e avvio
 
-Serve Windows con PowerShell e Git. WinUtil chiede di rilanciarsi come Amministratore.
+Apri PowerShell ed esegui, come il comando di upstream (WinUtil chiede di rilanciarsi come Amministratore):
 
 ```powershell
-git clone -b ui-redesign https://github.com/realfulvio/winutil.git
+irm https://github.com/realfulvio/winutil/releases/latest/download/winutil.ps1 | iex
+```
+
+Scarica l'ultima build dell'interfaccia ridisegnata di questo fork (pubblicata dal workflow [Release redesigned interface](.github/workflows/redesign-release.yaml)) e, quando si rilancia come Amministratore, riscarica la stessa build, non quella di upstream.
+
+Per compilarla da sé (Windows con PowerShell e Git):
+
+```powershell
+git clone https://github.com/realfulvio/winutil.git
 cd winutil
 .\Compile.ps1 -Interface Redesign -Run
 ```
 
-`Compile.ps1` costruisce `winutil.ps1` dai sorgenti (il file è generato e non viene committato). Se PowerShell rifiuta di eseguirlo, consenti gli script solo per questa finestra con `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` e riprova.
+`Compile.ps1` costruisce `winutil.ps1` dai sorgenti (il file è generato e non viene committato). Se PowerShell rifiuta di eseguirlo, consenti gli script solo per questa finestra con `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` e riprova. Una build fatta così si rilancia dall'indirizzo di `-ReleaseUrl` (per impostazione predefinita l'ultima release del fork).
 
 ## Tornare all'interfaccia originale
 
-Il ridisegno è opzionale. Compila senza l'opzione, oppure usa il comando ufficiale:
+Il ridisegno è opzionale. Usa il comando ufficiale, oppure compila senza l'opzione:
 
 ```powershell
 .\Compile.ps1 -Run
