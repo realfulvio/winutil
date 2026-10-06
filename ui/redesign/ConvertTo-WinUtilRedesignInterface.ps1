@@ -13,6 +13,7 @@ function ConvertTo-WinUtilRedesignInterface {
         change upstream fails the build instead of producing a half-working window.
     #>
     [CmdletBinding()]
+    [OutputType([string])]
     param(
         [Parameter(Mandatory)][string]$Xaml
     )
@@ -51,8 +52,8 @@ function ConvertTo-WinUtilRedesignInterface {
         }
         $imported
     }
-    # Detaches a named upstream node so it can be placed somewhere else
-    function Take-UpstreamNode([string]$Name) {
+    # Returns a named upstream node after detaching it, so it can be placed somewhere else
+    function Get-UpstreamNode([string]$Name) {
         $node = $document.SelectSingleNode("//*[@Name='$Name']")
         $null = $node.ParentNode.RemoveChild($node)
         $node
@@ -75,8 +76,8 @@ function ConvertTo-WinUtilRedesignInterface {
     }
 
     # --- Lift the upstream controls out of the old layout -------------------------------------
-    $offlineBanner = Take-UpstreamNode 'WPFOfflineBanner'
-    $clearSearch = Take-UpstreamNode 'SearchBarClearButton'
+    $offlineBanner = Get-UpstreamNode 'WPFOfflineBanner'
+    $clearSearch = Get-UpstreamNode 'SearchBarClearButton'
     $searchBorder = ($document.SelectSingleNode("//*[@Name='SearchBar']")).ParentNode.ParentNode
     if ($searchBorder.LocalName -ne 'Border') {
         throw 'Upstream header topology changed: the search box is no longer wrapped in a Border.'
@@ -87,13 +88,13 @@ function ConvertTo-WinUtilRedesignInterface {
         throw 'Upstream header topology changed: the theme/settings/window buttons are no longer in a StackPanel.'
     }
     $null = $windowButtons.ParentNode.RemoveChild($windowButtons)
-    $progress = Take-UpstreamNode 'WPFTweaksProgressBar'
+    $progress = Get-UpstreamNode 'WPFTweaksProgressBar'
 
     $tweakButtons = @{}
     foreach ($name in 'WPFstandard', 'WPFminimal', 'WPFAdvanced', 'WPFGetInstalledTweaks', 'WPFAppxRemoval', 'WPFClearTweaksSelection', 'WPFTweaksbutton', 'WPFUndoall') {
-        $tweakButtons[$name] = Take-UpstreamNode $name
+        $tweakButtons[$name] = Get-UpstreamNode $name
     }
-    $tabNav = Take-UpstreamNode 'WPFTabNav'
+    $tabNav = Get-UpstreamNode 'WPFTabNav'
 
     # --- Restyle what moves --------------------------------------------------------------------
     Set-RedesignAttributes $windowButtons @{ Margin = '0' } -Remove @('Grid.Column')
@@ -162,21 +163,21 @@ function ConvertTo-WinUtilRedesignInterface {
     $tweaksTab = Read-RedesignXml 'tweaks-tab.xaml'
     foreach ($name in $tweakButtons.Keys) {
         if ($name -in 'WPFClearTweaksSelection', 'WPFTweaksbutton', 'WPFUndoall') { continue }
-        Set-RedesignSlot $tweaksTab.DocumentElement $name $tweakButtons[$name]
+        Set-RedesignSlot -Target $tweaksTab.DocumentElement -Slot $name -Node $tweakButtons[$name]
     }
     $null = $tab2.AppendChild((Import-RedesignNode $tweaksTab.DocumentElement))
 
     # --- New window layout --------------------------------------------------------------------
     $shell = Read-RedesignXml 'shell.xaml'
     $shellRoot = $shell.DocumentElement
-    Set-RedesignSlot $shellRoot 'Offline' $offlineBanner
-    Set-RedesignSlot $shellRoot 'WindowButtons' $windowButtons
-    Set-RedesignSlot $shellRoot 'TabHost' $tabNav
-    Set-RedesignSlot $shellRoot 'Progress' $progress
-    Set-RedesignSlot $shellRoot 'ClearButton' $tweakButtons['WPFClearTweaksSelection']
-    Set-RedesignSlot $shellRoot 'ApplyButton' $tweakButtons['WPFTweaksbutton']
-    Set-RedesignSlot $shellRoot 'UndoButton' $tweakButtons['WPFUndoall']
-    Set-RedesignSlot $shellRoot 'SearchBox' $searchHost
+    Set-RedesignSlot -Target $shellRoot -Slot 'Offline' -Node $offlineBanner
+    Set-RedesignSlot -Target $shellRoot -Slot 'WindowButtons' -Node $windowButtons
+    Set-RedesignSlot -Target $shellRoot -Slot 'TabHost' -Node $tabNav
+    Set-RedesignSlot -Target $shellRoot -Slot 'Progress' -Node $progress
+    Set-RedesignSlot -Target $shellRoot -Slot 'ClearButton' -Node $tweakButtons['WPFClearTweaksSelection']
+    Set-RedesignSlot -Target $shellRoot -Slot 'ApplyButton' -Node $tweakButtons['WPFTweaksbutton']
+    Set-RedesignSlot -Target $shellRoot -Slot 'UndoButton' -Node $tweakButtons['WPFUndoall']
+    Set-RedesignSlot -Target $shellRoot -Slot 'SearchBox' -Node $searchHost
 
     $oldMain = $document.SelectSingleNode("//*[@Name='WPFMainGrid']")
     $null = $oldMain.ParentNode.ReplaceChild((Import-RedesignNode $shellRoot), $oldMain)
@@ -220,6 +221,7 @@ function ConvertTo-WinUtilRedesignThemes {
         override targets no longer exists upstream.
     #>
     [CmdletBinding()]
+    [OutputType([psobject])]
     param(
         [Parameter(Mandatory)][psobject]$Themes
     )

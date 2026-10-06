@@ -59,10 +59,10 @@ foreach ($file in Get-ChildItem (Join-Path $repoRoot 'ui\redesign\functions') -F
 # Stubs: nothing below may read or change the machine
 function Get-WinUtilToggleStatus { $false }
 function Get-WinUtilRegistryComboState { 'Enabled' }
-function Initialize-WinUtilTabContentUpstream { param($TabName, [switch]$Yield) }
-function Invoke-WPFPopup { param($Action, $Popups, $PopupActionTable) }
-function Invoke-WPFButton { param($Button) }
-function Write-WinUtilLog { param($Message, $Level, $Component) }
+function Initialize-WinUtilTabContentUpstream { param($TabName, [switch]$Yield) $null = $TabName, $Yield }
+function Invoke-WPFPopup { param($Action, $Popups, $PopupActionTable) $null = $Action, $Popups, $PopupActionTable }
+function Invoke-WPFButton { param($Button) $null = $Button }
+function Write-WinUtilLog { param($Message, $Level, $Component) $null = $Message, $Level, $Component }
 
 # ---- window ----------------------------------------------------------------------------------
 $xaml = ConvertTo-WinUtilRedesignInterface -Xaml (Get-Content (Join-Path $repoRoot 'xaml\inputXML.xaml') -Raw)
