@@ -1,0 +1,63 @@
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <!-- Filter chips -->
+    <WrapPanel Grid.Row="0" Name="WPFRedesignChips" Margin="0,8,0,0">
+        <ToggleButton Name="WPFRedesignChipRec" Style="{StaticResource RdChipStyle}" IsChecked="True">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Name="WPFRedesignChipRecText" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}" Text="Recommended"/>
+                <TextBlock Name="WPFRedesignChipRecCount" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}" Text="" Opacity="0.7" Margin="6,0,0,0"/>
+            </StackPanel>
+        </ToggleButton>
+        <ToggleButton Name="WPFRedesignChipPrivacy" Style="{StaticResource RdChipStyle}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Name="WPFRedesignChipPrivacyText" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}" Text="Privacy"/>
+                <TextBlock Name="WPFRedesignChipPrivacyCount" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}" Text="" Opacity="0.7" Margin="6,0,0,0"/>
+            </StackPanel>
+        </ToggleButton>
+        <ToggleButton Name="WPFRedesignChipSystem" Style="{StaticResource RdChipStyle}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Name="WPFRedesignChipSystemText" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}" Text="System"/>
+                <TextBlock Name="WPFRedesignChipSystemCount" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}" Text="" Opacity="0.7" Margin="6,0,0,0"/>
+            </StackPanel>
+        </ToggleButton>
+        <ToggleButton Name="WPFRedesignChipAdvanced" Style="{StaticResource RdChipStyle}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Name="WPFRedesignChipAdvancedText" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}" Text="Advanced"/>
+                <TextBlock Name="WPFRedesignChipAdvancedCount" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}" Text="" Opacity="0.7" Margin="6,0,0,0"/>
+            </StackPanel>
+        </ToggleButton>
+    </WrapPanel>
+
+    <ScrollViewer Grid.Row="1" Name="WPFRedesignScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="2,2,10,24">
+        <StackPanel>
+            <!-- Cards are added here by Initialize-WinUtilRedesignTweaks -->
+            <StackPanel Name="WPFRedesignCardList"/>
+            <TextBlock Name="WPFRedesignNoResults" Text="" FontSize="15" Foreground="#9FB0C9" Margin="4,12,0,0" Visibility="Collapsed"/>
+
+            <StackPanel Name="WPFRedesignQuickSection" Margin="0,24,0,0">
+                <TextBlock Name="WPFRedesignQuickTitle" Text="Quick selections" FontSize="13" FontWeight="Bold" Foreground="#9FB0C9" Margin="4,0,0,8"/>
+                <WrapPanel>
+                    <ContentControl Slot="WPFstandard"/>
+                    <ContentControl Slot="WPFminimal"/>
+                    <ContentControl Slot="WPFAdvanced"/>
+                    <ContentControl Slot="WPFGetInstalledTweaks"/>
+                    <ContentControl Slot="WPFAppxRemoval"/>
+                </WrapPanel>
+            </StackPanel>
+
+            <StackPanel Name="WPFRedesignOtherSection" Margin="0,24,0,0">
+                <TextBlock Name="WPFRedesignOtherTitle" Text="Other settings" FontSize="13" FontWeight="Bold" Foreground="#9FB0C9" Margin="4,0,0,4"/>
+                <TextBlock Name="WPFRedesignOtherNote" Text="" FontSize="13" Foreground="#9FB0C9" TextWrapping="Wrap" Margin="4,0,0,10"/>
+                <Grid Name="WPFRedesignOtherGrid"/>
+            </StackPanel>
+
+            <!-- Kept so code that looks the upstream panel up by name still finds it -->
+            <Grid Name="tweakspanel" Visibility="Collapsed"/>
+        </StackPanel>
+    </ScrollViewer>
+</Grid>

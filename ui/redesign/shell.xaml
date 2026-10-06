@@ -1,0 +1,368 @@
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Name="WPFMainGrid" ShowGridLines="False" HorizontalAlignment="Stretch">
+    <!-- Slot="..." attributes are placeholders replaced by ConvertTo-WinUtilRedesignInterface with the
+         upstream controls (so every named control and its handlers keep working). -->
+    <Grid.Background>
+        <RadialGradientBrush Center="0.75,-0.08" GradientOrigin="0.75,-0.08" RadiusX="0.7" RadiusY="0.55">
+            <GradientStop Color="#15294D" Offset="0"/>
+            <GradientStop Color="#0A0F1C" Offset="1"/>
+        </RadialGradientBrush>
+    </Grid.Background>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="56"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+    <ContentControl Slot="Offline" Grid.Row="0"/>
+
+    <!-- Title bar -->
+    <Border Grid.Row="1" BorderBrush="#16213A" BorderThickness="0,0,0,1" IsHitTestVisible="False"/>
+    <Grid Name="GridBesideNavDockPanel" Grid.Row="1" Background="Transparent">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Name="NavDockPanel" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="24,0,0,0" Background="Transparent">
+            <Grid Width="28" Height="28" AutomationProperties.Name="WinUtil">
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions>
+                <Grid.RowDefinitions><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
+                <Border Grid.Row="0" Grid.Column="0" Margin="1" CornerRadius="2" Background="#4CC2FF"/>
+                <Border Grid.Row="0" Grid.Column="1" Margin="1" CornerRadius="2" Background="#2F8BFF"/>
+                <Border Grid.Row="1" Grid.Column="0" Margin="1" CornerRadius="2" Background="#2F8BFF"/>
+                <Border Grid.Row="1" Grid.Column="1" Margin="1" CornerRadius="2" Background="#4CC2FF"/>
+            </Grid>
+            <TextBlock Text="WinUtil" Margin="12,0,0,0" FontSize="20" FontWeight="Bold" Foreground="#EAF0FA" VerticalAlignment="Center"/>
+            <StackPanel Name="NavLogoPanel" Orientation="Horizontal" Visibility="Collapsed"/>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,8,0">
+            <Button Name="WPFRedesignHelpButton" Style="{StaticResource RdCaptionButtonStyle}" Content="&#xE897;"
+                    ToolTip="Help" AutomationProperties.Name="Help"/>
+            <ContentControl Slot="WindowButtons"/>
+        </StackPanel>
+    </Grid>
+
+    <!-- Body: sidebar | center | right panel -->
+    <Grid Grid.Row="2">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="296"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar -->
+        <Border Grid.Column="0" Background="#B3090E1A" BorderBrush="#16213A" BorderThickness="0,0,1,0">
+            <Grid Margin="16,20,16,16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Focusable="False">
+                    <StackPanel Name="WPFRedesignNav" Orientation="Vertical">
+                        <ToggleButton Name="WPFTab1BT" Style="{StaticResource RdNavToggleStyle}" Margin="0,0,0,6" AutomationProperties.Name="Programs">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Name="WPFRedesignNavIcon1" Text="&#xE7B8;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="24" Width="30" Foreground="#CFE0F5" VerticalAlignment="Center"/>
+                                <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Name="WPFRedesignNavTitle1" Text="Programs" FontSize="15" FontWeight="Bold" Foreground="#EAF0FA"/>
+                                    <TextBlock Name="WPFRedesignNavSub1" Text="" FontSize="12" Foreground="#9FB0C9" TextWrapping="Wrap" MaxWidth="190"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </ToggleButton>
+                        <ToggleButton Name="WPFTab2BT" Style="{StaticResource RdNavToggleStyle}" Margin="0,0,0,6" AutomationProperties.Name="Tweaks">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Name="WPFRedesignNavIcon2" Text="&#xE713;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="24" Width="30" Foreground="#CFE0F5" VerticalAlignment="Center"/>
+                                <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Name="WPFRedesignNavTitle2" Text="Tweaks" FontSize="15" FontWeight="Bold" Foreground="#EAF0FA"/>
+                                    <TextBlock Name="WPFRedesignNavSub2" Text="" FontSize="12" Foreground="#9FB0C9" TextWrapping="Wrap" MaxWidth="190"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </ToggleButton>
+                        <ToggleButton Name="WPFTab3BT" Style="{StaticResource RdNavToggleStyle}" Margin="0,0,0,6" AutomationProperties.Name="Repair">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Name="WPFRedesignNavIcon3" Text="&#xE90F;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="24" Width="30" Foreground="#CFE0F5" VerticalAlignment="Center"/>
+                                <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Name="WPFRedesignNavTitle3" Text="Repair" FontSize="15" FontWeight="Bold" Foreground="#EAF0FA"/>
+                                    <TextBlock Name="WPFRedesignNavSub3" Text="" FontSize="12" Foreground="#9FB0C9" TextWrapping="Wrap" MaxWidth="190"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </ToggleButton>
+                        <ToggleButton Name="WPFTab4BT" Style="{StaticResource RdNavToggleStyle}" Margin="0,0,0,6" AutomationProperties.Name="Updates">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Name="WPFRedesignNavIcon4" Text="&#xE895;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="24" Width="30" Foreground="#CFE0F5" VerticalAlignment="Center"/>
+                                <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Name="WPFRedesignNavTitle4" Text="Updates" FontSize="15" FontWeight="Bold" Foreground="#EAF0FA"/>
+                                    <TextBlock Name="WPFRedesignNavSub4" Text="" FontSize="12" Foreground="#9FB0C9" TextWrapping="Wrap" MaxWidth="190"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </ToggleButton>
+                        <ToggleButton Name="WPFTab6BT" Style="{StaticResource RdNavToggleStyle}" Margin="0,0,0,6" AutomationProperties.Name="Windows apps">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Name="WPFRedesignNavIcon6" Text="&#xE8A9;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="24" Width="30" Foreground="#CFE0F5" VerticalAlignment="Center"/>
+                                <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Name="WPFRedesignNavTitle6" Text="Windows apps" FontSize="15" FontWeight="Bold" Foreground="#EAF0FA"/>
+                                    <TextBlock Name="WPFRedesignNavSub6" Text="" FontSize="12" Foreground="#9FB0C9" TextWrapping="Wrap" MaxWidth="190"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </ToggleButton>
+                        <ToggleButton Name="WPFTab5BT" Style="{StaticResource RdNavToggleStyle}" Margin="0,0,0,6" AutomationProperties.Name="Create ISO">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Name="WPFRedesignNavIcon5" Text="&#xE958;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="24" Width="30" Foreground="#CFE0F5" VerticalAlignment="Center"/>
+                                <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Name="WPFRedesignNavTitle5" Text="Create ISO" FontSize="15" FontWeight="Bold" Foreground="#EAF0FA"/>
+                                    <TextBlock Name="WPFRedesignNavSub5" Text="" FontSize="12" Foreground="#9FB0C9" TextWrapping="Wrap" MaxWidth="190"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </ToggleButton>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,12,0,0">
+                    <Border Background="#0F182B" BorderBrush="#1B2842" BorderThickness="1" CornerRadius="14" Padding="16" Margin="0,0,0,10">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE946;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="20" Foreground="#4CC2FF" VerticalAlignment="Top" Margin="0,2,12,0"/>
+                            <StackPanel>
+                                <TextBlock Name="WPFRedesignStatusTitle" Text="" FontSize="14" FontWeight="Bold" Foreground="#EAF0FA" TextWrapping="Wrap" MaxWidth="190"/>
+                                <TextBlock Name="WPFRedesignStatusNote" Text="" FontSize="12" Foreground="#9FB0C9" TextWrapping="Wrap" MaxWidth="190" Margin="0,4,0,0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    <Button Name="WPFRedesignSettingsButton" Style="{StaticResource RdGhostButtonStyle}" AutomationProperties.Name="Settings">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE713;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="18" Width="30" Foreground="#CFE0F5" VerticalAlignment="Center"/>
+                            <TextBlock Name="WPFRedesignSettingsText" Text="Settings" FontSize="14" Foreground="#CFE0F5" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Name="WPFRedesignAboutButton" Style="{StaticResource RdGhostButtonStyle}" AutomationProperties.Name="About">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE897;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="18" Width="30" Foreground="#CFE0F5" VerticalAlignment="Center"/>
+                            <TextBlock Name="WPFRedesignAboutText" Text="About" FontSize="14" Foreground="#CFE0F5" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Name="WPFRedesignLangButton" Style="{StaticResource RdSecondaryButtonStyle}" Margin="0,6,0,0" FontWeight="SemiBold" HorizontalContentAlignment="Stretch" AutomationProperties.Name="Switch language">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="&#xE774;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="18" Width="30" Foreground="#EAF0FA" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Name="WPFRedesignLangName" Text="Italiano" FontSize="14" Foreground="#EAF0FA" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Name="WPFRedesignLangCode" Text="EN" FontSize="12" FontWeight="Bold" Foreground="#9FB0C9" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Center -->
+        <Grid Grid.Column="1" Margin="32,24,16,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0">
+                <TextBlock Name="WPFRedesignPageTitle" Text="Tweaks" FontSize="40" FontWeight="ExtraBold" Foreground="#EAF0FA" TextTrimming="CharacterEllipsis"/>
+                <TextBlock Name="WPFRedesignPageSubtitle" Text="" FontSize="16" Foreground="#9FB0C9" Margin="0,6,0,0" TextWrapping="Wrap"/>
+            </StackPanel>
+            <Grid Slot="SearchBox" Grid.Row="1" Margin="0,18,0,0"/>
+            <ContentControl Slot="TabHost" Grid.Row="2" Margin="0,8,0,0"/>
+        </Grid>
+
+        <!-- Right panel: what the focused tweak does, impact, apply -->
+        <Border Name="WPFRedesignRightPanel" Grid.Column="2" Width="420" Margin="4,16,20,20" CornerRadius="20" BorderBrush="#1E2A44" BorderThickness="1" ClipToBounds="True">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#EB121C33" Offset="0"/>
+                    <GradientStop Color="#EB0C1324" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsSelected, ElementName=WPFTab2}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="24,26,24,8">
+                    <StackPanel>
+                        <TextBlock Name="WPFRedesignBeforeTitle" Text="Before you apply" FontSize="24" FontWeight="ExtraBold" Foreground="#EAF0FA" TextWrapping="Wrap"/>
+                        <TextBlock Name="WPFRedesignSelCount" Text="" FontSize="15" Foreground="#9FB0C9" Margin="0,4,0,0"/>
+
+                        <Border Name="WPFRedesignFocusCard" Margin="0,18,0,0" Padding="14" CornerRadius="14" Background="#0F1A30" BorderBrush="#2A4A73" BorderThickness="1">
+                            <StackPanel Orientation="Horizontal">
+                                <Border Width="52" Height="52" CornerRadius="13" BorderBrush="#243558" BorderThickness="1" Background="#16223C">
+                                    <TextBlock Name="WPFRedesignFocusIcon" Text="&#xE713;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="26" Foreground="#7FD3FF" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Name="WPFRedesignFocusName" Text="" FontSize="16" FontWeight="Bold" Foreground="#EAF0FA" TextWrapping="Wrap" MaxWidth="260"/>
+                                    <TextBlock Name="WPFRedesignFocusDesc" Text="" FontSize="13" Foreground="#9FB0C9" TextWrapping="Wrap" MaxWidth="260" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                        <TextBlock Name="WPFRedesignNoFocus" Text="" FontSize="14" Foreground="#9FB0C9" TextWrapping="Wrap" Margin="0,18,0,0"/>
+
+                        <StackPanel Name="WPFRedesignDetails" Margin="0,18,0,0">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                                <TextBlock Text="&#xE8A5;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="22" Width="38" Foreground="#CFE0F5" VerticalAlignment="Top"/>
+                                <StackPanel>
+                                    <TextBlock Name="WPFRedesignWhatTitle" Text="What changes" FontSize="14" FontWeight="Bold" Foreground="#EAF0FA"/>
+                                    <TextBlock Name="WPFRedesignWhatText" Text="" FontSize="14" Foreground="#9FB0C9" TextWrapping="Wrap" MaxWidth="290" Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                                <TextBlock Text="&#xE946;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="22" Width="38" Foreground="#CFE0F5" VerticalAlignment="Top"/>
+                                <StackPanel>
+                                    <TextBlock Name="WPFRedesignEffTitle" Text="Possible effects" FontSize="14" FontWeight="Bold" Foreground="#EAF0FA"/>
+                                    <TextBlock Name="WPFRedesignEffText" Text="" FontSize="14" Foreground="#9FB0C9" TextWrapping="Wrap" MaxWidth="290" Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                <TextBlock Text="&#xE7A7;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="22" Width="38" Foreground="#CFE0F5" VerticalAlignment="Top"/>
+                                <StackPanel>
+                                    <TextBlock Name="WPFRedesignUndoTitle" Text="Undo" FontSize="14" FontWeight="Bold" Foreground="#EAF0FA"/>
+                                    <TextBlock Name="WPFRedesignUndoText" Text="" FontSize="14" Foreground="#9FB0C9" TextWrapping="Wrap" MaxWidth="290" Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <Border Name="WPFRedesignWarnBox" Margin="0,18,0,0" Padding="14,12" CornerRadius="14" Background="#2A2210" BorderBrush="#6B531C" BorderThickness="1" Visibility="Collapsed">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE7BA;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="20" Width="34" Foreground="#F5B94A" VerticalAlignment="Top"/>
+                                    <TextBlock Name="WPFRedesignWarnText" Text="" FontSize="14" Foreground="#FFE3A8" TextWrapping="Wrap" MaxWidth="290"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Name="WPFRedesignSafeBox" Margin="0,18,0,0" Padding="14,12" CornerRadius="14" Background="#0F2E2A" BorderBrush="#1D5A4A" BorderThickness="1" Visibility="Collapsed">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xEA18;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="20" Width="34" Foreground="#6FD6A0" VerticalAlignment="Top"/>
+                                    <TextBlock Name="WPFRedesignSafeText" Text="" FontSize="14" Foreground="#C6F3DC" TextWrapping="Wrap" MaxWidth="290"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+
+                        <Border Margin="0,18,0,12" Padding="16" CornerRadius="14" Background="#0D1628" BorderBrush="#1B2842" BorderThickness="1">
+                            <StackPanel>
+                                <TextBlock Name="WPFRedesignImpactTitle" Text="Estimated impact" FontSize="12" FontWeight="Bold" Foreground="#9FB0C9"/>
+                                <TextBlock Name="WPFRedesignImpactNote" Text="" FontSize="12" Foreground="#9FB0C9" TextWrapping="Wrap" Margin="0,4,0,0"/>
+                                <TextBlock Name="WPFRedesignImpactEmpty" Text="" FontSize="14" Foreground="#CFE0F5" TextWrapping="Wrap" Margin="0,12,0,0"/>
+                                <StackPanel Name="WPFRedesignBars">
+                                    <Grid Name="WPFRedesignBar1Row" Margin="0,12,0,0">
+                                        <TextBlock Name="WPFRedesignBar1Label" Text="" FontSize="13" Foreground="#CFE0F5"/>
+                                        <TextBlock Name="WPFRedesignBar1Value" Text="" FontSize="13" FontWeight="Bold" Foreground="#EAF0FA" HorizontalAlignment="Right"/>
+                                    </Grid>
+                                    <ProgressBar Name="WPFRedesignBar1" Margin="0,6,0,0" Height="7" Minimum="0" Maximum="100" Value="0" Style="{StaticResource RdBarStyle}" AutomationProperties.Name="Services changed"/>
+                                    <Grid Name="WPFRedesignBar2Row" Margin="0,12,0,0">
+                                        <TextBlock Name="WPFRedesignBar2Label" Text="" FontSize="13" Foreground="#CFE0F5"/>
+                                        <TextBlock Name="WPFRedesignBar2Value" Text="" FontSize="13" FontWeight="Bold" Foreground="#EAF0FA" HorizontalAlignment="Right"/>
+                                    </Grid>
+                                    <ProgressBar Name="WPFRedesignBar2" Margin="0,6,0,0" Height="7" Minimum="0" Maximum="100" Value="0" Style="{StaticResource RdBarStyle}" AutomationProperties.Name="Registry values changed"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Footer: actions, or the mirrored job progress while one runs -->
+                <Border Grid.Row="1" Padding="24,16,24,20" BorderBrush="#1E2A44" BorderThickness="0,1,0,0" Background="#8C090E1A">
+                    <Grid>
+                        <StackPanel Name="WPFRedesignActions">
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Visibility, ElementName=WPFTweaksProgressBar}" Value="Visible">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="1.3*"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentControl Slot="ClearButton" Grid.Column="0"/>
+                                <ContentControl Slot="ApplyButton" Grid.Column="2"/>
+                            </Grid>
+                            <ContentControl Slot="UndoButton"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <TextBlock Text="&#xE946;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="16" Width="26" Foreground="#9FB0C9" VerticalAlignment="Top"/>
+                                <TextBlock Name="WPFRedesignFootNote" Text="" FontSize="12" Foreground="#9FB0C9" TextWrapping="Wrap" MaxWidth="330"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Name="WPFRedesignProgress">
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Visibility, ElementName=WPFTweaksProgressBar}" Value="Visible">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                            <Grid>
+                                <TextBlock Text="{Binding Text, ElementName=WPFTweaksProgressLabel}" FontSize="14" FontWeight="Bold" Foreground="#EAF0FA" TextTrimming="CharacterEllipsis" Margin="0,0,56,0"/>
+                                <TextBlock Text="{Binding Value, ElementName=WPFTweaksProgressValue, StringFormat={}{0:0}%}" FontSize="14" Foreground="#9FB0C9" HorizontalAlignment="Right"/>
+                            </Grid>
+                            <ProgressBar Margin="0,10,0,0" Height="10" Minimum="0" Maximum="100"
+                                         Value="{Binding Value, ElementName=WPFTweaksProgressValue}"
+                                         Foreground="{Binding Foreground, ElementName=WPFTweaksProgressValue}"
+                                         Style="{StaticResource RdBarStyle}" AutomationProperties.Name="Progress"/>
+                            <Button Name="WPFRedesignNewSelection" Height="48" Margin="0,14,0,0" Content="New selection">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource RdSecondaryButtonStyle}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Value, ElementName=WPFTweaksProgressValue}" Value="100">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                            <TextBlock Name="WPFRedesignDoneNote" Text="" FontSize="12" Foreground="#9FB0C9" TextWrapping="Wrap" Margin="0,8,0,0">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Value, ElementName=WPFTweaksProgressValue}" Value="100">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+
+    <!-- Window-level progress for the tabs that do not show the right panel -->
+    <Border Grid.Row="3" Background="#8C090E1A">
+        <Border.Style>
+            <Style TargetType="Border">
+                <Setter Property="Visibility" Value="Visible"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsSelected, ElementName=WPFTab2}" Value="True">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
+        <ContentControl Slot="Progress"/>
+    </Border>
+</Grid>
