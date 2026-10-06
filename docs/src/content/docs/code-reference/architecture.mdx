@@ -9,6 +9,48 @@ WinUtil is a PowerShell-based Windows utility with a WPF (Windows Presentation F
 
 ## High-Level Architecture
 
+### Personal interface adapter
+
+The personal fork keeps the PowerShell/WPF stack and upstream's single-script distribution. The first redesign is an optional compile-time adapter rather than a second frontend or copied backend:
+
+```text
+xaml/inputXML.xaml + config/themes.json
+                  |
+      Compile.ps1 -Interface Modern
+                  |
+  ui/modern/ConvertTo-WinUtilModernInterface.ps1
+             + tokens.json
+                  |
+     transformed XAML + merged themes
+                  |
+   existing compiler + existing functions
+                  |
+          generated winutil.ps1
+```
+
+`functions/`, `scripts/`, application/tweak/feature JSON, presets, navigation data, job/runspace handling and the original XAML/theme files remain upstream sources. `functions/public/` is not a clean backend API boundary: it also contains UI handlers, and both public/private helpers may reference WPF controls and `$sync`. A replacement web or native frontend would therefore require a larger decoupling project. This iteration avoids that migration.
+
+The adapter moves the existing navigation panel into a sidebar and keeps the original control names, types, content, tab indices and event-routing conventions. It makes search and window controls use the remaining header width, preserves offline/progress banners across both columns, and adjusts existing theme tokens. It does not run in the generated runtime or require auxiliary files after compilation. The default `Upstream` build does not load the adapter.
+
+The adapter rejects missing shell controls, changed header topology, changed main columns, and removed overridden theme keys. These errors should be reviewed when importing upstream changes; do not weaken them simply to make a build pass. Contract tests compare named controls and all tab content, load both XAML variants in WPF, and verify that modern compilation embeds the transformed inputs without changing upstream config sources.
+
+Keep the fork's `main` aligned with upstream and work on `ui/modern-shell`. The local checkout has `origin` pointing to the personal fork and `upstream` pointing to `https://github.com/ChrisTitusTech/winutil.git`. To import updates, with a clean worktree:
+
+```powershell
+git fetch upstream
+git switch main
+git merge --ff-only upstream/main
+git push origin main
+git switch ui/modern-shell
+git merge main
+./Compile.ps1 -Interface Upstream
+./Compile.ps1 -Interface Modern
+```
+
+If `--ff-only` refuses, review branch divergence before proceeding; do not reset or force-push. Run relevant Pester tests and Windows GUI checks on the new upstream version. Most conflicts should be concentrated in the small `Compile.ps1` integration and documentation; preservation of handlers does not by itself prove full behavioral compatibility.
+
+The original `LICENSE` and `Copyright (c) 2022 CT Tech Group LLC` are retained verbatim. The title and README identify the personal build as unofficial. No runtime migration, change to system operations, or release workflow change is part of this first architecture.
+
 ```
 ┌─────────────────────────────────────────────────────┐
 │                    Winutil GUI                      │

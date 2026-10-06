@@ -1,5 +1,7 @@
 # Chris Titus Tech's Windows Utility
 
+> **Personal, unofficial fork.** The optional WPF redesign is built with `./Compile.ps1 -Interface Modern`. The default build retains upstream's interface. See [the redesign guide](docs/src/content/docs/guides/personal-interface.mdx) for usage and [architecture](docs/src/content/docs/code-reference/architecture.mdx#personal-interface-adapter) for maintenance. The quick-start URLs below launch the official upstream version, not this redesign. Original MIT license and copyright are preserved.
+
 [![Version](https://img.shields.io/github/v/release/ChrisTitusTech/winutil?color=%230567ff&label=Latest%20Release&style=for-the-badge)](https://github.com/ChrisTitusTech/winutil/releases/latest)
 ![Downloads](https://img.shields.io/github/downloads/ChrisTitusTech/winutil/winutil.ps1?label=Total%20Downloads&style=for-the-badge)
 [![Discord](https://dcbadge.limes.pink/api/server/https://discord.gg/RUbZUZyByQ?theme=default-inverted&style=for-the-badge)](https://discord.gg/RUbZUZyByQ)

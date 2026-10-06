@@ -1,6 +1,13 @@
 param (
-    [switch]$Run
+    [switch]$Run,
+    [ValidateSet('Upstream', 'Modern')]
+    [string]$Interface = 'Upstream'
 )
+
+if ($Interface -eq 'Modern') {
+    . "$PSScriptRoot/ui/modern/ConvertTo-WinUtilModernInterface.ps1"
+    $modernInterface = ConvertTo-WinUtilModernInterface -Xaml (Get-Content -Path xaml/inputXML.xaml -Raw) -Themes (Get-Content -Path config/themes.json -Raw | ConvertFrom-Json)
+}
 
 $OFS = "`r`n"
 
@@ -19,6 +26,10 @@ $script += Get-ChildItem -Path functions -Recurse -File | ForEach-Object {
 Get-ChildItem config | ForEach-Object {
     $obj = Get-Content -Path $_.FullName -Raw | ConvertFrom-Json
 
+    if ($Interface -eq 'Modern' -and $_.Name -eq 'themes.json') {
+        $obj = $modernInterface.Themes
+    }
+
     if ($_.Name -eq "applications.json") {
         $fixed = [ordered]@{}
         foreach ($p in $obj.PSObject.Properties) {
@@ -34,6 +45,9 @@ Get-ChildItem config | ForEach-Object {
 }
 
 $xaml = Get-Content -Path xaml\inputXML.xaml -Raw
+if ($Interface -eq 'Modern') {
+    $xaml = $modernInterface.Xaml
+}
 $script += "`$inputXML = @'`r`n$xaml`r`n'@"
 
 $autounattendXml = Get-Content -Path tools\autounattend.xml -Raw

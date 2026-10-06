@@ -66,6 +66,10 @@ Because the final script is concatenated, code cannot rely on runtime module imp
 
 ## Runtime Model
 
+### Personal fork interface variant
+
+`Compile.ps1 -Interface Modern` optionally transforms the upstream XAML and merges visual token overrides into the embedded themes. The adapter and tokens live under `ui/modern/`, outside runtime functions and config enumeration. The default `Upstream` build retains the original compiler inputs. Both variants produce the same ignored `winutil.ps1` artifact; the most recent compilation replaces that local artifact. No runtime functions, feature keys, presets, or named controls are removed. See the hand-written architecture page for the compatibility boundary and upstream synchronization procedure.
+
 - WinUtil runs in PowerShell on Windows and uses WPF for the UI.
 - Shared mutable state is stored in `$sync`, including configs, UI element references, runspace state, selections, and progress.
 - Long-running operations use runspaces or existing async patterns so the UI remains responsive.
