@@ -4,7 +4,7 @@
 
 This is a personal fork of [ChrisTitusTech/winutil](https://github.com/ChrisTitusTech/winutil) with an optional, redesigned interface. It is **not** the official project and it is not affiliated with it. The tweaks, installs and updates still run on upstream's engine: the logic was not changed.
 
-> **Status:** the interface runs as the real program (started with the command below on Windows 11: every tab opened, cards selected, filters, search and language used), but **no tweak has been applied or undone with it yet**. That part, and the progress panel while a real job runs, is untested. See [Project status](#project-status) before you use it.
+> **Status:** the interface runs as the real program (started with the command below on Windows 11: every tab opened, cards selected, filters, search and language used) and was used to **apply and undo two real tweaks**, with the registry checked before and after. That is a small sample: tweaks that run scripts, change services or write to `HKLM`, and a restore point, were not tried with it. See [Project status](#project-status) before you use it.
 
 ## What is this fork, and why does it exist
 
@@ -21,7 +21,7 @@ It is a fork, compatible with upstream. The original interface is still there (i
 
 ## What is improved
 
-> The screenshots are of the real program, taken on Windows 11 with the window maximized. They are in Italian, the language of the PC they were taken on, except where noted. Only the progress screenshot is missing: showing it means really applying a tweak.
+> The screenshots are of the real program, taken on Windows 11 with the window maximized. They are in Italian, the language of the PC they were taken on, except where noted.
 
 ### Sidebar and navigation
 One place to move between Programs, Tweaks, Repair, Updates, Windows apps and Create ISO, each with a one-line description, plus a status card, Settings, About and the language button. These are the same tabs as upstream (Repair is upstream's Config tab).
@@ -51,7 +51,7 @@ For the selected tweaks, how many services and registry values they touch, again
 ### Progress
 While tweaks are applied, the panel shows the real step the engine is on and a percentage, then a "New selection" button when it ends. The step name is the one the engine reports (it still uses the tweak's internal name).
 
-> 📷 *Screenshot not available: showing the progress panel means really applying a tweak, which was not done to take the pictures.*
+![After applying two tweaks: the panel shows the finished job at 100% with a "New selection" button, and the sidebar says "2 modifiche applicate" (2 changes applied). The step text comes from the engine, in English](docs/screenshots/tweaks-applied-it.png)
 
 ### Language switch
 Italian or English from the sidebar. All labels, descriptions, warnings and steps of the redesign come from one dictionary, [`ui/redesign/strings.json`](ui/redesign/strings.json). It starts in your Windows display language.
@@ -101,8 +101,9 @@ irm https://christitus.com/win | iex
 
 ## Project status
 
-What was checked (on a Windows 11 machine, without applying any tweak):
+What was checked (on a Windows 11 machine):
 
+- Two real tweaks were applied and undone with the interface: Storage Sense and Background apps, both user-level (`HKCU`) registry values. Undo set them back to their original values and Apply set them again, and the registry read as expected each time. The panel showed the finished job and the sidebar counted the two applied changes. The machine ended in the state it started in.
 - The published command (`irm … | iex`) starts the redesigned interface, including the relaunch as Administrator from this fork's release. Every tab opened; cards were selected and focused; filters, search, language switch, maximize and close worked, and the program's log shows no warning or error.
 - `Compile.ps1` builds both variants; the default build is byte for byte what it was before this fork's changes.
 - The generated script parses in PowerShell 7 and Windows PowerShell 5.1, and is ASCII only.
@@ -111,7 +112,7 @@ What was checked (on a Windows 11 machine, without applying any tweak):
 
 `ui/redesign/tools/Test-RedesignHeadless.ps1` repeats the in-memory checks on any Windows machine without starting WinUtil or changing anything.
 
-What was not checked: applying a tweak and undoing it with this interface, the progress panel during a real job, a machine that is not Windows 11 or not in Italian or English, and the docs site build. Script Analyzer runs in the repository's CI and reports findings in the redesign files that are accepted conventions of this repository (plural names, ShouldProcess on UI helpers). Details and decisions are in [`NOTE-LAVORO.md`](NOTE-LAVORO.md).
+What was not checked: tweaks that run scripts, stop services, write to `HKLM` or remove components, the Restore point tweak, the progress panel in the middle of a long job (the jobs tried finished too quickly to capture), a machine that is not Windows 11 or not in Italian or English, and the docs site build. Script Analyzer runs in the repository's CI and reports findings in the redesign files that are accepted conventions of this repository (plural names, ShouldProcess on UI helpers). Details and decisions are in [`NOTE-LAVORO.md`](NOTE-LAVORO.md).
 
 ## Credits and license
 

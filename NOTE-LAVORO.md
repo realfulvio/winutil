@@ -30,6 +30,15 @@ fast-forward autorizzato da Luca (nessun force push, nessuna PR, upstream mai to
   `architecture.mdx`.
 
 **Verificato**
+- **Applica e Annulla reali** (Luca ha autorizzato le prove su questo PC, che è nel dominio `bondeno1.local`, quindi di
+  produzione): giro Annulla → Applica su due ottimizzazioni a livello utente già applicate sul PC, *Sensore memoria*
+  (`HKCU\...\StorageSense\Parameters\StoragePolicy\01`) e *App in background*
+  (`HKCU\...\BackgroundAccessApplications\GlobalUserDisabled`). Registro iniziale `01=0; GlobalUserDisabled=1`, dopo
+  Annulla `01=1; GlobalUserDisabled=0` (valori originali), dopo Applica di nuovo `01=0; GlobalUserDisabled=1`; stato
+  finale identico a quello iniziale. Scelte per questo: toccano solo HKCU, niente criteri di dominio, niente HKLM,
+  niente servizi o script; `TaskbarEndTask` era già a 1 e non è stato usato. Il pannello ha mostrato il job al 100% con
+  "Nuova selezione", la scheda di stato è passata a "2 modifiche applicate", il log non ha avvisi né errori. Prima del
+  giro uno script controlla che le uniche card spuntate siano quelle due.
 - **Esecuzione reale su Windows 11** (Luca ha accettato i prompt UAC): avviato con il comando `irm | iex` pubblicato
   (rilancio elevato incluso, che parte dal fork e non da upstream), finestra massimizzata, tutte le schede aperte tranne
   Crea ISO, card selezionate e messe a fuoco, chip, ricerca, cambio lingua, chiusura. Il log del programma non ha avvisi
@@ -45,9 +54,11 @@ fast-forward autorizzato da Luca (nessun force push, nessuna PR, upstream mai to
   ShouldProcess sugli helper UI, `$global:sync` dello script di sviluppo, falsi positivi di Pester); corretti gli altri.
 
 **Non fatto / non verificato**
-- **Applicare e annullare ottimizzazioni** con la nuova interfaccia, e il **pannello di avanzamento durante un job
-  vero** (nei README è un segnaposto dichiarato: mostrarlo richiede di applicare davvero qualcosa). L'avanzamento è
-  stato provato solo pilotando i controlli di upstream con valori simulati.
+- Ottimizzazioni che eseguono **script, fermano servizi, scrivono in HKLM o rimuovono componenti**, e la modifica
+  **Punto di ripristino**: non provate con l'interfaccia (solo due valori HKCU, vedi sopra).
+- Il **pannello di avanzamento a metà di un job**: i job provati sono finiti troppo in fretta per catturarlo, quindi
+  lo screenshot nei README mostra lo stato finale al 100%; i passi intermedi sono stati provati solo pilotando i
+  controlli di upstream con valori simulati.
 - Macchine che non siano Windows 11, o con una lingua diversa da italiano/inglese.
 - La build del sito docs (Docker non presente).
 - Le schede Programmi, Riparazioni, Aggiornamenti, App di Windows e Crea ISO non hanno un nuovo layout: usano quello

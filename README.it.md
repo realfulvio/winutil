@@ -4,7 +4,7 @@
 
 Questo è un fork personale di [ChrisTitusTech/winutil](https://github.com/ChrisTitusTech/winutil) con un'interfaccia ridisegnata, opzionale. **Non** è il progetto ufficiale e non è affiliato ad esso. Le ottimizzazioni, le installazioni e gli aggiornamenti usano ancora il motore di upstream: la logica non è stata cambiata.
 
-> **Stato:** l'interfaccia gira come programma vero (avviata con il comando qui sotto su Windows 11: aperte tutte le schede, selezionate delle card, usati filtri, ricerca e lingua), ma **con essa non è stata ancora applicata né annullata nessuna ottimizzazione**. Quella parte, e il pannello di avanzamento durante un job vero, non è provata. Leggi [Stato del progetto](#stato-del-progetto) prima di usarla.
+> **Stato:** l'interfaccia gira come programma vero (avviata con il comando qui sotto su Windows 11: aperte tutte le schede, selezionate delle card, usati filtri, ricerca e lingua), ma è stata usata per **applicare e annullare due ottimizzazioni vere**, con il registro controllato prima e dopo. È un campione piccolo: le ottimizzazioni che eseguono script, cambiano servizi o scrivono in `HKLM`, e il punto di ripristino, non sono state provate con essa. Leggi [Stato del progetto](#stato-del-progetto) prima di usarla.
 
 ## Cos'è questo fork e perché esiste
 
@@ -21,7 +21,7 @@ WinUtil è potente, ma la finestra predefinita è un lungo elenco di caselle con
 
 ## Cosa è migliorato
 
-> Gli screenshot sono del programma vero, fatti su Windows 11 con la finestra a schermo intero, in italiano (la lingua del PC su cui sono stati fatti) salvo dove indicato. Manca solo quello dell'avanzamento: mostrarlo significa applicare davvero un'ottimizzazione.
+> Gli screenshot sono del programma vero, fatti su Windows 11 con la finestra a schermo intero, in italiano (la lingua del PC su cui sono stati fatti) salvo dove indicato.
 
 ### Barra laterale e navigazione
 Un solo posto per spostarsi tra Programmi, Ottimizzazioni, Riparazioni, Aggiornamenti, App di Windows e Crea ISO, ognuno con una riga di descrizione, più una scheda di stato, Impostazioni, Informazioni e il pulsante della lingua. Sono le stesse schede di upstream (Riparazioni è la scheda Config di upstream).
@@ -51,7 +51,7 @@ Per le ottimizzazioni selezionate, quanti servizi e quanti valori di registro to
 ### Avanzamento
 Mentre le ottimizzazioni vengono applicate, il pannello mostra il passo reale del motore e una percentuale, poi un pulsante "Nuova selezione" alla fine. Il nome del passo è quello riportato dal motore (usa ancora il nome interno dell'ottimizzazione).
 
-> 📷 *Screenshot non disponibile: mostrare il pannello di avanzamento significa applicare davvero un'ottimizzazione, cosa che non è stata fatta per scattare le immagini.*
+![Dopo aver applicato due ottimizzazioni: il pannello mostra il job finito al 100% con il pulsante "Nuova selezione" e la barra laterale dice "2 modifiche applicate". Il testo del passo arriva dal motore, in inglese](docs/screenshots/tweaks-applied-it.png)
 
 ### Cambio lingua
 Italiano o inglese dalla barra laterale. Tutte le etichette, descrizioni, avvisi e passi del ridisegno arrivano da un unico dizionario, [`ui/redesign/strings.json`](ui/redesign/strings.json). Parte nella lingua di visualizzazione di Windows.
@@ -101,8 +101,9 @@ irm https://christitus.com/win | iex
 
 ## Stato del progetto
 
-Cosa è stato controllato (su una macchina Windows 11, senza applicare nessuna ottimizzazione):
+Cosa è stato controllato (su una macchina Windows 11):
 
+- Due ottimizzazioni vere sono state applicate e annullate con l'interfaccia: Sensore memoria e App in background, entrambe valori di registro a livello utente (`HKCU`). Annulla le ha riportate ai valori originali e Applica le ha impostate di nuovo, con il registro letto come previsto ogni volta. Il pannello ha mostrato il job finito e la barra laterale ha contato le due modifiche applicate. La macchina è finita nello stato in cui era partita.
 - Il comando pubblicato (`irm … | iex`) avvia l'interfaccia ridisegnata, compreso il rilancio come Amministratore dalla release di questo fork. Tutte le schede si aprono; le card si selezionano e vanno a fuoco; filtri, ricerca, cambio lingua, ingrandimento e chiusura funzionano, e il log del programma non mostra avvisi né errori.
 - `Compile.ps1` compila entrambe le varianti; la build predefinita è identica, byte per byte, a quella di `main`.
 - Lo script generato passa il parser di PowerShell 7 e di Windows PowerShell 5.1 ed è solo ASCII.
@@ -111,7 +112,7 @@ Cosa è stato controllato (su una macchina Windows 11, senza applicare nessuna o
 
 `ui/redesign/tools/Test-RedesignHeadless.ps1` ripete i controlli in memoria su qualsiasi macchina Windows, senza avviare WinUtil e senza cambiare nulla.
 
-Cosa non è stato controllato: applicare un'ottimizzazione e annullarla con questa interfaccia, il pannello di avanzamento durante un job vero, una macchina che non sia Windows 11 o non sia in italiano o inglese, e la build del sito della documentazione. Script Analyzer gira nella CI del repository e segnala nei file del ridisegno dei punti che sono convenzioni accettate di questo repository (nomi plurali, ShouldProcess sugli helper UI). Dettagli e decisioni sono in [`NOTE-LAVORO.md`](NOTE-LAVORO.md).
+Cosa non è stato controllato: le ottimizzazioni che eseguono script, fermano servizi, scrivono in `HKLM` o rimuovono componenti, la modifica Punto di ripristino, il pannello di avanzamento a metà di un job lungo (i job provati sono finiti troppo in fretta per catturarlo), una macchina che non sia Windows 11 o non sia in italiano o inglese, e la build del sito della documentazione. Script Analyzer gira nella CI del repository e segnala nei file del ridisegno dei punti che sono convenzioni accettate di questo repository (nomi plurali, ShouldProcess sugli helper UI). Dettagli e decisioni sono in [`NOTE-LAVORO.md`](NOTE-LAVORO.md).
 
 ## Crediti e licenza
 
