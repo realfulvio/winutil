@@ -65,8 +65,8 @@ Questo file è il diario di lavoro: piano, decisioni, limiti e riepilogo finale.
 
 ## Piano a milestone (commit piccoli, push dopo ognuna)
 
-- [ ] M0 – questo piano
-- [ ] M1 – `Compile.ps1 -Interface Redesign` + scheletro adattatore + test Pester dell'adattatore
+- [x] M0 – questo piano
+- [x] M1 – `Compile.ps1 -Interface Redesign` + scheletro adattatore + test Pester dell'adattatore
 - [ ] M2 – `shell.xaml`: tema, finestra, sidebar, titolo, pannello destro (parsing XAML OK)
 - [ ] M3 – `strings.json` en/it + funzione di lookup + cambio lingua
 - [ ] M4 – card tweak + chip filtro + ricerca + pannello "Prima di applicare"
@@ -77,7 +77,15 @@ Questo file è il diario di lavoro: piano, decisioni, limiti e riepilogo finale.
 
 ## Registro decisioni e limiti (aggiornato durante il lavoro)
 
-- (vuoto)
+- **Identità git**: il primo commit (`c9cfdd8`) è stato creato con l'identità automatica della macchina e contiene
+  un indirizzo email aziendale. Dal secondo commit in poi il repo usa un'identità locale `noreply` di GitHub.
+  Non ho riscritto la storia (il prompt vieta il force push): decisione lasciata a Luca, comandi indicati nel
+  messaggio di sessione.
+- **Pester**: sull'host c'è solo Pester 3.4.0 (di sistema); la suite del repo richiede 5.8.0 e non installo moduli
+  sull'host. Il file `pester/redesign-interface.Tests.ps1` è scritto per 5.8.0 ma **non è stato eseguito**; le
+  stesse verifiche sono state fatte a mano (149/149 controlli con nome preservati, errore corretto se manca un
+  controllo, `XamlReader` carica la finestra). Da eseguire su una macchina con Pester 5.8.0.
+- `Compile.ps1 -Interface Redesign` compila senza errori; la variante `Upstream` resta quella di default.
 
 ## Cosa non ho potuto replicare in WPF / alternative
 

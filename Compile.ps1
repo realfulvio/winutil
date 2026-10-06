@@ -1,5 +1,7 @@
 param (
-    [switch]$Run
+    [switch]$Run,
+    [ValidateSet('Upstream', 'Redesign')]
+    [string]$Interface = 'Upstream'
 )
 
 $OFS = "`r`n"
@@ -34,6 +36,10 @@ Get-ChildItem config | ForEach-Object {
 }
 
 $xaml = Get-Content -Path xaml\inputXML.xaml -Raw
+if ($Interface -eq 'Redesign') {
+    . "$PSScriptRoot\ui\redesign\ConvertTo-WinUtilRedesignInterface.ps1"
+    $xaml = ConvertTo-WinUtilRedesignInterface -Xaml $xaml
+}
 $script += "`$inputXML = @'`r`n$xaml`r`n'@"
 
 $autounattendXml = Get-Content -Path tools\autounattend.xml -Raw
