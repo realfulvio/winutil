@@ -27,6 +27,7 @@ WinUtil is a Windows PowerShell utility with a WPF interface. The repository is 
 - `functions/private/`: internal helper PowerShell functions.
 - `config/`: JSON configuration consumed at compile time and embedded into `$sync.configs`.
 - `xaml/inputXML.xaml`: WPF UI markup embedded into the compiled script.
+- `ui/redesign/`: optional "design D" interface, built only by `.\Compile.ps1 -Interface Redesign` (adapter, layout and styles in XAML, theme tokens, the Italian/English dictionary and its runtime functions). The default build does not read it.
 - `tools/autounattend.xml`: unattended setup XML embedded for Windows ISO workflows.
 - `pester/`: Pester tests for config and function checks.
 - `lint/PSScriptAnalyser.ps1`: PowerShell Script Analyzer settings.
@@ -61,6 +62,12 @@ WinUtil is a Windows PowerShell utility with a WPF interface. The repository is 
 6. Embed `tools/autounattend.xml` into `$WinUtilAutounattendXml`.
 7. Append `scripts/main.ps1`.
 8. Write the result to root `winutil.ps1`.
+
+`Compile.ps1 -Interface Redesign` changes the build as follows, and `-Interface Upstream` (the default) is identical to the list above:
+
+- In step 2, `Initialize-WinUtilTabContent` and `Find-TweaksByNameOrDescription` are renamed to `<Name>Upstream` and the files under `ui/redesign/functions/` are appended, which define the wrappers.
+- In step 3, `config/themes.json` gets the palette of `ui/redesign/tokens.json`, and `ui/redesign/strings.json` is embedded as `$sync.configs.redesignstrings` (non-ASCII written as `\uXXXX`).
+- In step 5, the XAML is the output of `ConvertTo-WinUtilRedesignInterface`, which keeps every named control of `xaml/inputXML.xaml` and fails the build if a control it depends on is gone.
 
 Because the final script is concatenated, code cannot rely on runtime module imports or source-relative dot-sourcing unless the compiled script will also contain the required code/data.
 

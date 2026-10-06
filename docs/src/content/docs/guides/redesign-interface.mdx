@@ -1,0 +1,74 @@
+---
+title: Redesigned interface (fork)
+description: An optional dark interface with plain-language tweak descriptions, a preview before you apply, and Italian/English. Available in this personal fork only.
+sidebar:
+  order: 8
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+*English first. [Vai alla versione italiana](#italiano).*
+
+<Aside type="caution" title="Unofficial and not run end to end">
+This interface exists in a personal fork of WinUtil, not in the official project. It was built and checked without a Windows test machine: it compiles, loads as a window and its logic ran on simulated data, but it has not been run end to end as the real program. Tweaks change your system. Create a restore point first. You use it at your own risk.
+</Aside>
+
+## What it is
+
+An opt-in interface for the Tweaks tab (and a new window around every tab): a sidebar, search, filter chips, tweak cards, a "Before you apply" panel, an estimated impact and a visible progress. The tweak, install and update logic is upstream's and was not changed. The original interface remains the default build.
+
+## Build and run
+
+```powershell
+git clone -b ui-redesign https://github.com/realfulvio/winutil.git
+cd winutil
+.\Compile.ps1 -Interface Redesign -Run
+```
+
+Build without `-Interface Redesign` (or use the official command) to get the original interface.
+
+## How to read a tweak card
+
+- **Recommended** means the tweak is in upstream's Standard preset.
+- **Advanced** means it is in upstream's "CAUTION" category, or it is a risky change of its own (services, Widgets removal, turning BitLocker off).
+- **Safe** means it is neither.
+- Click a card to see what changes, the possible effects, whether it can be undone and any warning. Whether it can be undone is read from the tweak's own undo data.
+- The impact counts services and registry values of the selected tweaks. Memory, disk space and a privacy score are not shown because the repository has no data for them.
+
+## Other settings
+
+Switches, buttons and the Multiplane Overlay list apply immediately, as upstream does. The DNS list is applied by the Apply button.
+
+## Italiano
+
+*[Back to English](#what-it-is).*
+
+<Aside type="caution" title="Non ufficiale e non eseguita fino in fondo">
+Questa interfaccia esiste in un fork personale di WinUtil, non nel progetto ufficiale. È stata costruita e controllata senza una macchina Windows di prova: si compila, si carica come finestra e la sua logica è stata eseguita su dati simulati, ma non è stata eseguita fino in fondo come programma vero. Le ottimizzazioni modificano il sistema. Crea prima un punto di ripristino. L'uso è a tuo rischio.
+</Aside>
+
+### Cos'è
+
+Un'interfaccia opzionale per la scheda Ottimizzazioni (e una nuova finestra attorno a ogni scheda): barra laterale, ricerca, filtri, schede delle ottimizzazioni, pannello "Prima di applicare", impatto stimato e avanzamento visibile. La logica di ottimizzazioni, installazioni e aggiornamenti è quella di upstream e non è stata cambiata. L'interfaccia originale resta la build predefinita.
+
+### Compilare e avviare
+
+```powershell
+git clone -b ui-redesign https://github.com/realfulvio/winutil.git
+cd winutil
+.\Compile.ps1 -Interface Redesign -Run
+```
+
+Compila senza `-Interface Redesign` (oppure usa il comando ufficiale) per avere l'interfaccia originale.
+
+### Come leggere una scheda
+
+- **Consigliata** significa che l'ottimizzazione è nel preset Standard di upstream.
+- **Avanzato** significa che è nella categoria "CAUTION" di upstream, oppure che è una modifica rischiosa di per sé (servizi, rimozione dei Widget, disattivare BitLocker).
+- **Sicura** significa che non è nessuna delle due.
+- Clicca una scheda per vedere cosa cambia, i possibili effetti, se si può annullare e l'eventuale avviso. Se si può annullare lo si legge dai dati di annullamento dell'ottimizzazione stessa.
+- L'impatto conta i servizi e i valori di registro delle ottimizzazioni selezionate. Memoria, spazio su disco e punteggio privacy non sono mostrati perché il repository non ha dati per questi.
+
+### Altre impostazioni
+
+Interruttori, pulsanti e l'elenco Multiplane Overlay si applicano subito, come in upstream. L'elenco DNS si applica con il pulsante Applica.

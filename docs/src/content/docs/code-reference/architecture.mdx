@@ -128,6 +128,18 @@ The interface itself lives in `Start-WinUtilUserInterface`, not here. See [Threa
 - CheckBoxes for options
 - ListBoxes for selections
 
+#### 7. ui/redesign/ (optional interface)
+**Purpose**: An opt-in "design D" window, built only by `.\Compile.ps1 -Interface Redesign`. The default build (`-Interface Upstream`) does not read this folder and its output is unchanged.
+
+**Files**:
+- `ConvertTo-WinUtilRedesignInterface.ps1`: the compile-time adapter. It lifts the upstream controls out of `xaml/inputXML.xaml` (search box, window buttons and popups, the `WPFTabNav` tab control, the progress bar, the tweak buttons) and places them into the new layout, so every named control keeps its handlers. It throws when upstream no longer has a control it depends on. It also returns the theme palette and renames the two upstream functions the redesign wraps.
+- `shell.xaml`, `tweaks-tab.xaml`, `styles.xaml`: the window layout, the Tweaks tab content and the styles. Elements marked `Slot="..."` are placeholders the adapter fills with upstream controls.
+- `tokens.json`: palette applied to both `Light` and `Dark` in `config/themes.json` (the redesign is dark only).
+- `strings.json`: the Italian/English dictionary, embedded as `$sync.configs.redesignstrings`. Per tweak it holds only the wording and the icon; recommendation (Standard preset), risk (the `CAUTION` category) and undo state (undo script, original registry value or service type) come from `config/`.
+- `functions/`: runtime code. `Initialize-WinUtilTabContent` and `Find-TweaksByNameOrDescription` are wrapped: the compiler renames upstream's definition to `<Name>Upstream` and the redesign defines `<Name>`, which calls it for every tab it does not change.
+
+**Contract with upstream**: the card checkboxes are named after the tweak key and use the same `Invoke-WPFSelectedCheckboxesUpdate` handling, so presets, import/export and `Invoke-WPFtweaksbutton` work unchanged. Job progress comes from the existing `WPFTweaksProgress*` controls; the right panel mirrors them with XAML bindings.
+
 ## Win11 Creator Architecture
 
 The **Win11 Creator** is a specialized subsystem within Winutil that creates customized Windows 11 ISOs. It operates independently of the main package installation and tweak system.
