@@ -44,6 +44,7 @@ export default defineConfig({
 					items: [
 						{ label: 'Overview', slug: 'guides' },
 						{ label: 'Getting Started', slug: 'guides/getting-started' },
+						{ label: 'Personal Interface', slug: 'guides/personal-interface' },
 						{ label: 'Applications', slug: 'guides/application' },
 						{ label: 'Tweaks', slug: 'guides/tweaks' },
 						{ label: 'Features', slug: 'guides/features' },

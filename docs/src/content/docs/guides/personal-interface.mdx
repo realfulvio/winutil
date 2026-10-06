@@ -1,0 +1,24 @@
+---
+title: Personal Interface
+description: Build the optional WPF redesign in this unofficial personal fork.
+---
+
+This fork adds an optional sidebar layout, Segoe UI typography, larger controls, and revised Light/Dark surfaces. It uses upstream's existing PowerShell handlers and config-driven feature lists. It is an early interface iteration, not an official Chris Titus Tech release.
+
+From the repository root on Windows:
+
+```powershell
+./Compile.ps1 -Interface Modern
+```
+
+To launch after reviewing the sources, run the compiled `./winutil.ps1` in an administrator PowerShell session, as required by upstream. Compiling alone does not launch WinUtil or change system settings. All original tabs, search, presets, undo, import/export, offline indication, progress feedback and settings remain available. AppX remains accessible through the existing Settings menu.
+
+To rebuild the original interface:
+
+```powershell
+./Compile.ps1 -Interface Upstream
+```
+
+Both builds write the same local `winutil.ps1`; keep separate copies outside the repository if comparing them. The official `christitus.com/win` and `windev.ps1` launch upstream, not the personal interface.
+
+This iteration preserves upstream's window sizing and font scaling logic. Test sidebar text, dialogs, tab content, and search at the display's normal scaling and at 125%, 150%, and 200% before considering it release-ready. Windows system actions must be tested in a disposable Windows environment. No installer or redesigned release is published by this change.
