@@ -5,6 +5,9 @@ Sessione autonoma del 2026-10-06. Questo file è il diario di lavoro: piano, dec
 
 ## Riepilogo finale
 
+Branch [`ui-redesign`](https://github.com/realfulvio/winutil/tree/ui-redesign), uguale a `main` del fork dopo il merge
+fast-forward autorizzato da Luca (nessun force push, nessuna PR, upstream mai toccato).
+
 **Fatto**
 - Opzione di compilazione `.\Compile.ps1 -Interface Redesign` (default `Upstream`: l'output è identico, hash per hash,
   a quello di `main`). Sorgenti upstream intatti salvo `Compile.ps1`, `SPEC.md`, `README.md` e docs.
@@ -17,54 +20,58 @@ Sessione autonoma del 2026-10-06. Questo file è il diario di lavoro: piano, dec
 - Lingua IT/EN da un unico dizionario (`ui/redesign/strings.json`), con pulsante in sidebar.
 - Accessibilità: controlli ≥ 44 px, focus da tastiera visibile, contrasto testo ≥ 4,5:1 (minimo misurato 5,88:1),
   `AutomationProperties.Name` sui pulsanti a sola icona, testi che seguono lo scaling dei caratteri (Ctrl +/-).
-- README bilingue (`README.md`, `README.it.md`), pagina docs bilingue, sezioni in `SPEC.md` e `architecture.mdx`.
-- Pubblicato solo sul branch `ui-redesign` di `origin`: nessun force push, nessun merge su `main`, nessuna PR.
+- **Comando `irm | iex` del fork**: `irm https://github.com/realfulvio/winutil/releases/latest/download/winutil.ps1 | iex`.
+  Upstream, quando si rilancia come Amministratore, riscarica il proprio script da un URL scritto in `scripts/start.ps1`
+  (e un altro nel comando esportato da `Invoke-WPFImpex`): senza intervento il comando del fork riaprirebbe l'interfaccia
+  di upstream. Un build Redesign sostituisce a compile time entrambi gli URL con `-ReleaseUrl` (default: la release del
+  fork) e fallisce se uno dei due non si trova più. Il workflow manuale `redesign-release.yaml` compila e pubblica
+  `winutil.ps1` come ultima release; `redesign-26.10.06-1658` è la prima.
+- README bilingue (`README.md`, `README.it.md`) con 7 screenshot veri, pagina docs bilingue, sezioni in `SPEC.md` e
+  `architecture.mdx`.
+
+**Verificato**
+- **Esecuzione reale su Windows 11** (Luca ha accettato i prompt UAC): avviato con il comando `irm | iex` pubblicato
+  (rilancio elevato incluso, che parte dal fork e non da upstream), finestra massimizzata, tutte le schede aperte tranne
+  Crea ISO, card selezionate e messe a fuoco, chip, ricerca, cambio lingua, chiusura. Il log del programma non ha avvisi
+  né errori e nessuna ottimizzazione è stata applicata o annullata. Gli scatti sono fatti con `PrintWindow` e UI
+  Automation su una sequenza di azioni ammesse (mai Applica, Annulla, "Altre impostazioni" o pulsanti dentro le schede);
+  prima di ogni click lo script controlla che WinUtil sia in primo piano.
+- **CI di GitHub su runner Windows**: suite Pester completa, 874 test passati e 0 falliti (compresi quelli del redesign);
+  `Compile & Check` verde; workflow di release verde.
+- `Compile.ps1` compila entrambe le varianti; la variante di default ha lo stesso hash di `main`.
+- Lo script generato passa il parser di PowerShell 7 e di Windows PowerShell 5.1; la variante Redesign è ASCII pura.
+- `ui/redesign/tools/Test-RedesignHeadless.ps1`: 30 controlli su dati simulati, senza toccare la macchina.
+- Script Analyzer (in CI): sui miei file restano solo le convenzioni accettate di questo repo (nomi plurali,
+  ShouldProcess sugli helper UI, `$global:sync` dello script di sviluppo, falsi positivi di Pester); corretti gli altri.
 
 **Non fatto / non verificato**
-- **Nessuna esecuzione reale su Windows** (nessuna VM disponibile, confermato da Luca). L'interfaccia non è stata mai
-  avviata come programma vero, nessuna ottimizzazione è stata applicata o annullata.
-- Pester: sull'host c'è solo la 3.4.0, la suite richiede la 5.8.0 (non installata: niente installazioni sull'host).
-  `pester/redesign-interface.Tests.ps1` è scritto per la 5.8.0 e **non è stato eseguito**; le stesse verifiche sono
-  state fatte con uno script a mano (tutte superate).
-- Script Analyzer (non installato) e build del sito docs (Docker non presente) non eseguiti.
-- Screenshot reali: nessuno. Nei README ci sono segnaposto dichiarati ("screenshot in arrivo").
+- **Applicare e annullare ottimizzazioni** con la nuova interfaccia, e il **pannello di avanzamento durante un job
+  vero** (nei README è un segnaposto dichiarato: mostrarlo richiede di applicare davvero qualcosa). L'avanzamento è
+  stato provato solo pilotando i controlli di upstream con valori simulati.
+- Macchine che non siano Windows 11, o con una lingua diversa da italiano/inglese.
+- La build del sito docs (Docker non presente).
 - Le schede Programmi, Riparazioni, Aggiornamenti, App di Windows e Crea ISO non hanno un nuovo layout: usano quello
-  di upstream dentro la nuova finestra, con la palette scura.
-
-**Cosa è stato effettivamente controllato (sempre sull'host, senza toccare il sistema)**
-- `Compile.ps1` compila entrambe le varianti; la variante di default ha lo stesso hash di `main`.
-- Lo script generato passa il parser di PowerShell 7 e di Windows PowerShell 5.1; la variante Redesign è ASCII pura
-  (2 byte non ASCII preesistenti in upstream, contro i 251 del baseline: i caratteri dei commenti XAML sono ora
-  scritti come entità).
-- La finestra si carica con `XamlReader` e conserva tutti i 149 controlli con nome di upstream.
-- `ui/redesign/tools/Test-RedesignHeadless.ps1` carica le funzioni (upstream rinominate + redesign) con un `$sync`
-  simulato e stub che non toccano la macchina, costruisce la scheda con la vera `Invoke-WPFUIElements` per "Altre
-  impostazioni", e verifica 30 comportamenti (tutti superati): 38 card, checkbox registrate in `$sync` con il nome del
-  tweak e agganciate al vero `Invoke-WPFSelectedCheckboxesUpdate`, selezione, Applica abilitato/disabilitato, filtri,
-  ricerca, lingua, impatto, stato di avanzamento specchiato, visibilità del pannello destro e della barra di fondo,
-  scaling dei caratteri. Con `-RenderDir` salva anche le immagini della finestra con dati di esempio.
-- Render in memoria della finestra con dati di esempio, usati solo per rivedere il layout (non sono screenshot del
-  programma e non compaiono in nessun file del repo).
-
+  di upstream dentro la nuova finestra, con la palette scura. La scheda Crea ISO non è stata aperta nella prova reale.
+- Il primo commit (`c9cfdd8`) ha ancora l'email aziendale di Luca come autore (vedi sotto).
 ## Come testare
 
-0. Su qualsiasi Windows con PowerShell 7 (nessuna VM, non modifica la macchina):
+0. Su qualsiasi Windows con PowerShell 7 (non modifica la macchina):
    `.\ui\redesign\tools\Test-RedesignHeadless.ps1 -RenderDir $env:TEMP\winutil-renders`
 
 Su una macchina o VM Windows:
 
 1. Ripristina uno snapshot pulito, poi in PowerShell:
    ```powershell
-   git clone -b ui-redesign https://github.com/realfulvio/winutil.git
-   cd winutil
-   .\Compile.ps1 -Interface Redesign -Run
+   irm https://github.com/realfulvio/winutil/releases/latest/download/winutil.ps1 | iex
    ```
+   (oppure, da sorgenti: `git clone https://github.com/realfulvio/winutil.git`, `cd winutil`,
+   `.\Compile.ps1 -Interface Redesign -Run`).
 2. Controlla: apertura di tutte le schede (Programmi, Ottimizzazioni, Riparazioni, Aggiornamenti, App di Windows,
    Crea ISO), pulsante lingua, ricerca (Ctrl+F), chip, click su una card (pannello destro), Ctrl +/- (scaling).
 3. Seleziona "Punto di ripristino" + 1-2 ottimizzazioni innocue, Applica: avanzamento a destra, fine con "Nuova
    selezione", scheda di stato in sidebar. Poi "Annulla le modifiche selezionate".
 4. Prova `-Preset Standard` (headless: non usa la finestra) e un'importazione/esportazione dalle Impostazioni.
-5. Installa Pester 5.8.0 ed esegui `Invoke-Pester -Path 'pester/*.Tests.ps1' -Output Detailed -CI`.
+5. La suite Pester gira già nella CI del fork (workflow "Unit Tests"); per eseguirla in locale installa Pester 5.8.0.
 6. Tornare all'originale: `.\Compile.ps1 -Run`.
 
 ## Stato iniziale (esplorazione)
@@ -126,6 +133,11 @@ Su una macchina o VM Windows:
   indirizzo email aziendale. Dal secondo commit in poi il repo usa un'identità locale `noreply` di GitHub. Non ho
   riscritto la storia (il prompt vieta il force push): decisione lasciata a Luca (comandi indicati nel messaggio di
   sessione). Anche dopo una riscrittura GitHub può mostrare il vecchio commit tramite il suo SHA per un po'.
+- **Prima prova reale, secondo passaggio andato male**: un secondo passaggio con click a coordinate fisse è partito con la
+  finestra di WinUtil coperta dal terminale della sessione; gli scatti 10-13 mostravano testo di quella conversazione e
+  sono stati cancellati subito (mai salvati nel repo), e click e tasti dello script possono essere finiti nel terminale.
+  Il log del programma non mostra nessuna modifica. Lo script definitivo usa UI Automation e `PrintWindow` e si ferma
+  se WinUtil non è in primo piano.
 - **Connettore GitHub**: nella sessione non c'era un connettore GitHub; è stata usata la CLI `gh` già autenticata come
   `realfulvio` (permessi ADMIN sul fork), testata con lettura del fork, commit, push e verifica remota.
 - Il test "byte per byte" della build di default è stato fatto compilando `main` (da `git archive`) e confrontando

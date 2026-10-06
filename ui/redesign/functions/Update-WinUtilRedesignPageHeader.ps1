@@ -14,10 +14,13 @@ function Update-WinUtilRedesignPageHeader {
         $index = 1
     }
 
+    # The search box serves the Install, Tweaks and AppX tabs, so only the Tweaks one says "tweak"
     if ($index -eq 1) {
         $sync.WPFRedesignPageTitle.Text = Get-WinUtilRedesignText -Key "title"
         $sync.WPFRedesignPageSubtitle.Text = Get-WinUtilRedesignText -Key "subtitle"
+        $sync.WPFRedesignSearchHint.Text = Get-WinUtilRedesignText -Key "searchPh"
     } else {
+        $sync.WPFRedesignSearchHint.Text = Get-WinUtilRedesignText -Key "searchPhAll"
         $sync.WPFRedesignPageTitle.Text = @(Get-WinUtilRedesignText -Key "navTitles")[$index]
         $sync.WPFRedesignPageSubtitle.Text = @(Get-WinUtilRedesignText -Key "navSubs")[$index]
     }

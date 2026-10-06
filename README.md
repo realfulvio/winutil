@@ -4,7 +4,7 @@
 
 This is a personal fork of [ChrisTitusTech/winutil](https://github.com/ChrisTitusTech/winutil) with an optional, redesigned interface. It is **not** the official project and it is not affiliated with it. The tweaks, installs and updates still run on upstream's engine: the logic was not changed.
 
-> **Status:** the interface was built and checked without access to a Windows test machine. It compiles, loads as a WPF window, and its logic was exercised against simulated data, but it has **not been run end to end as the real program**. See [Project status](#project-status) before you use it.
+> **Status:** the interface runs as the real program (started with the command below on Windows 11: every tab opened, cards selected, filters, search and language used), but **no tweak has been applied or undone with it yet**. That part, and the progress panel while a real job runs, is untested. See [Project status](#project-status) before you use it.
 
 ## What is this fork, and why does it exist
 
@@ -21,45 +21,47 @@ It is a fork, compatible with upstream. The original interface is still there (i
 
 ## What is improved
 
-> Screenshots of the real program are **coming soon**. None are shown here on purpose: a mockup would not be the program, and the interface has not been run on a Windows machine yet.
+> The screenshots are of the real program, taken on Windows 11 with the window maximized. They are in Italian, the language of the PC they were taken on, except where noted. Only the progress screenshot is missing: showing it means really applying a tweak.
 
 ### Sidebar and navigation
 One place to move between Programs, Tweaks, Repair, Updates, Windows apps and Create ISO, each with a one-line description, plus a status card, Settings, About and the language button. These are the same tabs as upstream (Repair is upstream's Config tab).
 
-> 📷 *Screenshot coming soon (sidebar and navigation).*
+![The redesigned window: sidebar with the six sections on the left, tweak cards in the middle, the "Before you apply" panel on the right](docs/screenshots/tweaks-it.png)
 
 ### Filters and search
 Four filter chips with counters (Recommended, Privacy, System, Advanced) and a search box that looks at every tweak by name and description, in the language you picked.
 
-> 📷 *Screenshot coming soon (filters and search).*
+![Searching "onedrive": the list shows the matching card whatever the active filter chip](docs/screenshots/tweaks-search-it.png)
 
 ### Cards with safety tags
 Each tweak is a card with a checkbox, an icon, a plain-language name and description, and tags: its category plus *Recommended*, *Safe* or *Advanced*. *Recommended* means the tweak is in upstream's Standard preset; *Advanced* means it is in upstream's "CAUTION" category (for example removing Edge, OneDrive or the Windows AI components) or it is a risky change of its own: services, Widgets removal, turning BitLocker off.
 
-> 📷 *Screenshot coming soon (cards with safety tags).*
+![The Advanced filter: each card has a category tag and an amber "Advanced" tag, and the panel on the right shows the warning for the tweak in focus](docs/screenshots/tweaks-advanced-it.png)
 
 ### "Before you apply" panel
 Click a card to see, on the right: what changes, possible effects, whether it can be undone, and a warning when there is one. Whether a tweak can be undone is read from its own data (an undo script, an original registry value or an original service type), not typed by hand.
 
-> 📷 *Screenshot coming soon ("Before you apply" panel).*
+![The "Before you apply" panel for "Windows services": what changes, possible effects, undo, an amber warning and the estimated impact](docs/screenshots/panel-before-apply-it.png)
 
 ### Estimated impact
 For the selected tweaks, how many services and registry values they touch, against everything the cards touch. A bar is shown only when the selection has that kind of data. There are no figures for memory, disk space or a privacy score because the repository has no data for them, and none are invented.
 
-> 📷 *Screenshot coming soon (estimated impact).*
+![Three tweaks selected: services changed 5 of 6 and registry values changed 12 of 85, counted from the tweaks' own data; the Apply button says "Applica 3 modifiche"](docs/screenshots/tweaks-selected-it.png)
 
 ### Progress
 While tweaks are applied, the panel shows the real step the engine is on and a percentage, then a "New selection" button when it ends. The step name is the one the engine reports (it still uses the tweak's internal name).
 
-> 📷 *Screenshot coming soon (progress).*
+> 📷 *Screenshot not available: showing the progress panel means really applying a tweak, which was not done to take the pictures.*
 
 ### Language switch
 Italian or English from the sidebar. All labels, descriptions, warnings and steps of the redesign come from one dictionary, [`ui/redesign/strings.json`](ui/redesign/strings.json). It starts in your Windows display language.
 
-> 📷 *Screenshot coming soon (language switch).*
+![The same page in English, after pressing the language button in the sidebar](docs/screenshots/tweaks-en.png)
 
 ### What was not redesigned
 Only the Tweaks tab has the new card layout. Programs, Repair, Updates, Windows apps and Create ISO keep their upstream layout inside the new window and sidebar, with the new dark palette. Switches, buttons and the Multiplane Overlay list apply immediately as upstream does and appear under "Other settings"; the DNS list is applied with the Apply button.
+
+![The Programs tab keeps upstream's layout inside the new window and sidebar](docs/screenshots/programs-it.png)
 
 ## Install and run
 
@@ -99,17 +101,17 @@ irm https://christitus.com/win | iex
 
 ## Project status
 
-What was checked (on a Windows host, without applying any tweak):
+What was checked (on a Windows 11 machine, without applying any tweak):
 
+- The published command (`irm … | iex`) starts the redesigned interface, including the relaunch as Administrator from this fork's release. Every tab opened; cards were selected and focused; filters, search, language switch, maximize and close worked, and the program's log shows no warning or error.
 - `Compile.ps1` builds both variants; the default build is byte for byte what it was before this fork's changes.
 - The generated script parses in PowerShell 7 and Windows PowerShell 5.1, and is ASCII only.
-- The window loads as a WPF window with every control of upstream's window still present.
-- The tab logic ran against simulated data: the 38 cards, selection, filters, search, language switch, the Apply button state, the impact figures, and the progress panel states.
-- Images of the window rendered in memory with sample data were used to review the layout.
+- On GitHub's Windows runners the whole Pester suite passes (874 tests, including this fork's), and the build workflow compiles and publishes the release.
+- The window loads with every control of upstream's window still present, and the tab logic ran against simulated data: the 38 cards, selection, filters, search, language, the Apply button state, the impact figures, the progress panel states and the font scaling.
 
 `ui/redesign/tools/Test-RedesignHeadless.ps1` repeats the in-memory checks on any Windows machine without starting WinUtil or changing anything.
 
-What was not checked: a real run on a Windows machine (opening the window, applying a tweak, undoing it), the Pester suite (it needs Pester 5.8.0, not available here), Script Analyzer and the docs site build. Details and decisions are in [`NOTE-LAVORO.md`](NOTE-LAVORO.md).
+What was not checked: applying a tweak and undoing it with this interface, the progress panel during a real job, a machine that is not Windows 11 or not in Italian or English, and the docs site build. Script Analyzer runs in the repository's CI and reports findings in the redesign files that are accepted conventions of this repository (plural names, ShouldProcess on UI helpers). Details and decisions are in [`NOTE-LAVORO.md`](NOTE-LAVORO.md).
 
 ## Credits and license
 
