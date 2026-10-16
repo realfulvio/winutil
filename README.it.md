@@ -2,78 +2,31 @@
 
 [English](README.md) | **Italiano**
 
-Questo è un fork personale di [ChrisTitusTech/winutil](https://github.com/ChrisTitusTech/winutil) con un'interfaccia ridisegnata, opzionale. **Non** è il progetto ufficiale e non è affiliato ad esso. Le ottimizzazioni, le installazioni e gli aggiornamenti usano ancora il motore di upstream: la logica non è stata cambiata.
+![WinUtil ridisegnato: Programmi, kit e ottimizzazioni in una barra laterale a gruppi](docs/public/social-preview.png)
 
-> **Stato:** l'interfaccia gira come programma vero (avviata con il comando qui sotto su Windows 11: aperte tutte le schede, selezionate delle card, usati filtri, ricerca e lingua), ma è stata usata per **applicare e annullare due ottimizzazioni vere**, con il registro controllato prima e dopo. È un campione piccolo: le ottimizzazioni che eseguono script, cambiano servizi o scrivono in `HKLM`, e il punto di ripristino, non sono state provate con essa. Leggi [Stato del progetto](#stato-del-progetto) prima di usarla.
+Questo è un fork personale di [ChrisTitusTech/winutil](https://github.com/ChrisTitusTech/winutil) con un'interfaccia ridisegnata, opzionale. **Non** è il progetto ufficiale e non è affiliato ad esso. Installazioni, ottimizzazioni e aggiornamenti usano ancora il motore di upstream: quella logica non è stata cambiata.
 
-## Cos'è questo fork e perché esiste
+## Cosa cambia, e perché esiste il fork
 
-WinUtil è potente, ma la finestra predefinita è un lungo elenco di caselle con nomi asciutti. Questo fork aggiunge una seconda interfaccia, pensata per essere più leggibile e più sicura per chi è alle prime armi con questo tipo di strumento:
+La finestra di upstream è un lungo elenco di caselle con nomi asciutti e una colonna di pulsanti in inglese. Questo fork aggiunge una seconda interfaccia, più leggibile e più sicura per chi è alle prime armi con questo tipo di strumento:
 
-- Un'interfaccia scura e moderna con barra laterale, ricerca, filtri e schede.
-- Ogni ottimizzazione spiegata in parole semplici: cosa cambia, cosa può andare storto e se si può annullare.
-- Un'anteprima prima di applicare: cosa tocca ogni modifica, contato dai dati dell'ottimizzazione stessa.
-- Avanzamento visibile mentre le modifiche vengono applicate.
-- Italiano e inglese, selezionabili dalla barra laterale.
-- Nella nuova finestra e nella scheda Ottimizzazioni: testi che seguono lo scaling dei caratteri di WinUtil (Ctrl +/-), controlli di almeno 44 px, focus da tastiera visibile e contrasto del testo di almeno 4,5:1. Le schede che mantengono il layout di upstream mantengono le sue dimensioni.
+- **Una barra laterale a gruppi**: Home, *Installa* (Programmi), *Ottimizza* (Ottimizzazioni, Pulizia app Windows), *Manutenzione* (Aggiornamenti, Riparazioni), *Avanzate* (Crea ISO), e una pagina **Home**, "Cosa vuoi fare?", con quattro scelte numerate.
+- **Una scheda Programmi ridisegnata**: ricerca, **kit** pronti, filtri per categoria con contatori, una scheda per programma con la sua icona vera, un pannello di dettaglio e una barra azioni flottante con la selezione, Installa e l'avanzamento.
+- **Kit personalizzati**: salvi una selezione come kit, la esporti in un file (anche su una cartella di rete), la importi su un altro PC, oppure la installi senza finestra: `-Kit "kit.winutil-kit.json" -Installa`.
+- **Ottimizzazioni spiegate in parole semplici**, con il pannello "Prima di applicare", dalla versione precedente di questo fork.
+- **Italiano e inglese**, selezionabili dalla barra laterale; testi che seguono lo scaling dei caratteri di WinUtil (Ctrl +/-), controlli di almeno 44 px e focus da tastiera visibile nella nuova finestra.
 
-È un fork compatibile con upstream. L'interfaccia originale c'è ancora (è la build predefinita) e il ridisegno è opzionale. I file di upstream sono stati lasciati intatti per quanto possibile, così integrare gli aggiornamenti di upstream resta semplice. **La logica di ottimizzazioni, installazione delle app e aggiornamenti non è stata cambiata**: il ridisegno aggiunge solo una nuova finestra, gli stili e il codice che la riempie.
+Resta compatibile con upstream. L'interfaccia originale è ancora la build predefinita; il ridisegno è opzionale. I file di upstream sono stati lasciati intatti per quanto possibile (la nuova build aggiunge i suoi pezzi in fase di compilazione), così integrare gli aggiornamenti di upstream resta semplice.
 
-## Cosa è migliorato
+## Come installare e avviare
 
-> Gli screenshot sono del programma vero, fatti su Windows 11 con la finestra a schermo intero, in italiano (la lingua del PC su cui sono stati fatti) salvo dove indicato.
+> **L'unico comando per questo fork** (WinUtil chiede di rilanciarsi come Amministratore):
+>
+> ```powershell
+> irm https://github.com/realfulvio/winutil/releases/latest/download/winutil.ps1 | iex
+> ```
 
-### Barra laterale e navigazione
-Un solo posto per spostarsi tra Programmi, Ottimizzazioni, Riparazioni, Aggiornamenti, App di Windows e Crea ISO, ognuno con una riga di descrizione, più una scheda di stato, Impostazioni, Informazioni e il pulsante della lingua. Sono le stesse schede di upstream (Riparazioni è la scheda Config di upstream).
-
-![La finestra ridisegnata: barra laterale con le sei sezioni a sinistra, schede delle ottimizzazioni al centro, pannello "Prima di applicare" a destra](docs/screenshots/tweaks-it.png)
-
-### Filtri e ricerca
-Quattro filtri con contatore (Consigliate, Privacy, Sistema, Avanzate) e un campo di ricerca che guarda tutte le ottimizzazioni per nome e descrizione, nella lingua scelta.
-
-![Ricerca di "onedrive": la lista mostra la scheda corrispondente qualunque sia il filtro attivo](docs/screenshots/tweaks-search-it.png)
-
-### Schede con etichette di sicurezza
-Ogni ottimizzazione è una scheda con casella, icona, nome e descrizione in parole semplici ed etichette: la categoria più *Consigliata*, *Sicura* o *Avanzato*. *Consigliata* significa che l'ottimizzazione è nel preset Standard di upstream; *Avanzato* significa che è nella categoria "CAUTION" di upstream (per esempio rimuovere Edge, OneDrive o i componenti IA di Windows) oppure che è una modifica rischiosa di per sé: servizi, rimozione dei Widget, disattivare BitLocker.
-
-![Il filtro Avanzate: ogni scheda ha l'etichetta della categoria e quella ambra "Avanzato", e il pannello a destra mostra l'avviso dell'ottimizzazione a fuoco](docs/screenshots/tweaks-advanced-it.png)
-
-### Pannello "Prima di applicare"
-Clicca una scheda per vedere, a destra: cosa cambia, i possibili effetti, se si può annullare e un avviso quando c'è. Se un'ottimizzazione si può annullare lo si legge dai suoi dati (uno script di annullamento, un valore di registro originale o un tipo di servizio originale), non è scritto a mano.
-
-![Il pannello "Prima di applicare" per "Servizi di Windows": cosa cambia, possibili effetti, annullamento, avviso ambra e impatto stimato](docs/screenshots/panel-before-apply-it.png)
-
-### Impatto stimato
-Per le ottimizzazioni selezionate, quanti servizi e quanti valori di registro toccano, rispetto a tutto ciò che toccano le schede. Una barra compare solo se la selezione ha quel tipo di dato. Non ci sono valori per memoria, spazio su disco o punteggio privacy perché il repository non ha dati per questi e nessuno è inventato.
-
-![Tre ottimizzazioni selezionate: servizi modificati 5 su 6 e valori di registro modificati 12 su 85, contati dai dati delle ottimizzazioni; il pulsante dice "Applica 3 modifiche"](docs/screenshots/tweaks-selected-it.png)
-
-### Avanzamento
-Mentre le ottimizzazioni vengono applicate, il pannello mostra il passo reale del motore e una percentuale, poi un pulsante "Nuova selezione" alla fine. Il nome del passo è quello riportato dal motore (usa ancora il nome interno dell'ottimizzazione).
-
-![Dopo aver applicato due ottimizzazioni: il pannello mostra il job finito al 100% con il pulsante "Nuova selezione" e la barra laterale dice "2 modifiche applicate". Il testo del passo arriva dal motore, in inglese](docs/screenshots/tweaks-applied-it.png)
-
-### Cambio lingua
-Italiano o inglese dalla barra laterale. Tutte le etichette, descrizioni, avvisi e passi del ridisegno arrivano da un unico dizionario, [`ui/redesign/strings.json`](ui/redesign/strings.json). Parte nella lingua di visualizzazione di Windows.
-
-![La stessa pagina in inglese, dopo aver premuto il pulsante della lingua nella barra laterale](docs/screenshots/tweaks-en.png)
-
-### Cosa non è stato ridisegnato
-Solo la scheda Ottimizzazioni ha il nuovo layout a schede. Programmi, Riparazioni, Aggiornamenti, App di Windows e Crea ISO mantengono il layout di upstream dentro la nuova finestra e barra laterale, con la nuova palette scura. Interruttori, pulsanti e l'elenco Multiplane Overlay si applicano subito, come in upstream, e compaiono sotto "Altre impostazioni"; l'elenco DNS si applica con il pulsante Applica.
-
-![La scheda Programmi mantiene il layout di upstream dentro la nuova finestra e barra laterale](docs/screenshots/programs-it.png)
-
-## Installazione e avvio
-
-Apri PowerShell ed esegui, come il comando di upstream (WinUtil chiede di rilanciarsi come Amministratore):
-
-```powershell
-irm https://github.com/realfulvio/winutil/releases/latest/download/winutil.ps1 | iex
-```
-
-Scarica l'ultima build dell'interfaccia ridisegnata di questo fork (pubblicata dal workflow [Release redesigned interface](.github/workflows/redesign-release.yaml)) e, quando si rilancia come Amministratore, riscarica la stessa build, non quella di upstream.
-
-Per compilarla da sé (Windows con PowerShell e Git):
+Scarica l'ultima build dell'interfaccia ridisegnata di questo fork (pubblicata dal workflow [Release redesigned interface](.github/workflows/redesign-release.yaml)) e, quando si rilancia come Amministratore, riscarica quella stessa build, non quella di upstream. Per compilarla da sé (Windows, PowerShell e Git):
 
 ```powershell
 git clone https://github.com/realfulvio/winutil.git
@@ -81,43 +34,139 @@ cd winutil
 .\Compile.ps1 -Interface Redesign -Run
 ```
 
-`Compile.ps1` costruisce `winutil.ps1` dai sorgenti (il file è generato e non viene committato). Se PowerShell rifiuta di eseguirlo, consenti gli script solo per questa finestra con `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` e riprova. Una build fatta così si rilancia dall'indirizzo di `-ReleaseUrl` (per impostazione predefinita l'ultima release del fork).
+`Compile.ps1` costruisce `winutil.ps1` dai sorgenti (il file è generato e non viene salvato nel repository). Se PowerShell si rifiuta di eseguirlo, consenti gli script solo per questa finestra con `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`.
 
-## Tornare all'interfaccia originale
+## Schermate
 
-Il ridisegno è opzionale. Usa il comando ufficiale, oppure compila senza l'opzione:
+> Sono immagini della finestra del programma vero (la build compilata, in esecuzione su una macchina virtuale Windows 11, disegnata a 1280 x 820), non bozzetti. Le icone che vedi sono quelle che il programma ha scaricato o disegna da sé. Italiano a sinistra, inglese a destra.
 
-```powershell
-.\Compile.ps1 -Run
+### Home e navigazione
+
+| Italiano | English |
+|---|---|
+| ![Home, italiano](docs/screenshots/home-it.png) | ![Home, inglese](docs/screenshots/home-en.png) |
+
+![I gruppi della barra laterale e dove portano le quattro scelte della Home](docs/screenshots/nav-groups-it.svg)
+
+### Programmi
+
+Scegli un kit o clicca i programmi uno per uno; la barra in basso conta la selezione e la installa. Il filtro "Installati" e l'etichetta su ogni scheda mostrano cosa c'è già sul PC (letto dal gestore pacchetti in uso).
+
+| Italiano | English |
+|---|---|
+| ![Programmi, italiano](docs/screenshots/programmi-it.png) | ![Programmi, inglese](docs/screenshots/programmi-en.png) |
+
+Il pulsante ⓘ di una scheda apre il dettaglio a destra: descrizione, categoria, gli ID WinGet e Chocolatey, licenza (quando il catalogo segna il programma come open source), sito web e il pulsante che lo aggiunge o lo toglie dalla selezione.
+
+| Italiano | English |
+|---|---|
+| ![Pannello di dettaglio, italiano](docs/screenshots/dettaglio-it.png) | ![Pannello di dettaglio, inglese](docs/screenshots/dettaglio-en.png) |
+
+Durante l'installazione la barra mostra il passo che il motore riporta e una percentuale (il testo del passo arriva dal motore, in inglese):
+
+| Italiano | English |
+|---|---|
+| ![Installazione in corso, italiano](docs/screenshots/installazione-it.png) | ![Installazione in corso, inglese](docs/screenshots/installazione-en.png) |
+
+Il menu "⋯" contiene ciò che prima era una colonna fissa: disinstalla la selezione, aggiorna tutti i programmi, seleziona gli installati e la scelta tra WinGet e Chocolatey.
+
+### Icone
+
+Ogni programma mostra la propria icona. In quest'ordine: l'icona che la **pagina web ufficiale** del programma dichiara (scaricata in background in `%LOCALAPPDATA%\WinUtil\icons`, senza mai bloccare la finestra, e mostrata da quella cache quando manca la rete); un **profilo di marchio** di [Simple Icons](https://simpleicons.org/) (CC0) su una tessera del colore del marchio; un **glifo generico della categoria**. Fonti e licenze sono in [docs/ICONS.md](docs/ICONS.md).
+
+### Ottimizzazioni
+
+La scheda Ottimizzazioni, con schede, filtri e pannello "Prima di applicare", ora dentro la barra laterale a gruppi.
+
+| Italiano | English |
+|---|---|
+| ![Ottimizzazioni, italiano](docs/screenshots/ottimizzazioni-it.png) | ![Ottimizzazioni, inglese](docs/screenshots/ottimizzazioni-en.png) |
+| ![Tre ottimizzazioni selezionate e il pannello con il loro impatto, italiano](docs/screenshots/ottimizzazioni-selezione-it.png) | ![Tre ottimizzazioni selezionate e il pannello con il loro impatto, inglese](docs/screenshots/ottimizzazioni-selezione-en.png) |
+| ![Ricerca "onedrive", italiano](docs/screenshots/ottimizzazioni-ricerca-it.png) | ![Ricerca "onedrive", inglese](docs/screenshots/ottimizzazioni-ricerca-en.png) |
+| ![Il filtro Avanzate con l'avviso dell'ottimizzazione a fuoco, italiano](docs/screenshots/ottimizzazioni-avanzate-it.png) | ![Il filtro Avanzate con l'avviso dell'ottimizzazione a fuoco, inglese](docs/screenshots/ottimizzazioni-avanzate-en.png) |
+
+*Consigliata* significa che l'ottimizzazione è nel preset Standard di upstream; *Avanzato* significa che è nella categoria "CAUTION" di upstream o che è una modifica rischiosa di per sé. Se si può annullare lo si legge dai dati dell'ottimizzazione stessa, non è scritto a mano. Interruttori, pulsanti e l'elenco Multiplane Overlay si applicano subito come in upstream e compaiono in "Altre impostazioni"; l'elenco DNS si applica con il pulsante Applica.
+
+## Kit personalizzati
+
+Un **kit** è un elenco di programmi con un nome. Tre sono inclusi in WinUtil (Ufficio, Sviluppo, Gaming); puoi crearne di tuoi e portarli da un PC all'altro.
+
+![Flusso dei kit: crea, esporta, importa su un altro PC](docs/screenshots/kit-flow-it.svg)
+
+| Italiano | English |
+|---|---|
+| ![Finestra Crea kit, italiano](docs/screenshots/kit-dialog-it.png) | ![Finestra Crea kit, inglese](docs/screenshots/kit-dialog-en.png) |
+| ![Un kit personalizzato tra gli altri, italiano](docs/screenshots/kit-custom-it.png) | ![Un kit personalizzato tra gli altri, inglese](docs/screenshots/kit-custom-en.png) |
+
+- **Aggiungi kit** mette i programmi del kit nella selezione; "✓ Aggiunto" li toglie di nuovo.
+- **Crea kit dalla selezione**: un nome (obbligatorio), una descrizione (facoltativa), uno di cinque colori. Viene salvato in `%APPDATA%\WinUtil\kits` e compare tra i kit con l'etichetta *Personalizzato*, più i pulsanti **Esporta** ed **Elimina**.
+- **Esporta** chiede dove salvare `nome.winutil-kit.json` (va bene anche una cartella di rete). **Importa kit** legge un file così, lo controlla e aggiunge il kit; i programmi che il catalogo non ha vengono saltati e il messaggio dice quanti.
+
+Il file contiene **ID dei pacchetti**, mai i nomi visualizzati, quindi significa la stessa cosa su ogni PC:
+
+```json
+{
+  "formato": "winutil-kit",
+  "versione": 1,
+  "nome": "Postazione Ufficio Tributi",
+  "descrizione": "App standard per il front-office",
+  "programmi": [
+    "7zip.7zip",
+    "VideoLAN.VLC",
+    "Mozilla.Firefox"
+  ]
+}
 ```
 
+L'ID è quello WinGet del programma, oppure quello Chocolatey quando non ne ha uno WinGet; un kit fatto su un PC con un catalogo più recente si importa comunque qui.
+
+### Installare un kit da riga di comando
+
+Per le postazioni, senza finestra. Il comando vale per la build ridisegnata e richiede `winutil.ps1` come file (scaricalo dalle [release](https://github.com/realfulvio/winutil/releases/latest) o compilalo):
+
 ```powershell
-irm https://christitus.com/win | iex
+# Mostra cosa contiene il kit e cosa verrebbe saltato. Non installa nulla.
+powershell -ExecutionPolicy Bypass -File .\winutil.ps1 -Kit "\\server\kit\ufficio.winutil-kit.json"
+
+# Lo installa in silenzio, un programma alla volta, poi riferisce
+powershell -ExecutionPolicy Bypass -File .\winutil.ps1 -Kit "\\server\kit\ufficio.winutil-kit.json" -Installa
 ```
 
-## Avvertenza
+Si rilancia come Amministratore se serve (richiesta UAC) e aspetta il risultato. Codice di uscita **0** = riuscito, **1** = kit non leggibile o installazione con problemi, **2** = `-Installa` senza `-Kit`. I messaggi sono nella lingua di Windows. Il gestore pacchetti è WinGet. Il registro è in `%LOCALAPPDATA%\winutil\logs`.
 
-**Le ottimizzazioni modificano il sistema**: il registro, i servizi, i componenti installati e, per alcune, il funzionamento di dischi e rete. Non tutte si possono annullare e alcune richiedono un riavvio. Crea un **punto di ripristino** prima di applicare qualsiasi cosa (la modifica *Punto di ripristino* lo fa) e leggi ogni descrizione. **L'uso è a tuo rischio**; il software è fornito così com'è, senza garanzia.
+## Cosa è cambiato
+
+- `ui/redesign/`: la nuova finestra, i suoi stili, il dizionario (`strings.json`), gli extra del catalogo programmi (`programs.json`), i profili dei marchi (`icons.json`) e il codice di esecuzione. Vedi [SPEC.md](SPEC.md) e la pagina di architettura della documentazione.
+- `Compile.ps1`: l'opzione `-Interface Redesign` (la build predefinita non cambia). La build ridisegnata riceve anche i parametri `-Kit` e `-Installa`, aggiunti in fase di compilazione.
+- Funzioni di upstream "avvolte": `Initialize-WinUtilTabContent`, `Find-TweaksByNameOrDescription`, `Invoke-WinUtilFontScaling`, `Find-AppsByNameOrDescription` e `Invoke-WPFTab` (la versione di upstream si chiama `<Nome>Upstream` e fa ancora il lavoro).
+- Installa, disinstalla e aggiorna sono i pulsanti e le funzioni di upstream, comandati dalla nuova finestra.
 
 ## Stato del progetto
 
-Cosa è stato controllato (su una macchina Windows 11):
+Verificato in questa versione, su una macchina virtuale Windows 11 Enterprise LTSC con Windows PowerShell 5.1, con la build ridisegnata compilata:
 
-- Due ottimizzazioni vere sono state applicate e annullate con l'interfaccia: Sensore memoria e App in background, entrambe valori di registro a livello utente (`HKCU`). Annulla le ha riportate ai valori originali e Applica le ha impostate di nuovo, con il registro letto come previsto ogni volta. Il pannello ha mostrato il job finito e la barra laterale ha contato le due modifiche applicate. La macchina è finita nello stato in cui era partita.
-- Il comando pubblicato (`irm … | iex`) avvia l'interfaccia ridisegnata, compreso il rilancio come Amministratore dalla release di questo fork. Tutte le schede si aprono; le card si selezionano e vanno a fuoco; filtri, ricerca, cambio lingua, ingrandimento e chiusura funzionano, e il log del programma non mostra avvisi né errori.
-- `Compile.ps1` compila entrambe le varianti; la build predefinita è identica, byte per byte, a quella di `main`.
-- Lo script generato passa il parser di PowerShell 7 e di Windows PowerShell 5.1 ed è solo ASCII.
-- Sui runner Windows di GitHub tutta la suite Pester passa (874 test, compresi quelli di questo fork) e il workflow di build compila e pubblica la release.
-- La finestra si carica con tutti i controlli di quella di upstream ancora presenti e la logica della scheda è stata eseguita su dati simulati: le 38 schede, selezione, filtri, ricerca, lingua, stato del pulsante Applica, valori di impatto, stati del pannello di avanzamento e scaling dei caratteri.
+- La finestra vera è stata pilotata attraverso i suoi controlli veri (63 controlli, tutti superati): Home e le sue quattro card, la barra laterale, il catalogo (236 schede), i filtri per categoria, la ricerca, la selezione, la barra azioni, i tre kit predefiniti, il pannello di dettaglio, creazione, salvataggio, esportazione, importazione ed eliminazione di un kit personalizzato, i file kit non validi o con programmi sconosciuti, il menu del gestore pacchetti e il cambio italiano/inglese. Nessun errore registrato.
+- **7-Zip e VLC sono stati davvero installati e poi disinstallati con WinGet** dalla finestra (24 controlli, tutti superati), compreso l'avanzamento, l'aggiornamento dei segni "Installato" e il catalogo disabilitato mentre un lavoro è in corso.
+- La modalità da riga di comando (15 controlli, tutti superati): una prova a vuoto, un kit non valido e uno mancante, `-Installa` senza kit e un'installazione vera di un kit con un programma sconosciuto.
+- Icone: 202 schede su 236 mostrano l'icona del programma scaricata dal suo sito ufficiale, 15 un profilo di marchio e 19 il glifo della categoria; con la rete irraggiungibile le stesse 202 si vedono dalla cache, e una rete assente non ha segnato nessun programma come privo di icona.
+- `Compile.ps1` compila entrambe le varianti e lo script ridisegnato si legge senza errori; i nuovi test Pester (kit, icone, adattatore) passano. L'intera suite su Windows PowerShell 5.1 dà 928 superati e 11 falliti; gli 11 sono i test WinOneShot di upstream, che usano `ConvertFrom-Json -NoEnumerate` (solo PowerShell 7) e non c'entrano con questa modifica.
 
-`ui/redesign/tools/Test-RedesignHeadless.ps1` ripete i controlli in memoria su qualsiasi macchina Windows, senza avviare WinUtil e senza cambiare nulla.
+Non verificato: il percorso Chocolatey da capo a fondo (solo il passaggio a esso), PowerShell 7 su questa macchina (la CI del repository esegue lì la suite), altre versioni di Windows, schermi ad alta densità e altre dimensioni di finestra, le vere finestre Apri/Salva di Esporta e Importa (le stesse funzioni sono state eseguite con percorsi espliciti), la finestra di conferma di upstream per Disinstalla (risposta dal test) e Applica/Annulla della scheda Ottimizzazioni in questa versione (erano stati provati su un PC vero nella versione precedente, su due ottimizzazioni di registro a livello utente). Le ottimizzazioni che eseguono script, fermano servizi o scrivono in `HKLM`, e il punto di ripristino, non sono mai state provate con l'interfaccia. Le schermate sono immagini della finestra fatte dal programma in esecuzione, non catture di un desktop. I dettagli sono in [`NOTE-LAVORO.md`](NOTE-LAVORO.md).
 
-Cosa non è stato controllato: le ottimizzazioni che eseguono script, fermano servizi, scrivono in `HKLM` o rimuovono componenti, la modifica Punto di ripristino, il pannello di avanzamento a metà di un job lungo (i job provati sono finiti troppo in fretta per catturarlo), una macchina che non sia Windows 11 o non sia in italiano o inglese, e la build del sito della documentazione. Script Analyzer gira nella CI del repository e segnala nei file del ridisegno dei punti che sono convenzioni accettate di questo repository (nomi plurali, ShouldProcess sugli helper UI). Dettagli e decisioni sono in [`NOTE-LAVORO.md`](NOTE-LAVORO.md).
+## Tornare all'interfaccia originale
+
+> **Il comando di upstream, non di questo fork.** Avvia WinUtil ufficiale, non modificato:
+>
+> ```powershell
+> irm https://christitus.com/win | iex
+> ```
+
+Oppure compila questo repository senza l'opzione: `.\Compile.ps1 -Run`.
+
+## Avvertenza
+
+**Ottimizzazioni e installazioni modificano il sistema**: registro, servizi, componenti e programmi installati. Non tutte le modifiche si possono annullare e alcune richiedono un riavvio. Crea un **punto di ripristino** prima di applicare qualsiasi cosa (lo fa l'ottimizzazione *Punto di ripristino*) e leggi prima ogni descrizione. **Lo usi a tuo rischio**; il software è fornito così com'è, senza garanzie.
 
 ## Crediti e licenza
 
-Tutto il motore, le ottimizzazioni, l'elenco delle app e l'interfaccia originale sono opera di **[Chris Titus Tech](https://github.com/ChrisTitusTech)** e dei collaboratori di [ChrisTitusTech/winutil](https://github.com/ChrisTitusTech/winutil); vedi i suoi [collaboratori](https://github.com/ChrisTitusTech/winutil/graphs/contributors) e la [documentazione ufficiale](https://winutil.christitus.com/). Questo fork mantiene la licenza di upstream: [MIT](LICENSE), copyright (c) 2022 CT Tech Group LLC. Il ridisegno aggiunge file sotto `ui/redesign/` e l'opzione `-Interface` in `Compile.ps1`.
-
-## Il progetto upstream
-
-Il [README originale](README.md#about-the-upstream-project) (in inglese) è conservato in fondo al [README in inglese](README.md): i suoi comandi avviano WinUtil ufficiale, non modificato. Sponsor e collaboratori di upstream sono elencati lì.
+Il motore, le ottimizzazioni, l'elenco delle app e l'interfaccia originale sono opera di **[Chris Titus Tech](https://github.com/ChrisTitusTech)** e dei collaboratori di [ChrisTitusTech/winutil](https://github.com/ChrisTitusTech/winutil); vedi i suoi [collaboratori](https://github.com/ChrisTitusTech/winutil/graphs/contributors) e la [documentazione ufficiale](https://winutil.christitus.com/). Questo fork mantiene la licenza di upstream: [MIT](LICENSE), copyright (c) 2022 CT Tech Group LLC. Nomi e loghi dei marchi appartengono ai rispettivi proprietari; vedi [docs/ICONS.md](docs/ICONS.md).

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="330" viewBox="0 0 960 330" role="img" aria-labelledby="t d">
+  <title id="t">Kit flow: create, export, import on another PC</title>
+  <desc id="d">On the first PC you select programs and choose Create kit from selection, then Export: you get a name.winutil-kit.json file holding package IDs, even on a network folder. On the other PC you choose Import kit, then Add kit and Install; or use the command line with -Kit and -Installa.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0E1A33"/><stop offset="1" stop-color="#090E1A"/></linearGradient>
+    <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#4CC2FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  </defs>
+  <rect width="960" height="330" rx="18" fill="url(#bg)"/>
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif">
+    <rect x="24" y="30" width="270" height="216" rx="14" fill="#0F182B" stroke="#1E2A44"/>
+    <circle cx="52" cy="58" r="14" fill="#4CC2FF"/><text x="52" y="63.5" fill="#04121F" font-size="15" font-weight="800" text-anchor="middle">1</text>
+    <text x="76" y="63" fill="#EAF0FA" font-size="16" font-weight="800">Create (PC 1)</text>
+    <text x="44" y="96" fill="#CFE0F5" font-size="13">Pick the programs</text>
+    <text x="44" y="116" fill="#CFE0F5" font-size="13">or start from a ready-made kit,</text>
+    <text x="44" y="136" fill="#CFE0F5" font-size="13">then press</text>
+    <rect x="44" y="148" width="226" height="34" rx="10" fill="#14203A" stroke="#2A3A5C"/>
+    <text x="157" y="170" fill="#EAF0FA" font-size="13" font-weight="700" text-anchor="middle">Create kit from selection</text>
+    <text x="44" y="208" fill="#9FB0C9" font-size="12">Name, description and color.</text>
+    <text x="44" y="226" fill="#9FB0C9" font-size="12">Saved in %APPDATA%\WinUtil\kits</text>
+
+    <path d="M 300 138 H 336" stroke="#4CC2FF" stroke-width="2.5" fill="none" stroke-linecap="round" marker-end="url(#ah)"/>
+    <text x="318" y="126" fill="#9FB0C9" font-size="11" text-anchor="middle">Export</text>
+
+    <rect x="345" y="30" width="270" height="216" rx="14" fill="#0F182B" stroke="#1E2A44"/>
+    <circle cx="373" cy="58" r="14" fill="#4CC2FF"/><text x="373" y="63.5" fill="#04121F" font-size="15" font-weight="800" text-anchor="middle">2</text>
+    <text x="397" y="63" fill="#EAF0FA" font-size="16" font-weight="800">The kit file</text>
+    <rect x="378" y="82" width="204" height="150" rx="10" fill="#0B1222" stroke="#2A3A5C"/>
+    <text x="390" y="104" fill="#9FB0C9" font-size="11" font-family="Consolas, Menlo, monospace">desk.winutil-kit.json</text>
+    <text x="390" y="128" fill="#7FD3FF" font-size="11.5" font-family="Consolas, Menlo, monospace">{ "formato": "winutil-kit",</text>
+    <text x="390" y="145" fill="#7FD3FF" font-size="11.5" font-family="Consolas, Menlo, monospace">  "versione": 1,</text>
+    <text x="390" y="162" fill="#7FD3FF" font-size="11.5" font-family="Consolas, Menlo, monospace">  "nome": "Front desk",</text>
+    <text x="390" y="179" fill="#7FD3FF" font-size="11.5" font-family="Consolas, Menlo, monospace">  "programmi": [</text>
+    <text x="390" y="196" fill="#EAF0FA" font-size="11.5" font-family="Consolas, Menlo, monospace">    "7zip.7zip",</text>
+    <text x="390" y="213" fill="#EAF0FA" font-size="11.5" font-family="Consolas, Menlo, monospace">    "VideoLAN.VLC" ] }</text>
+
+    <path d="M 621 138 H 657" stroke="#4CC2FF" stroke-width="2.5" fill="none" stroke-linecap="round" marker-end="url(#ah)"/>
+    <text x="639" y="126" fill="#9FB0C9" font-size="11" text-anchor="middle">network folder</text>
+    <text x="639" y="152" fill="#9FB0C9" font-size="11" text-anchor="middle">or USB stick</text>
+
+    <rect x="666" y="30" width="270" height="216" rx="14" fill="#0F182B" stroke="#1E2A44"/>
+    <circle cx="694" cy="58" r="14" fill="#4CC2FF"/><text x="694" y="63.5" fill="#04121F" font-size="15" font-weight="800" text-anchor="middle">3</text>
+    <text x="718" y="63" fill="#EAF0FA" font-size="16" font-weight="800">Import (PC 2)</text>
+    <rect x="686" y="82" width="230" height="30" rx="9" fill="#14203A" stroke="#2A3A5C"/>
+    <text x="801" y="102" fill="#EAF0FA" font-size="13" font-weight="700" text-anchor="middle">Import kit</text>
+    <rect x="686" y="120" width="230" height="30" rx="9" fill="#FFFFFF"/>
+    <text x="801" y="140" fill="#08224A" font-size="13" font-weight="700" text-anchor="middle">Add kit</text>
+    <rect x="686" y="158" width="230" height="30" rx="9" fill="#3AA6EE"/>
+    <text x="801" y="178" fill="#04121F" font-size="13" font-weight="800" text-anchor="middle">Install 2</text>
+    <text x="686" y="212" fill="#9FB0C9" font-size="12">Programs the catalog does not have</text>
+    <text x="686" y="228" fill="#9FB0C9" font-size="12">are skipped, with a notice.</text>
+
+    <rect x="24" y="266" width="912" height="42" rx="10" fill="#0B1222" stroke="#2A3A5C"/>
+    <text x="40" y="292" fill="#9FB0C9" font-size="12.5">Without a window:</text>
+    <text x="170" y="292" fill="#7FD3FF" font-size="13" font-family="Consolas, Menlo, monospace">winutil.ps1 -Kit "\\server\kits\desk.winutil-kit.json" -Installa</text>
+  </g>
+</svg>

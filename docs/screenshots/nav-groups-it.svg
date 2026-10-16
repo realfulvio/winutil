@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="420" viewBox="0 0 960 420" role="img" aria-labelledby="t d">
+  <title id="t">Navigazione a gruppi di WinUtil</title>
+  <desc id="d">La barra laterale ha Home e quattro gruppi: Installa (Programmi), Ottimizza (Ottimizzazioni, Pulizia app Windows), Manutenzione (Aggiornamenti, Riparazioni), Avanzate (Crea ISO). Home porta a quattro scelte numerate.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0E1A33"/><stop offset="1" stop-color="#090E1A"/></linearGradient>
+    <linearGradient id="b1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1D6FE0"/><stop offset="1" stop-color="#0C3A8A"/></linearGradient>
+    <linearGradient id="b2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7A4BE0"/><stop offset="1" stop-color="#3A1F8F"/></linearGradient>
+    <linearGradient id="b3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0C7A58"/><stop offset="1" stop-color="#08493A"/></linearGradient>
+    <linearGradient id="b4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B35C0B"/><stop offset="1" stop-color="#6B3205"/></linearGradient>
+  </defs>
+  <rect width="960" height="420" rx="18" fill="url(#bg)"/>
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif">
+    <!-- sidebar -->
+    <rect x="24" y="24" width="300" height="372" rx="14" fill="#090E1A" stroke="#1E2A44"/>
+    <rect x="36" y="36" width="276" height="34" rx="10" fill="#16315A" stroke="#2A5A96"/>
+    <text x="52" y="59" fill="#EAF0FA" font-size="15" font-weight="700">Home</text>
+
+    <text x="44" y="92" fill="#9FB0C9" font-size="11" font-weight="700">INSTALLA</text>
+    <text x="52" y="116" fill="#EAF0FA" font-size="15" font-weight="700">Programmi</text>
+
+    <text x="44" y="148" fill="#9FB0C9" font-size="11" font-weight="700">OTTIMIZZA</text>
+    <text x="52" y="172" fill="#EAF0FA" font-size="15" font-weight="700">Ottimizzazioni</text>
+    <text x="52" y="198" fill="#EAF0FA" font-size="15" font-weight="700">Pulizia app Windows</text>
+
+    <text x="44" y="230" fill="#9FB0C9" font-size="11" font-weight="700">MANUTENZIONE</text>
+    <text x="52" y="254" fill="#EAF0FA" font-size="15" font-weight="700">Aggiornamenti</text>
+    <text x="52" y="280" fill="#EAF0FA" font-size="15" font-weight="700">Riparazioni</text>
+
+    <text x="44" y="312" fill="#9FB0C9" font-size="11" font-weight="700">AVANZATE</text>
+    <text x="52" y="336" fill="#EAF0FA" font-size="15" font-weight="700">Crea ISO</text>
+
+    <!-- arrow -->
+    <path d="M 340 60 H 392" stroke="#4CC2FF" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M 384 52 L 394 60 L 384 68" stroke="#4CC2FF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="344" y="46" fill="#9FB0C9" font-size="12">Home</text>
+
+    <!-- home cards -->
+    <text x="410" y="40" fill="#EAF0FA" font-size="20" font-weight="800">Cosa vuoi fare?</text>
+    <g>
+      <rect x="410" y="56" width="262" height="150" rx="14" fill="#0F182B" stroke="#1E2A44"/>
+      <rect x="426" y="72" width="34" height="34" rx="10" fill="url(#b1)"/><text x="443" y="95" fill="#fff" font-size="16" font-weight="800" text-anchor="middle">1</text>
+      <text x="426" y="136" fill="#EAF0FA" font-size="16" font-weight="800">Installa i programmi</text>
+      <text x="426" y="158" fill="#9FB0C9" font-size="12.5">&#8594; Programmi</text>
+    </g>
+    <g>
+      <rect x="686" y="56" width="262" height="150" rx="14" fill="#0F182B" stroke="#1E2A44"/>
+      <rect x="702" y="72" width="34" height="34" rx="10" fill="url(#b2)"/><text x="719" y="95" fill="#fff" font-size="16" font-weight="800" text-anchor="middle">2</text>
+      <text x="702" y="136" fill="#EAF0FA" font-size="16" font-weight="800">Ottimizza Windows</text>
+      <text x="702" y="158" fill="#9FB0C9" font-size="12.5">&#8594; Ottimizzazioni</text>
+    </g>
+    <g>
+      <rect x="410" y="222" width="262" height="150" rx="14" fill="#0F182B" stroke="#1E2A44"/>
+      <rect x="426" y="238" width="34" height="34" rx="10" fill="url(#b3)"/><text x="443" y="261" fill="#fff" font-size="16" font-weight="800" text-anchor="middle">3</text>
+      <text x="426" y="302" fill="#EAF0FA" font-size="16" font-weight="800">Tieni tutto aggiornato</text>
+      <text x="426" y="324" fill="#9FB0C9" font-size="12.5">&#8594; Aggiornamenti</text>
+    </g>
+    <g>
+      <rect x="686" y="222" width="262" height="150" rx="14" fill="#0F182B" stroke="#1E2A44"/>
+      <rect x="702" y="238" width="34" height="34" rx="10" fill="url(#b4)"/><text x="719" y="261" fill="#fff" font-size="16" font-weight="800" text-anchor="middle">4</text>
+      <text x="702" y="302" fill="#EAF0FA" font-size="16" font-weight="800">Ripara un problema</text>
+      <text x="702" y="324" fill="#9FB0C9" font-size="12.5">&#8594; Riparazioni</text>
+    </g>
+  </g>
+</svg>

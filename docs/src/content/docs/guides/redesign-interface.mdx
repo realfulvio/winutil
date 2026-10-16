@@ -10,7 +10,7 @@ import { Aside } from '@astrojs/starlight/components';
 *English first. [Vai alla versione italiana](#italiano).*
 
 <Aside type="caution" title="Unofficial and not fully tested">
-This interface exists in a personal fork of WinUtil, not in the official project. It runs as the real program (tabs, cards, filters, search and language were used on Windows 11), and two real tweaks were applied and undone with it, but scripts, services, HKLM and the restore point were not tried. Tweaks change your system. Create a restore point first. You use it at your own risk.
+This interface exists in a personal fork of WinUtil, not in the official project. It runs as the real program: in this release the window was driven on a Windows 11 virtual machine, including a real install and uninstall of two programs, and in the earlier release two real tweaks were applied and undone on a PC. Scripts, services, HKLM, the restore point and the Chocolatey path from end to end were not tried. Tweaks change your system. Create a restore point first. You use it at your own risk.
 </Aside>
 
 ## What it is
@@ -33,6 +33,15 @@ To build it yourself: `git clone https://github.com/realfulvio/winutil.git`, the
 - Click a card to see what changes, the possible effects, whether it can be undone and any warning. Whether it can be undone is read from the tweak's own undo data.
 - The impact counts services and registry values of the selected tweaks. Memory, disk space and a privacy score are not shown because the repository has no data for them.
 
+## Programs and kits
+
+The Programs tab has a search box, **kits**, category chips with counters, one card per program (icon, name, a short line, category or "Installed", a checkbox and a ⓘ button for the details on the right) and a floating bar with the selection, Install and the progress. The "⋯" menu holds Uninstall, Upgrade all, "Select installed programs" and the choice between WinGet and Chocolatey. Install, uninstall and upgrade are upstream's own code.
+
+- **Kits**: Office, Development and Gaming come with WinUtil. "Create kit from selection" saves your own in `%APPDATA%\WinUtil\kits`; **Export** writes a `name.winutil-kit.json` file (a network folder works) and **Import kit** reads one. The file holds package IDs (WinGet, or Chocolatey when there is no WinGet one), not names; programs the catalog does not have are skipped and counted.
+- **Command line** (redesigned build, `winutil.ps1` as a file): `-Kit "path\kit.winutil-kit.json"` shows what the kit holds; add `-Installa` to install it with no window. Exit code 0 is success, 1 a bad kit or an installation with problems, 2 `-Installa` without `-Kit`.
+- **Icons**: the program's own icon from its official site (cached in `%LOCALAPPDATA%\WinUtil\icons`, shown offline from the cache), else a brand outline from Simple Icons (CC0), else a glyph of the category. See `docs/ICONS.md` in the repository.
+- **Home** is the first page: four numbered choices that open Programs, Tweaks, Updates and Repair. The sidebar is grouped: Install, Optimize, Maintenance, Advanced.
+
 ## Other settings
 
 Switches, buttons and the Multiplane Overlay list apply immediately, as upstream does. The DNS list is applied by the Apply button.
@@ -42,7 +51,7 @@ Switches, buttons and the Multiplane Overlay list apply immediately, as upstream
 *[Back to English](#what-it-is).*
 
 <Aside type="caution" title="Non ufficiale e non provata fino in fondo">
-Questa interfaccia esiste in un fork personale di WinUtil, non nel progetto ufficiale. Gira come programma vero (schede, card, filtri, ricerca e lingua sono stati usati su Windows 11), e con essa sono state applicate e annullate due ottimizzazioni vere, ma script, servizi, HKLM e punto di ripristino non sono stati provati. Le ottimizzazioni modificano il sistema. Crea prima un punto di ripristino. L'uso è a tuo rischio.
+Questa interfaccia esiste in un fork personale di WinUtil, non nel progetto ufficiale. Gira come programma vero: in questa versione la finestra è stata pilotata su una macchina virtuale Windows 11, con un'installazione e disinstallazione vera di due programmi, e nella versione precedente due ottimizzazioni vere sono state applicate e annullate su un PC. Script, servizi, HKLM, punto di ripristino e il percorso Chocolatey da capo a fondo non sono stati provati. Le ottimizzazioni modificano il sistema. Crea prima un punto di ripristino. L'uso è a tuo rischio.
 </Aside>
 
 ### Cos'è
@@ -64,6 +73,15 @@ Per compilarla da sé: `git clone https://github.com/realfulvio/winutil.git`, po
 - **Sicura** significa che non è nessuna delle due.
 - Clicca una scheda per vedere cosa cambia, i possibili effetti, se si può annullare e l'eventuale avviso. Se si può annullare lo si legge dai dati di annullamento dell'ottimizzazione stessa.
 - L'impatto conta i servizi e i valori di registro delle ottimizzazioni selezionate. Memoria, spazio su disco e punteggio privacy non sono mostrati perché il repository non ha dati per questi.
+
+### Programmi e kit
+
+La scheda Programmi ha un campo di ricerca, i **kit**, filtri per categoria con contatori, una scheda per programma (icona, nome, una riga breve, categoria o "Installato", una casella e un pulsante ⓘ per il dettaglio a destra) e una barra flottante con la selezione, Installa e l'avanzamento. Il menu "⋯" contiene Disinstalla, Aggiorna tutto, "Seleziona i programmi installati" e la scelta tra WinGet e Chocolatey. Installa, disinstalla e aggiorna sono il codice di upstream.
+
+- **Kit**: Ufficio, Sviluppo e Gaming sono inclusi. "Crea kit dalla selezione" salva i tuoi in `%APPDATA%\WinUtil\kits`; **Esporta** scrive un file `nome.winutil-kit.json` (va bene una cartella di rete) e **Importa kit** ne legge uno. Il file contiene ID dei pacchetti (WinGet, o Chocolatey se non c'è quello WinGet), non nomi; i programmi che il catalogo non ha vengono saltati e contati.
+- **Riga di comando** (build ridisegnata, `winutil.ps1` come file): `-Kit "percorso\kit.winutil-kit.json"` mostra cosa contiene il kit; con `-Installa` lo installa senza finestra. Codice di uscita 0 = riuscito, 1 = kit non valido o installazione con problemi, 2 = `-Installa` senza `-Kit`.
+- **Icone**: l'icona del programma dal suo sito ufficiale (in cache in `%LOCALAPPDATA%\WinUtil\icons`, mostrata offline dalla cache), altrimenti un profilo di marchio di Simple Icons (CC0), altrimenti un glifo della categoria. Vedi `docs/ICONS.md` nel repository.
+- **Home** è la prima pagina: quattro scelte numerate che aprono Programmi, Ottimizzazioni, Aggiornamenti e Riparazioni. La barra laterale è a gruppi: Installa, Ottimizza, Manutenzione, Avanzate.
 
 ### Altre impostazioni
 

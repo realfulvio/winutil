@@ -1,3 +1,40 @@
+# NOTE-LAVORO – Programmi, Home, kit e icone (2026-10-16)
+
+Seconda sessione autonoma: scheda Programmi ridisegnata, sidebar a gruppi, Home, kit personalizzati, icone vere,
+modalita' `-Kit ... -Installa`. Il resto di questo file e' il diario della prima sessione (Ottimizzazioni).
+
+## Cosa e' stato fatto
+- Sidebar a gruppi (Home / Installa / Ottimizza / Manutenzione / Avanzate), scheda Home con 4 card, tab `WPFTab7`.
+- Scheda Programmi: kit, chip categoria con contatori, 236 card, pannello dettaglio, barra azioni flottante, menu "..."
+  (disinstalla, aggiorna tutto, seleziona installati, WinGet/Chocolatey). Install/uninstall/upgrade sono i pulsanti di
+  upstream (costruiti nascosti da `Initialize-WPFUI`), comandati con `Invoke-WPFButton`.
+- Kit: predefiniti (Ufficio, Sviluppo, Gaming), creazione/esportazione/importazione/eliminazione, formato con ID dei
+  pacchetti, cartella `%APPDATA%\WinUtil\kits`; modalita' CLI aggiunta solo alla build Redesign (`ConvertTo-WinUtilRedesignKitMode`).
+- Icone: cache `%LOCALAPPDATA%\WinUtil\icons`, download in background dal sito ufficiale, riserva Simple Icons (CC0), poi glifo di categoria.
+- Test: `pester/redesign-kits.Tests.ps1` (45), `pester/redesign-icons.Tests.ps1` (14), `pester/redesign-interface.Tests.ps1` (esteso).
+
+## Decisioni prese dove il prompt non diceva
+- Si parte dalla Home (tramite wrapper di `Invoke-WPFTab`, solo per la chiamata di avvio con `-Yield`).
+- La descrizione breve italiana sta in `ui/redesign/programs.json`, non in `config/applications.json` (file di upstream); in inglese si usa la prima frase della descrizione di upstream.
+- WinGet non espone `IconUrl` da riga di comando: non usato; si parte dal sito ufficiale (per i progetti GitHub, l'avatar del proprietario).
+- "Fatto" sulla barra azioni, dopo un lavoro riuscito, svuota la selezione (come nel mockup).
+- Il kit esportato contiene solo i cinque campi del formato; il colore resta nel file salvato in `%APPDATA%`.
+- La finestra di conferma di "Disinstalla" e' quella di upstream (in inglese): non toccata.
+
+## Come e' stato provato (VM Windows 11 LTSC, solo li')
+- Nessuna prova su questo PC. Sulla VM la sessione SSH non ha un desktop visibile e il login automatico non e' stato permesso, quindi la
+  build compilata e' stata avviata da un driver (programma vero, thread dell'interfaccia vero, controlli premuti come con il mouse) e le
+  immagini sono `RenderTargetBitmap` del contenuto della finestra, non catture di desktop. Il driver non e' nel repository.
+- La VM e' condivisa con un altro progetto (HCOK-Update-Manager). Una volta, per errore, sono stati chiusi tutti i processi PowerShell
+  della VM; poi solo i propri. La VM NON e' stata riportata allo snapshot `base-clean` per non cancellare il lavoro dell'altro progetto;
+  WinGet e' stato installato da WinUtil durante la prova.
+
+## Non fatto / limiti
+- PowerShell 7 non provato qui (solo la CI). Chocolatey solo come selezione, non installazione completa. Finestre Apri/Salva non cliccate.
+- Applica/Annulla delle ottimizzazioni non riprovati in questa sessione.
+
+---
+
 # NOTE-LAVORO – Redesign WinUtil (design D)
 
 Branch: [`ui-redesign`](https://github.com/realfulvio/winutil/tree/ui-redesign) (da `main`, fork `realfulvio/winutil`).

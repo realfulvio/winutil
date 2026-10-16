@@ -2,78 +2,31 @@
 
 **English** | [Italiano](README.it.md)
 
-This is a personal fork of [ChrisTitusTech/winutil](https://github.com/ChrisTitusTech/winutil) with an optional, redesigned interface. It is **not** the official project and it is not affiliated with it. The tweaks, installs and updates still run on upstream's engine: the logic was not changed.
+![WinUtil redesigned: Programs, kits and tweaks in a grouped sidebar](docs/public/social-preview.png)
 
-> **Status:** the interface runs as the real program (started with the command below on Windows 11: every tab opened, cards selected, filters, search and language used) and was used to **apply and undo two real tweaks**, with the registry checked before and after. That is a small sample: tweaks that run scripts, change services or write to `HKLM`, and a restore point, were not tried with it. See [Project status](#project-status) before you use it.
+This is a personal fork of [ChrisTitusTech/winutil](https://github.com/ChrisTitusTech/winutil) with an optional, redesigned interface. It is **not** the official project and is not affiliated with it. Installs, tweaks and updates still run on upstream's engine: that logic was not changed.
 
-## What is this fork, and why does it exist
+## What changes, and why the fork exists
 
-WinUtil is powerful, but its default window is a long list of terse checkboxes. This fork adds a second interface, built to be easier to read and safer to use for people who are new to this kind of tool:
+Upstream's window is a long list of terse checkboxes and a column of English buttons. This fork adds a second interface that is easier to read and safer for people who are new to this kind of tool:
 
-- A modern dark interface with a sidebar, search, filters and cards.
-- Every tweak explained in plain words: what it changes, what could go wrong, and whether it can be undone.
-- A preview before you apply: what each change touches, counted from the tweak's own data.
-- Visible progress while changes are applied.
-- Italian and English, switchable from the sidebar.
-- In the new window and the Tweaks tab: text that follows WinUtil's font scaling (Ctrl +/-), controls of at least 44 px, visible keyboard focus and text contrast of at least 4.5:1. The tabs that keep upstream's layout keep upstream's sizes.
+- **A sidebar in groups**: Home, *Install* (Programs), *Optimize* (Tweaks, Windows app cleanup), *Maintenance* (Updates, Repair), *Advanced* (Create ISO), and a **Home** page, "What do you want to do?", with four numbered choices.
+- **A redesigned Programs tab**: search, ready-made **kits**, category chips with counters, one card per program with its real icon, a details panel, and a floating action bar with the selection, Install and the progress.
+- **Custom kits**: save a selection as a kit, export it to a file (a network folder works), import it on another PC, or install it with no window at all: `-Kit "kit.winutil-kit.json" -Installa`.
+- **Tweaks explained in plain words** with a "Before you apply" panel, from the earlier release of this fork.
+- **Italian and English**, switchable from the sidebar; text that follows WinUtil's font scaling (Ctrl +/-), controls of at least 44 px and visible keyboard focus in the new window.
 
-It is a fork, compatible with upstream. The original interface is still there (it is the default build), and the redesign is opt-in. Upstream files were left alone as far as possible, so merging upstream updates stays simple. **The logic of the tweaks, the app installs and the updates was not changed**; the redesign only adds a new window, styles and the code that fills it.
-
-## What is improved
-
-> The screenshots are of the real program, taken on Windows 11 with the window maximized. They are in Italian, the language of the PC they were taken on, except where noted.
-
-### Sidebar and navigation
-One place to move between Programs, Tweaks, Repair, Updates, Windows apps and Create ISO, each with a one-line description, plus a status card, Settings, About and the language button. These are the same tabs as upstream (Repair is upstream's Config tab).
-
-![The redesigned window: sidebar with the six sections on the left, tweak cards in the middle, the "Before you apply" panel on the right](docs/screenshots/tweaks-it.png)
-
-### Filters and search
-Four filter chips with counters (Recommended, Privacy, System, Advanced) and a search box that looks at every tweak by name and description, in the language you picked.
-
-![Searching "onedrive": the list shows the matching card whatever the active filter chip](docs/screenshots/tweaks-search-it.png)
-
-### Cards with safety tags
-Each tweak is a card with a checkbox, an icon, a plain-language name and description, and tags: its category plus *Recommended*, *Safe* or *Advanced*. *Recommended* means the tweak is in upstream's Standard preset; *Advanced* means it is in upstream's "CAUTION" category (for example removing Edge, OneDrive or the Windows AI components) or it is a risky change of its own: services, Widgets removal, turning BitLocker off.
-
-![The Advanced filter: each card has a category tag and an amber "Advanced" tag, and the panel on the right shows the warning for the tweak in focus](docs/screenshots/tweaks-advanced-it.png)
-
-### "Before you apply" panel
-Click a card to see, on the right: what changes, possible effects, whether it can be undone, and a warning when there is one. Whether a tweak can be undone is read from its own data (an undo script, an original registry value or an original service type), not typed by hand.
-
-![The "Before you apply" panel for "Windows services": what changes, possible effects, undo, an amber warning and the estimated impact](docs/screenshots/panel-before-apply-it.png)
-
-### Estimated impact
-For the selected tweaks, how many services and registry values they touch, against everything the cards touch. A bar is shown only when the selection has that kind of data. There are no figures for memory, disk space or a privacy score because the repository has no data for them, and none are invented.
-
-![Three tweaks selected: services changed 5 of 6 and registry values changed 12 of 85, counted from the tweaks' own data; the Apply button says "Applica 3 modifiche"](docs/screenshots/tweaks-selected-it.png)
-
-### Progress
-While tweaks are applied, the panel shows the real step the engine is on and a percentage, then a "New selection" button when it ends. The step name is the one the engine reports (it still uses the tweak's internal name).
-
-![After applying two tweaks: the panel shows the finished job at 100% with a "New selection" button, and the sidebar says "2 modifiche applicate" (2 changes applied). The step text comes from the engine, in English](docs/screenshots/tweaks-applied-it.png)
-
-### Language switch
-Italian or English from the sidebar. All labels, descriptions, warnings and steps of the redesign come from one dictionary, [`ui/redesign/strings.json`](ui/redesign/strings.json). It starts in your Windows display language.
-
-![The same page in English, after pressing the language button in the sidebar](docs/screenshots/tweaks-en.png)
-
-### What was not redesigned
-Only the Tweaks tab has the new card layout. Programs, Repair, Updates, Windows apps and Create ISO keep their upstream layout inside the new window and sidebar, with the new dark palette. Switches, buttons and the Multiplane Overlay list apply immediately as upstream does and appear under "Other settings"; the DNS list is applied with the Apply button.
-
-![The Programs tab keeps upstream's layout inside the new window and sidebar](docs/screenshots/programs-it.png)
+It stays compatible with upstream. The original interface is still the default build; the redesign is opt-in. Upstream's files were left alone as far as possible (the new build adds its pieces at compile time), so merging upstream updates stays simple.
 
 ## Install and run
 
-Open PowerShell and run, like upstream's one-liner (WinUtil asks to relaunch itself as Administrator):
+> **The one command for this fork** (WinUtil asks to relaunch itself as Administrator):
+>
+> ```powershell
+> irm https://github.com/realfulvio/winutil/releases/latest/download/winutil.ps1 | iex
+> ```
 
-```powershell
-irm https://github.com/realfulvio/winutil/releases/latest/download/winutil.ps1 | iex
-```
-
-This downloads the latest build of this fork's redesigned interface (published by the [Release redesigned interface](.github/workflows/redesign-release.yaml) workflow) and, when it relaunches as Administrator, downloads that same build again, not upstream's.
-
-To build it yourself instead (Windows with PowerShell and Git):
+It downloads the latest build of this fork's redesigned interface (published by the [Release redesigned interface](.github/workflows/redesign-release.yaml) workflow) and, when it relaunches as Administrator, downloads that same build again, not upstream's. To build it yourself (Windows, PowerShell and Git):
 
 ```powershell
 git clone https://github.com/realfulvio/winutil.git
@@ -81,42 +34,142 @@ cd winutil
 .\Compile.ps1 -Interface Redesign -Run
 ```
 
-`Compile.ps1` builds `winutil.ps1` from the sources (the file is generated and is not committed). If PowerShell refuses to run it, allow scripts for this window only with `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`, then run it again. A build made this way relaunches from the address in `-ReleaseUrl` (the fork's latest release by default).
+`Compile.ps1` builds `winutil.ps1` from the sources (the file is generated and is not committed). If PowerShell refuses to run it, allow scripts for this window only with `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`.
 
-## Go back to the original interface
+## Screenshots
 
-The redesign is opt-in. Use the official command, or build without the switch:
+> They are renders of the real program's window (the compiled build, running on a Windows 11 virtual machine, drawn at 1280 x 820), not mock-ups. The icons you see are the ones the program downloaded or draws itself. Italian on the left, English on the right.
 
-```powershell
-.\Compile.ps1 -Run
+### Home and navigation
+
+| Italiano | English |
+|---|---|
+| ![Home, Italian](docs/screenshots/home-it.png) | ![Home, English](docs/screenshots/home-en.png) |
+
+![The sidebar groups and where the four Home choices lead](docs/screenshots/nav-groups-en.svg)
+
+### Programs
+
+Pick a kit or click programs one by one; the bar at the bottom counts the selection and installs it. The "Installed" chip and the badge on each card show what is already on the PC (read from the package manager that is in use).
+
+| Italiano | English |
+|---|---|
+| ![Programs, Italian](docs/screenshots/programmi-it.png) | ![Programs, English](docs/screenshots/programmi-en.png) |
+
+The ⓘ button of a card opens the details on the right: description, category, the WinGet and Chocolatey IDs, license (when the catalog marks the program as open source), website, and the button that adds or removes it from the selection.
+
+| Italiano | English |
+|---|---|
+| ![Details panel, Italian](docs/screenshots/dettaglio-it.png) | ![Details panel, English](docs/screenshots/dettaglio-en.png) |
+
+While it installs, the bar shows the step the engine reports and a percentage (the step text comes from the engine, in English):
+
+| Italiano | English |
+|---|---|
+| ![Installing, Italian](docs/screenshots/installazione-it.png) | ![Installing, English](docs/screenshots/installazione-en.png) |
+
+The "⋯" menu holds what used to be a fixed column: uninstall the selection, upgrade all programs, select the installed ones, and the choice between WinGet and Chocolatey.
+
+### Icons
+
+Every program shows its own icon. In this order: the icon the program's **official web page** declares (downloaded in the background into `%LOCALAPPDATA%\WinUtil\icons`, never blocking the window, and shown from that cache when there is no network); a **brand outline** from [Simple Icons](https://simpleicons.org/) (CC0) on a tile of the brand's color; a **generic glyph of the category**. Sources and licenses are in [docs/ICONS.md](docs/ICONS.md).
+
+### Tweaks
+
+The Tweaks tab, with cards, filter chips and the "Before you apply" panel, now inside the grouped sidebar.
+
+| Italiano | English |
+|---|---|
+| ![Tweaks, Italian](docs/screenshots/ottimizzazioni-it.png) | ![Tweaks, English](docs/screenshots/ottimizzazioni-en.png) |
+| ![Three tweaks selected and the panel with their impact, Italian](docs/screenshots/ottimizzazioni-selezione-it.png) | ![Three tweaks selected and the panel with their impact, English](docs/screenshots/ottimizzazioni-selezione-en.png) |
+| ![Search "onedrive", Italian](docs/screenshots/ottimizzazioni-ricerca-it.png) | ![Search "onedrive", English](docs/screenshots/ottimizzazioni-ricerca-en.png) |
+| ![The Advanced filter with the warning of the tweak in focus, Italian](docs/screenshots/ottimizzazioni-avanzate-it.png) | ![The Advanced filter with the warning of the tweak in focus, English](docs/screenshots/ottimizzazioni-avanzate-en.png) |
+
+*Recommended* means the tweak is in upstream's Standard preset; *Advanced* means it is in upstream's "CAUTION" category or is a risky change of its own. Whether a tweak can be undone is read from its own data, not typed by hand. Switches, buttons and the Multiplane Overlay list apply immediately as upstream does and appear under "Other settings"; the DNS list is applied with the Apply button.
+
+## Custom kits
+
+A **kit** is a named list of programs. Three come with WinUtil (Office, Development, Gaming); you can make your own and carry them between PCs.
+
+![Kit flow: create, export, import on another PC](docs/screenshots/kit-flow-en.svg)
+
+| Italiano | English |
+|---|---|
+| ![Create kit dialog, Italian](docs/screenshots/kit-dialog-it.png) | ![Create kit dialog, English](docs/screenshots/kit-dialog-en.png) |
+| ![A custom kit among the others, Italian](docs/screenshots/kit-custom-it.png) | ![A custom kit among the others, English](docs/screenshots/kit-custom-en.png) |
+
+- **Add kit** puts the kit's programs in the selection; "✓ Added" takes them out again.
+- **Create kit from selection**: a name (required), a description (optional), one of five colors. It is saved in `%APPDATA%\WinUtil\kits` and shows among the kits with the tag *Custom*, plus **Export** and **Delete** buttons.
+- **Export** asks where to save `name.winutil-kit.json` (a network folder is fine). **Import kit** reads such a file, checks it and adds the kit; programs the catalog does not have are skipped and the message says how many.
+
+The file holds **package IDs**, never display names, so it means the same thing on every PC:
+
+```json
+{
+  "formato": "winutil-kit",
+  "versione": 1,
+  "nome": "Front desk PC",
+  "descrizione": "Standard apps for the front office",
+  "programmi": [
+    "7zip.7zip",
+    "VideoLAN.VLC",
+    "Mozilla.Firefox"
+  ]
+}
 ```
 
+(`formato`, `versione`, `nome`, `descrizione` and `programmi` are the names of the fields: format, version, name, description and programs.) The ID is the WinGet ID of the program, or its Chocolatey ID when it has no WinGet one; a kit made on a PC with a newer catalog still imports here.
+
+### Install a kit from the command line
+
+For workstations, with no window. The command is for the redesigned build and needs `winutil.ps1` as a file (download it from the [releases](https://github.com/realfulvio/winutil/releases/latest) or compile it):
+
 ```powershell
-irm https://christitus.com/win | iex
+# Show what the kit holds and what would be skipped. Nothing is installed.
+powershell -ExecutionPolicy Bypass -File .\winutil.ps1 -Kit "\\server\kits\front-desk.winutil-kit.json"
+
+# Install it silently, one program at a time, then report
+powershell -ExecutionPolicy Bypass -File .\winutil.ps1 -Kit "\\server\kits\front-desk.winutil-kit.json" -Installa
 ```
 
-## Warning
+It relaunches as Administrator if needed (a UAC prompt) and waits for the result. Exit code **0** is success, **1** a kit that cannot be read or an installation with problems, **2** `-Installa` without `-Kit`. Messages are in the language of Windows. The package manager is WinGet. The usual log is in `%LOCALAPPDATA%\winutil\logs`.
 
-**Tweaks change your system**: the registry, services, installed components and, for some, how drives and the network work. Not all of them can be undone, and some need a restart. Create a **restore point** before you apply anything (the *Restore point* tweak does it) and read each description first. **You use this at your own risk**; the software is provided as is, without warranty.
+## What changed
+
+- `ui/redesign/`: the new window, its styles, the dictionary (`strings.json`), the program catalog extras (`programs.json`), the brand outlines (`icons.json`) and the runtime code. See [SPEC.md](SPEC.md) and the architecture page of the docs.
+- `Compile.ps1`: the `-Interface Redesign` switch (the default build is unchanged). The redesign build also gets the `-Kit` and `-Installa` parameters, added at compile time.
+- Wrapped upstream functions: `Initialize-WinUtilTabContent`, `Find-TweaksByNameOrDescription`, `Invoke-WinUtilFontScaling`, `Find-AppsByNameOrDescription` and `Invoke-WPFTab` (upstream's version is renamed `<Name>Upstream` and still does the work).
+- Install, uninstall and upgrade are upstream's own buttons and functions, driven by the new window.
 
 ## Project status
 
-What was checked (on a Windows 11 machine):
+Checked in this release, on a Windows 11 Enterprise LTSC virtual machine with Windows PowerShell 5.1, with the compiled redesign build:
 
-- Two real tweaks were applied and undone with the interface: Storage Sense and Background apps, both user-level (`HKCU`) registry values. Undo set them back to their original values and Apply set them again, and the registry read as expected each time. The panel showed the finished job and the sidebar counted the two applied changes. The machine ended in the state it started in.
-- The published command (`irm … | iex`) starts the redesigned interface, including the relaunch as Administrator from this fork's release. Every tab opened; cards were selected and focused; filters, search, language switch, maximize and close worked, and the program's log shows no warning or error.
-- `Compile.ps1` builds both variants; the default build is byte for byte what it was before this fork's changes.
-- The generated script parses in PowerShell 7 and Windows PowerShell 5.1, and is ASCII only.
-- On GitHub's Windows runners the whole Pester suite passes (874 tests, including this fork's), and the build workflow compiles and publishes the release.
-- The window loads with every control of upstream's window still present, and the tab logic ran against simulated data: the 38 cards, selection, filters, search, language, the Apply button state, the impact figures, the progress panel states and the font scaling.
+- The real window was driven through its real controls (63 checks, all passed): Home and its four cards, the sidebar, the catalog (236 cards), category chips, search, selection, the action bar, the three built-in kits, the details panel, creating, saving, exporting, importing and deleting a custom kit, the invalid and partly unknown kit files, the package manager menu, and the Italian/English switch. No error was logged.
+- **7-Zip and VLC were really installed and then uninstalled with WinGet** through the window (24 checks, all passed), including the progress bar, the "Installed" marks refreshing and the catalog being disabled while a job runs.
+- The command line mode (15 checks, all passed): a dry run, an invalid and a missing kit, `-Installa` without a kit, and a real install of a kit with an unknown program in it.
+- Icons: 202 of the 236 cards show the program's own icon downloaded from its official site, 15 a brand outline and 19 the category glyph; with the network unreachable the same 202 are shown from the cache, and a network that was down did not mark any program as having no icon.
+- `Compile.ps1` builds both variants and the redesign script parses; the new Pester tests (kits, icons, the adapter) pass. The whole suite on Windows PowerShell 5.1 gives 928 passed and 11 failed; the 11 are upstream's WinOneShot tests, which use `ConvertFrom-Json -NoEnumerate` (PowerShell 7 only) and have nothing to do with this change.
 
-`ui/redesign/tools/Test-RedesignHeadless.ps1` repeats the in-memory checks on any Windows machine without starting WinUtil or changing anything.
+Not checked: the Chocolatey path from end to end (only switching to it), PowerShell 7 on this machine (the repository's CI runs the suite there), other Windows versions, high-DPI screens and other window sizes, the real open/save dialogs of Export and Import (the same functions were run with explicit paths), upstream's own confirmation window of Uninstall (answered by the test), and the Tweaks tab's Apply and Undo in this release (they were exercised on a real PC in the earlier release, on two user-level registry tweaks). Tweaks that run scripts, stop services or write to `HKLM`, and the restore point, were never tried with the interface. The screenshots are renders of the window made from the running program, not captures of a desktop. Details are in [`NOTE-LAVORO.md`](NOTE-LAVORO.md).
 
-What was not checked: tweaks that run scripts, stop services, write to `HKLM` or remove components, the Restore point tweak, the progress panel in the middle of a long job (the jobs tried finished too quickly to capture), a machine that is not Windows 11 or not in Italian or English, and the docs site build. Script Analyzer runs in the repository's CI and reports findings in the redesign files that are accepted conventions of this repository (plural names, ShouldProcess on UI helpers). Details and decisions are in [`NOTE-LAVORO.md`](NOTE-LAVORO.md).
+## Go back to the original interface
+
+> **Upstream's command, not this fork's.** It starts the official, unmodified WinUtil:
+>
+> ```powershell
+> irm https://christitus.com/win | iex
+> ```
+
+Or build this repository without the switch: `.\Compile.ps1 -Run`.
+
+## Warning
+
+**Tweaks and installs change your system**: the registry, services, installed components and programs. Not all changes can be undone and some need a restart. Create a **restore point** before you apply anything (the *Restore point* tweak does it) and read each description first. **You use this at your own risk**; the software is provided as is, without warranty.
 
 ## Credits and license
 
-All the engine, the tweaks, the app list and the original interface are the work of **[Chris Titus Tech](https://github.com/ChrisTitusTech)** and the contributors of [ChrisTitusTech/winutil](https://github.com/ChrisTitusTech/winutil); see its [contributors](https://github.com/ChrisTitusTech/winutil/graphs/contributors) and the [official documentation](https://winutil.christitus.com/). This fork keeps the upstream license: [MIT](LICENSE), copyright (c) 2022 CT Tech Group LLC. The redesign adds files under `ui/redesign/` and a `-Interface` switch in `Compile.ps1`.
+The engine, the tweaks, the app list and the original interface are the work of **[Chris Titus Tech](https://github.com/ChrisTitusTech)** and the contributors of [ChrisTitusTech/winutil](https://github.com/ChrisTitusTech/winutil); see its [contributors](https://github.com/ChrisTitusTech/winutil/graphs/contributors) and the [official documentation](https://winutil.christitus.com/). This fork keeps the upstream license: [MIT](LICENSE), copyright (c) 2022 CT Tech Group LLC. Brand names and logos belong to their owners; see [docs/ICONS.md](docs/ICONS.md).
 
 ---
 
