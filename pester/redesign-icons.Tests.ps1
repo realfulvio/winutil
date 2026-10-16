@@ -35,7 +35,12 @@ Describe "Redesign program icons" {
 
         if ($script:wpf -and -not ("WinUtilTestHandler" -as [type])) {
             # A web client whose answers come from a table, so no network is needed
-            Add-Type -ReferencedAssemblies System.Net.Http -TypeDefinition @"
+            # .NET (PowerShell 7) keeps these types in separate assemblies; .NET Framework has them in the ones below
+            $references = @('System.Net.Http')
+            if ($PSVersionTable.PSEdition -eq 'Core') {
+                $references += 'System.Collections', 'System.Runtime', 'System.Threading.Tasks', 'System.Net.Primitives', 'netstandard'
+            }
+            Add-Type -ReferencedAssemblies $references -TypeDefinition @"
 using System;
 using System.Collections.Generic;
 using System.Net;
