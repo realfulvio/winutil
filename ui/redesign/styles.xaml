@@ -316,6 +316,114 @@
         </Setter>
     </Style>
 
+    <!-- Big numbered card of the Home page -->
+    <Style x:Key="RdHomeCardStyle" TargetType="Button">
+        <Setter Property="Padding" Value="26,24"/>
+        <Setter Property="MinHeight" Value="210"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="HomeBorder" CornerRadius="20" BorderThickness="1" BorderBrush="#1E2A44" Padding="{TemplateBinding Padding}">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="#141F38" Offset="0"/>
+                                <GradientStop Color="#0F182B" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="HomeBorder" Property="BorderBrush" Value="#4CC2FF"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="HomeBorder" Property="BorderBrush" Value="#EAF0FA"/>
+                            <Setter TargetName="HomeBorder" Property="BorderThickness" Value="2"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Single-line text field of the kit dialog -->
+    <Style x:Key="RdTextBoxStyle" TargetType="TextBox">
+        <Setter Property="Foreground" Value="#EAF0FA"/>
+        <Setter Property="CaretBrush" Value="#EAF0FA"/>
+        <Setter Property="Background" Value="#0B1222"/>
+        <Setter Property="BorderBrush" Value="#2A3A5C"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FontSize" Value="{DynamicResource RdFontMedium}"/>
+        <Setter Property="Height" Value="46"/>
+        <Setter Property="Padding" Value="12,0"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border x:Name="FieldBorder" CornerRadius="10" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <ScrollViewer x:Name="PART_ContentHost" Padding="{TemplateBinding Padding}" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="FieldBorder" Property="BorderBrush" Value="#4CC2FF"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Buttons on the colored kit cards: solid white, and the "added" state -->
+    <Style x:Key="RdKitButtonStyle" TargetType="Button">
+        <Setter Property="Foreground" Value="#08224A"/>
+        <Setter Property="Background" Value="#FFFFFF"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FontSize" Value="{DynamicResource RdFontBody}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="MinHeight" Value="44"/>
+        <Setter Property="Padding" Value="16,0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="KitBtnBorder" CornerRadius="12" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="KitBtnBorder" Property="Opacity" Value="0.9"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="KitBtnBorder" Property="BorderBrush" Value="#04121F"/>
+                            <Setter TargetName="KitBtnBorder" Property="BorderThickness" Value="2"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="RdKitButtonOnStyle" TargetType="Button" BasedOn="{StaticResource RdKitButtonStyle}">
+        <Setter Property="Foreground" Value="#FFFFFF"/>
+        <Setter Property="Background" Value="#CC06183A"/>
+        <Setter Property="BorderBrush" Value="#99FFFFFF"/>
+    </Style>
+    <Style x:Key="RdKitGhostButtonStyle" TargetType="Button" BasedOn="{StaticResource RdKitButtonStyle}">
+        <Setter Property="Foreground" Value="#FFFFFF"/>
+        <Setter Property="Background" Value="#55000000"/>
+        <Setter Property="BorderBrush" Value="#66FFFFFF"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontSize" Value="{DynamicResource RdFontSmall}"/>
+    </Style>
+
     <!-- Small pill used for the category / state tags on a card -->
     <Style x:Key="RdTagBorderStyle" TargetType="Border">
         <Setter Property="CornerRadius" Value="12"/>

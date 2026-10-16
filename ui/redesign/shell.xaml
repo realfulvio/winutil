@@ -62,63 +62,77 @@
                 </Grid.RowDefinitions>
                 <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Focusable="False">
                     <StackPanel Name="WPFRedesignNav" Orientation="Vertical">
-                        <ToggleButton Name="WPFTab1BT" Style="{StaticResource RdNavToggleStyle}" Margin="0,0,0,6" AutomationProperties.Name="Programs">
+                        <ToggleButton Name="WPFTab7BT" Style="{StaticResource RdNavToggleStyle}" MinHeight="44" Padding="14,2" Margin="0,0,0,2" AutomationProperties.Name="Home">
                             <Grid>
                                 <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Name="WPFRedesignNavIcon1" Text="&#xE7B8;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="{DynamicResource RdIconL}" Width="30" Foreground="#CFE0F5" VerticalAlignment="Center"/>
-                                <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center">
+                                <TextBlock Grid.Column="0" Name="WPFRedesignNavIcon7" Text="&#xE80F;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="{DynamicResource RdIconM}" Width="30" Foreground="#CFE0F5" VerticalAlignment="Center"/>
+                                <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock TextWrapping="Wrap" Name="WPFRedesignNavTitle7" Text="Home" FontSize="{DynamicResource RdFontMedium}" FontWeight="Bold" Foreground="#EAF0FA"/>
+                                    <TextBlock Name="WPFRedesignNavSub7" Text="" Visibility="Collapsed" FontSize="{DynamicResource RdFontSmall}" Foreground="#9FB0C9" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Grid>
+                        </ToggleButton>
+                        <TextBlock Name="WPFRedesignGroup1" Text="" FontSize="{DynamicResource RdFontSmall}" FontWeight="Bold" Foreground="#9FB0C9" Margin="14,12,0,4"/>
+                        <ToggleButton Name="WPFTab1BT" Style="{StaticResource RdNavToggleStyle}" MinHeight="44" Padding="14,2" Margin="0,0,0,2" AutomationProperties.Name="Programs">
+                            <Grid>
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Name="WPFRedesignNavIcon1" Text="&#xE7B8;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="{DynamicResource RdIconM}" Width="30" Foreground="#CFE0F5" VerticalAlignment="Center"/>
+                                <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
                                     <TextBlock TextWrapping="Wrap" Name="WPFRedesignNavTitle1" Text="Programs" FontSize="{DynamicResource RdFontMedium}" FontWeight="Bold" Foreground="#EAF0FA"/>
-                                    <TextBlock Name="WPFRedesignNavSub1" Text="" FontSize="{DynamicResource RdFontSmall}" Foreground="#9FB0C9" TextWrapping="Wrap"/>
+                                    <TextBlock Name="WPFRedesignNavSub1" Text="" Visibility="Collapsed" FontSize="{DynamicResource RdFontSmall}" Foreground="#9FB0C9" TextWrapping="Wrap"/>
                                 </StackPanel>
                             </Grid>
                         </ToggleButton>
-                        <ToggleButton Name="WPFTab2BT" Style="{StaticResource RdNavToggleStyle}" Margin="0,0,0,6" AutomationProperties.Name="Tweaks">
+                        <TextBlock Name="WPFRedesignGroup2" Text="" FontSize="{DynamicResource RdFontSmall}" FontWeight="Bold" Foreground="#9FB0C9" Margin="14,12,0,4"/>
+                        <ToggleButton Name="WPFTab2BT" Style="{StaticResource RdNavToggleStyle}" MinHeight="44" Padding="14,2" Margin="0,0,0,2" AutomationProperties.Name="Tweaks">
                             <Grid>
                                 <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Name="WPFRedesignNavIcon2" Text="&#xE713;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="{DynamicResource RdIconL}" Width="30" Foreground="#CFE0F5" VerticalAlignment="Center"/>
-                                <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center">
+                                <TextBlock Grid.Column="0" Name="WPFRedesignNavIcon2" Text="&#xE713;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="{DynamicResource RdIconM}" Width="30" Foreground="#CFE0F5" VerticalAlignment="Center"/>
+                                <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
                                     <TextBlock TextWrapping="Wrap" Name="WPFRedesignNavTitle2" Text="Tweaks" FontSize="{DynamicResource RdFontMedium}" FontWeight="Bold" Foreground="#EAF0FA"/>
-                                    <TextBlock Name="WPFRedesignNavSub2" Text="" FontSize="{DynamicResource RdFontSmall}" Foreground="#9FB0C9" TextWrapping="Wrap"/>
+                                    <TextBlock Name="WPFRedesignNavSub2" Text="" Visibility="Collapsed" FontSize="{DynamicResource RdFontSmall}" Foreground="#9FB0C9" TextWrapping="Wrap"/>
                                 </StackPanel>
                             </Grid>
                         </ToggleButton>
-                        <ToggleButton Name="WPFTab3BT" Style="{StaticResource RdNavToggleStyle}" Margin="0,0,0,6" AutomationProperties.Name="Repair">
+                        <ToggleButton Name="WPFTab6BT" Style="{StaticResource RdNavToggleStyle}" MinHeight="44" Padding="14,2" Margin="0,0,0,2" AutomationProperties.Name="Windows app cleanup">
                             <Grid>
                                 <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Name="WPFRedesignNavIcon3" Text="&#xE90F;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="{DynamicResource RdIconL}" Width="30" Foreground="#CFE0F5" VerticalAlignment="Center"/>
-                                <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center">
-                                    <TextBlock TextWrapping="Wrap" Name="WPFRedesignNavTitle3" Text="Repair" FontSize="{DynamicResource RdFontMedium}" FontWeight="Bold" Foreground="#EAF0FA"/>
-                                    <TextBlock Name="WPFRedesignNavSub3" Text="" FontSize="{DynamicResource RdFontSmall}" Foreground="#9FB0C9" TextWrapping="Wrap"/>
+                                <TextBlock Grid.Column="0" Name="WPFRedesignNavIcon6" Text="&#xE8A9;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="{DynamicResource RdIconM}" Width="30" Foreground="#CFE0F5" VerticalAlignment="Center"/>
+                                <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock TextWrapping="Wrap" Name="WPFRedesignNavTitle6" Text="Windows app cleanup" FontSize="{DynamicResource RdFontMedium}" FontWeight="Bold" Foreground="#EAF0FA"/>
+                                    <TextBlock Name="WPFRedesignNavSub6" Text="" Visibility="Collapsed" FontSize="{DynamicResource RdFontSmall}" Foreground="#9FB0C9" TextWrapping="Wrap"/>
                                 </StackPanel>
                             </Grid>
                         </ToggleButton>
-                        <ToggleButton Name="WPFTab4BT" Style="{StaticResource RdNavToggleStyle}" Margin="0,0,0,6" AutomationProperties.Name="Updates">
+                        <TextBlock Name="WPFRedesignGroup3" Text="" FontSize="{DynamicResource RdFontSmall}" FontWeight="Bold" Foreground="#9FB0C9" Margin="14,12,0,4"/>
+                        <ToggleButton Name="WPFTab4BT" Style="{StaticResource RdNavToggleStyle}" MinHeight="44" Padding="14,2" Margin="0,0,0,2" AutomationProperties.Name="Updates">
                             <Grid>
                                 <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Name="WPFRedesignNavIcon4" Text="&#xE895;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="{DynamicResource RdIconL}" Width="30" Foreground="#CFE0F5" VerticalAlignment="Center"/>
-                                <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center">
+                                <TextBlock Grid.Column="0" Name="WPFRedesignNavIcon4" Text="&#xE895;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="{DynamicResource RdIconM}" Width="30" Foreground="#CFE0F5" VerticalAlignment="Center"/>
+                                <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
                                     <TextBlock TextWrapping="Wrap" Name="WPFRedesignNavTitle4" Text="Updates" FontSize="{DynamicResource RdFontMedium}" FontWeight="Bold" Foreground="#EAF0FA"/>
-                                    <TextBlock Name="WPFRedesignNavSub4" Text="" FontSize="{DynamicResource RdFontSmall}" Foreground="#9FB0C9" TextWrapping="Wrap"/>
+                                    <TextBlock Name="WPFRedesignNavSub4" Text="" Visibility="Collapsed" FontSize="{DynamicResource RdFontSmall}" Foreground="#9FB0C9" TextWrapping="Wrap"/>
                                 </StackPanel>
                             </Grid>
                         </ToggleButton>
-                        <ToggleButton Name="WPFTab6BT" Style="{StaticResource RdNavToggleStyle}" Margin="0,0,0,6" AutomationProperties.Name="Windows apps">
+                        <ToggleButton Name="WPFTab3BT" Style="{StaticResource RdNavToggleStyle}" MinHeight="44" Padding="14,2" Margin="0,0,0,2" AutomationProperties.Name="Repair">
                             <Grid>
                                 <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Name="WPFRedesignNavIcon6" Text="&#xE8A9;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="{DynamicResource RdIconL}" Width="30" Foreground="#CFE0F5" VerticalAlignment="Center"/>
-                                <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center">
-                                    <TextBlock TextWrapping="Wrap" Name="WPFRedesignNavTitle6" Text="Windows apps" FontSize="{DynamicResource RdFontMedium}" FontWeight="Bold" Foreground="#EAF0FA"/>
-                                    <TextBlock Name="WPFRedesignNavSub6" Text="" FontSize="{DynamicResource RdFontSmall}" Foreground="#9FB0C9" TextWrapping="Wrap"/>
+                                <TextBlock Grid.Column="0" Name="WPFRedesignNavIcon3" Text="&#xE90F;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="{DynamicResource RdIconM}" Width="30" Foreground="#CFE0F5" VerticalAlignment="Center"/>
+                                <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock TextWrapping="Wrap" Name="WPFRedesignNavTitle3" Text="Repair" FontSize="{DynamicResource RdFontMedium}" FontWeight="Bold" Foreground="#EAF0FA"/>
+                                    <TextBlock Name="WPFRedesignNavSub3" Text="" Visibility="Collapsed" FontSize="{DynamicResource RdFontSmall}" Foreground="#9FB0C9" TextWrapping="Wrap"/>
                                 </StackPanel>
                             </Grid>
                         </ToggleButton>
-                        <ToggleButton Name="WPFTab5BT" Style="{StaticResource RdNavToggleStyle}" Margin="0,0,0,6" AutomationProperties.Name="Create ISO">
+                        <TextBlock Name="WPFRedesignGroup4" Text="" FontSize="{DynamicResource RdFontSmall}" FontWeight="Bold" Foreground="#9FB0C9" Margin="14,12,0,4"/>
+                        <ToggleButton Name="WPFTab5BT" Style="{StaticResource RdNavToggleStyle}" MinHeight="44" Padding="14,2" Margin="0,0,0,2" AutomationProperties.Name="Create ISO">
                             <Grid>
                                 <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Name="WPFRedesignNavIcon5" Text="&#xE958;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="{DynamicResource RdIconL}" Width="30" Foreground="#CFE0F5" VerticalAlignment="Center"/>
-                                <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center">
+                                <TextBlock Grid.Column="0" Name="WPFRedesignNavIcon5" Text="&#xE958;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="{DynamicResource RdIconM}" Width="30" Foreground="#CFE0F5" VerticalAlignment="Center"/>
+                                <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
                                     <TextBlock TextWrapping="Wrap" Name="WPFRedesignNavTitle5" Text="Create ISO" FontSize="{DynamicResource RdFontMedium}" FontWeight="Bold" Foreground="#EAF0FA"/>
-                                    <TextBlock Name="WPFRedesignNavSub5" Text="" FontSize="{DynamicResource RdFontSmall}" Foreground="#9FB0C9" TextWrapping="Wrap"/>
+                                    <TextBlock Name="WPFRedesignNavSub5" Text="" Visibility="Collapsed" FontSize="{DynamicResource RdFontSmall}" Foreground="#9FB0C9" TextWrapping="Wrap"/>
                                 </StackPanel>
                             </Grid>
                         </ToggleButton>
@@ -367,9 +381,85 @@
                     <DataTrigger Binding="{Binding IsSelected, ElementName=WPFTab2}" Value="True">
                         <Setter Property="Visibility" Value="Collapsed"/>
                     </DataTrigger>
+                    <!-- The programs tab has its own bar in the action dock -->
+                    <DataTrigger Binding="{Binding IsSelected, ElementName=WPFTab1}" Value="True">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
                 </Style.Triggers>
             </Style>
         </Border.Style>
         <ContentControl Slot="Progress"/>
+    </Border>
+
+    <!-- New custom kit: modal over the whole window. Filled in by Show-WinUtilRedesignKitDialog. -->
+    <Border Name="WPFRedesignKitScrim" Grid.Row="0" Grid.RowSpan="4" Background="#D9060B16" Visibility="Collapsed" Panel.ZIndex="50">
+        <Border Width="480" MaxHeight="720" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="28,26,28,24" CornerRadius="20" BorderThickness="1" BorderBrush="#2A4A73" Background="#0F1A30">
+            <Border.Effect>
+                <DropShadowEffect Color="#000000" Opacity="0.6" BlurRadius="40" ShadowDepth="10"/>
+            </Border.Effect>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel>
+                    <TextBlock Name="WPFRedesignKdTitle" Text="New custom kit" FontSize="{DynamicResource RdFontHeading}" FontWeight="ExtraBold" Foreground="#EAF0FA" TextWrapping="Wrap"/>
+                    <TextBlock Name="WPFRedesignKdIntro" Text="" FontSize="{DynamicResource RdFontBody}" Foreground="#9FB0C9" TextWrapping="Wrap" Margin="0,6,0,0"/>
+
+                    <TextBlock Name="WPFRedesignKdNameLabel" Text="" FontSize="{DynamicResource RdFontSmall}" FontWeight="Bold" Foreground="#9FB0C9" Margin="0,18,0,6"/>
+                    <Grid>
+                        <TextBox Name="WPFRedesignKdName" Style="{StaticResource RdTextBoxStyle}" MaxLength="60" AutomationProperties.Name="Kit name"/>
+                        <TextBlock Name="WPFRedesignKdNameHint" IsHitTestVisible="False" Margin="14,0,0,0" VerticalAlignment="Center" FontSize="{DynamicResource RdFontBody}" Foreground="#7F92B3" Text="">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=WPFRedesignKdName}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+
+                    <TextBlock Name="WPFRedesignKdDescLabel" Text="" FontSize="{DynamicResource RdFontSmall}" FontWeight="Bold" Foreground="#9FB0C9" Margin="0,14,0,6"/>
+                    <Grid>
+                        <TextBox Name="WPFRedesignKdDesc" Style="{StaticResource RdTextBoxStyle}" MaxLength="140" AutomationProperties.Name="Description"/>
+                        <TextBlock Name="WPFRedesignKdDescHint" IsHitTestVisible="False" Margin="14,0,0,0" VerticalAlignment="Center" FontSize="{DynamicResource RdFontBody}" Foreground="#7F92B3" Text="">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=WPFRedesignKdDesc}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+
+                    <TextBlock Name="WPFRedesignKdColorLabel" Text="" FontSize="{DynamicResource RdFontSmall}" FontWeight="Bold" Foreground="#9FB0C9" Margin="0,14,0,2"/>
+                    <WrapPanel Name="WPFRedesignKdColors"/>
+
+                    <TextBlock Name="WPFRedesignKdProgramsLabel" Text="" FontSize="{DynamicResource RdFontSmall}" FontWeight="Bold" Foreground="#9FB0C9" Margin="0,10,0,6"/>
+                    <ScrollViewer MaxHeight="104" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <WrapPanel Name="WPFRedesignKdPrograms"/>
+                    </ScrollViewer>
+
+                    <Border Margin="0,16,0,0" Padding="14,12" CornerRadius="12" Background="#10304A" BorderBrush="#1C4A70" BorderThickness="1">
+                        <TextBlock Name="WPFRedesignKdTip" Text="" FontSize="{DynamicResource RdFontSmall}" Foreground="#CFE0F5" TextWrapping="Wrap"/>
+                    </Border>
+                    <TextBlock Name="WPFRedesignKdError" Text="" Visibility="Collapsed" FontSize="{DynamicResource RdFontBody}" FontWeight="SemiBold" Foreground="#FF9C9C" TextWrapping="Wrap" Margin="0,12,0,0"/>
+
+                    <Grid Margin="0,20,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Name="WPFRedesignKdCancel" Grid.Column="0" Height="48" Style="{StaticResource RdSecondaryButtonStyle}" Content="Cancel"/>
+                        <Button Name="WPFRedesignKdSave" Grid.Column="2" Height="48" Style="{StaticResource RdPrimaryButtonStyle}" Content="Save kit"/>
+                    </Grid>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
     </Border>
 </Grid>

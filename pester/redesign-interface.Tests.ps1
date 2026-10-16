@@ -75,7 +75,7 @@ Describe "Redesign function wrapping" {
     }
 
     It "wraps the upstream functions the redesign overrides" {
-        foreach ($name in 'Initialize-WinUtilTabContent', 'Find-TweaksByNameOrDescription', 'Invoke-WinUtilFontScaling') {
+        foreach ($name in 'Initialize-WinUtilTabContent', 'Find-TweaksByNameOrDescription', 'Invoke-WinUtilFontScaling', 'Find-AppsByNameOrDescription', 'Invoke-WPFTab') {
             $file = Get-ChildItem -Path (Join-Path $repoRoot 'functions') -Recurse -File | Where-Object { $_.BaseName -eq $name }
             $file | Should -Not -BeNullOrEmpty
             $text = Convert-WinUtilRedesignFunctionSource -Source (Get-Content -LiteralPath $file.FullName -Raw) -Name $name
@@ -151,9 +151,21 @@ Describe "Compiled redesign build" {
         $compiled | Should -Not -Match ([regex]::Escape('irm https://christitus.com/win)'))
     }
 
+    It "embeds the program catalog data and the brand outlines" {
+        $compiled | Should -Match ([regex]::Escape('$sync.configs.redesignprograms = @'))
+        $compiled | Should -Match ([regex]::Escape('$sync.configs.redesignicons = @'))
+    }
+
+    It "adds -Kit and -Installa, and runs a kit in front of the interface start" {
+        $compiled | Should -Match ([regex]::Escape('[string]$Kit,'))
+        $compiled | Should -Match ([regex]::Escape('[switch]$Installa'))
+        $compiled | Should -Match ([regex]::Escape('Invoke-WinUtilKitHeadless -Path $Kit -Install:$Installa'))
+        $compiled.IndexOf('Invoke-WinUtilKitHeadless -Path $Kit') | Should -BeLessThan $compiled.IndexOf('$sync.UIRunspace = [runspacefactory]::CreateRunspace')
+    }
+
     It "embeds the redesign dictionary and wrappers" {
         $compiled | Should -Match ([regex]::Escape('$sync.configs.redesignstrings = @'))
-        foreach ($name in 'Initialize-WinUtilTabContent', 'Find-TweaksByNameOrDescription', 'Invoke-WinUtilFontScaling') {
+        foreach ($name in 'Initialize-WinUtilTabContent', 'Find-TweaksByNameOrDescription', 'Invoke-WinUtilFontScaling', 'Find-AppsByNameOrDescription', 'Invoke-WPFTab') {
             $compiled | Should -Match "(?m)^function ${name}Upstream \{"
         }
     }
@@ -163,5 +175,47 @@ Describe "Compile.ps1 interface switch" {
     It "defaults to the upstream interface" {
         $compile = Get-Content -LiteralPath (Join-Path (Split-Path -Parent $PSScriptRoot) 'Compile.ps1') -Raw
         $compile | Should -Match "\[string\]\`$Interface = 'Upstream'"
+    }
+}
+
+Describe "Redesign Home and Programs tabs" {
+    It "groups the sidebar: Home, Install, Optimize, Maintenance, Advanced" {
+        $result = [xml](ConvertTo-WinUtilRedesignInterface -Xaml $upstreamXaml)
+        $order = @($result.SelectNodes("//*[@Name='WPFRedesignNav']/*") | ForEach-Object { $_.GetAttribute("Name") })
+        $order | Should -Be @("WPFTab7BT", "WPFRedesignGroup1", "WPFTab1BT", "WPFRedesignGroup2", "WPFTab2BT", "WPFTab6BT", "WPFRedesignGroup3", "WPFTab4BT", "WPFTab3BT", "WPFRedesignGroup4", "WPFTab5BT")
+    }
+
+    It "adds a Home tab with four cards, after the six upstream tabs" {
+        $result = [xml](ConvertTo-WinUtilRedesignInterface -Xaml $upstreamXaml)
+        $tabs = @($result.SelectNodes("//*[@Name='WPFTabNav']/*") | ForEach-Object { $_.GetAttribute("Name") })
+        $tabs | Should -Be @("WPFTab1", "WPFTab2", "WPFTab3", "WPFTab4", "WPFTab5", "WPFTab6", "WPFTab7")
+        foreach ($number in 1..4) {
+            $result.SelectSingleNode("//*[@Name='WPFRedesignHomeCard$number']") | Should -Not -BeNullOrEmpty
+        }
+    }
+
+    It "replaces the Programs tab and keeps upstream's install controls, hidden" {
+        $result = [xml](ConvertTo-WinUtilRedesignInterface -Xaml $upstreamXaml)
+        foreach ($name in "WPFRedesignKitList", "WPFRedesignProgGrid", "WPFRedesignDock", "WPFRedesignDrawer", "WPFRedesignKitScrim") {
+            $result.SelectSingleNode("//*[@Name='$name']") | Should -Not -BeNullOrEmpty -Because $name
+        }
+        foreach ($name in "appscategory", "appspanel", "WPFSearchChips", "WPFSearchChipAll") {
+            $node = $result.SelectSingleNode("//*[@Name='$name']")
+            $node | Should -Not -BeNullOrEmpty -Because "$name is still looked up by name"
+            $node.SelectSingleNode("ancestor-or-self::*[@Visibility='Collapsed']") | Should -Not -BeNullOrEmpty -Because "$name must not be shown"
+        }
+    }
+
+    It "gives Home, Programs and the kit dialog a text in both languages" {
+        $keys = @("homeTitle", "homeSub", "home1Title", "home4Desc", "searchPhApps", "kitsLabel", "kitCreate", "dockInstallN", "runDone", "kdSave", "kitErrEmpty", "cliKitDry")
+        foreach ($key in $keys) {
+            foreach ($language in "en", "it") {
+                [string]$strings.ui.$language.$key | Should -Not -BeNullOrEmpty -Because "ui.$language.$key"
+            }
+        }
+        $strings.ui.en.navTitles.Count | Should -Be 7
+        $strings.ui.it.navTitles.Count | Should -Be 7
+        $strings.ui.it.navTitles[4] | Should -Be "Pulizia app Windows"
+        $strings.ui.it.navGroups | Should -Be @("Installa", "Ottimizza", "Manutenzione", "Avanzate")
     }
 }

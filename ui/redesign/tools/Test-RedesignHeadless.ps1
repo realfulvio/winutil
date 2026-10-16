@@ -49,7 +49,7 @@ $sync.InitializedTabs = @{}
 $sync.currentTab = 'Tweaks'
 
 # ---- functions: upstream (three renamed) + redesign, as Compile.ps1 does ---------------------
-$wrapped = @('Initialize-WinUtilTabContent', 'Find-TweaksByNameOrDescription', 'Invoke-WinUtilFontScaling')
+$wrapped = @('Initialize-WinUtilTabContent', 'Find-TweaksByNameOrDescription', 'Invoke-WinUtilFontScaling', 'Find-AppsByNameOrDescription', 'Invoke-WPFTab')
 foreach ($file in Get-ChildItem (Join-Path $repoRoot 'functions') -Recurse -File) {
     . ([scriptblock]::Create((Convert-WinUtilRedesignFunctionSource -Source (Get-Content $file.FullName -Raw) -Name $wrapped)))
 }

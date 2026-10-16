@@ -1,16 +1,16 @@
 function Initialize-WinUtilTabContent {
     <#
     .SYNOPSIS
-        Builds a tab's content, with the redesigned Tweaks tab in place of upstream's.
+        Builds a tab's content, with the redesigned Programs and Tweaks tabs in place of upstream's.
 
     .DESCRIPTION
         The upstream function is renamed to Initialize-WinUtilTabContentUpstream when the redesign
         is compiled (see Convert-WinUtilRedesignFunctionSource) and still builds every other tab.
         This wrapper also makes sure the window's own controls are wired, and refreshes the page
-        title for the tab that is open.
+        title for the tab that is open. Home has nothing to build: it is static.
 
     .PARAMETER TabName
-        Install, Tweaks, Config, Updates, Win11ISO or AppX.
+        Install, Tweaks, Config, Updates, Win11ISO, AppX or Home.
 
     .PARAMETER Yield
         Build in batches, letting the interface answer in between.
@@ -25,7 +25,10 @@ function Initialize-WinUtilTabContent {
     Initialize-WinUtilRedesignShell
     Update-WinUtilRedesignPageHeader
 
-    if ($TabName -ne "Tweaks") {
+    if ($TabName -eq "Home") {
+        return
+    }
+    if ($TabName -notin "Tweaks", "Install") {
         Initialize-WinUtilTabContentUpstream -TabName $TabName -Yield:$Yield
         return
     }
@@ -40,7 +43,11 @@ function Initialize-WinUtilTabContent {
     # Claimed before building, as upstream does, so a click during a yielding build cannot start a second one
     $sync.InitializedTabs[$TabName] = $true
     try {
-        Initialize-WinUtilRedesignTweaks -Yield:$Yield
+        if ($TabName -eq "Install") {
+            Initialize-WinUtilRedesignPrograms -Yield:$Yield
+        } else {
+            Initialize-WinUtilRedesignTweaks -Yield:$Yield
+        }
         # Cards start unchecked, so anything chosen by an import or a preset is applied to them now
         Reset-WPFCheckBoxes -doToggles $true
     } catch {

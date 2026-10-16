@@ -22,7 +22,8 @@ function ConvertTo-WinUtilRedesignInterface {
     $uiPath = $PSScriptRoot
 
     $required = @(
-        'WPFMainGrid', 'WPFTabNav', 'WPFTab2', 'WPFTweaksProgressBar', 'WPFOfflineBanner',
+        'WPFMainGrid', 'WPFTabNav', 'WPFTab1', 'WPFTab2', 'WPFTweaksProgressBar', 'WPFOfflineBanner',
+        'WPFSearchChips', 'appscategory', 'appspanel',
         'SearchBar', 'SearchBarIcon', 'SearchBarClearButton', 'ThemeButton',
         'WPFstandard', 'WPFminimal', 'WPFAdvanced', 'WPFGetInstalledTweaks', 'WPFAppxRemoval',
         'WPFClearTweaksSelection', 'WPFTweaksbutton', 'WPFUndoall', 'tweakspanel'
@@ -166,6 +167,28 @@ function ConvertTo-WinUtilRedesignInterface {
         Set-RedesignSlot -Target $tweaksTab.DocumentElement -Slot $name -Node $tweakButtons[$name]
     }
     $null = $tab2.AppendChild((Import-RedesignNode $tweaksTab.DocumentElement))
+
+    # --- Programs tab: new content; upstream's stays in a collapsed grid -----------------------
+    # The install code still looks the old chips, the "appscategory" grid (where the install,
+    # uninstall and upgrade buttons and the package manager choice are built) and the "appspanel"
+    # grid up by name, so they are kept, hidden, and the redesign drives them.
+    $tab1 = $tabNav.SelectSingleNode(".//*[@Name='WPFTab1']")
+    $namespace = $document.DocumentElement.NamespaceURI
+    $legacyInstall = $document.CreateElement('Grid', $namespace)
+    $legacyInstall.SetAttribute('Visibility', 'Collapsed')
+    while ($tab1.HasChildNodes) { $null = $legacyInstall.AppendChild($tab1.FirstChild) }
+    $programsHost = $document.CreateElement('Grid', $namespace)
+    $null = $programsHost.AppendChild($legacyInstall)
+    $programsTab = Read-RedesignXml 'programs-tab.xaml'
+    $null = $programsHost.AppendChild((Import-RedesignNode $programsTab.DocumentElement))
+    $null = $tab1.AppendChild($programsHost)
+
+    # --- Home tab: a seventh TabItem, after the six upstream ones ------------------------------
+    $homeItem = $document.CreateElement('TabItem', $namespace)
+    Set-RedesignAttributes $homeItem @{ Header = 'Home'; Visibility = 'Collapsed'; Name = 'WPFTab7' }
+    $homeTab = Read-RedesignXml 'home-tab.xaml'
+    $null = $homeItem.AppendChild((Import-RedesignNode $homeTab.DocumentElement))
+    $null = $tabNav.AppendChild($homeItem)
 
     # --- New window layout --------------------------------------------------------------------
     $shell = Read-RedesignXml 'shell.xaml'

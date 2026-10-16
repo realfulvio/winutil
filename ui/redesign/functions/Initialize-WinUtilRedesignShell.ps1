@@ -68,7 +68,16 @@ function Initialize-WinUtilRedesignShell {
             Update-WinUtilRedesignRunStatus
         })
 
+        Initialize-WinUtilRedesignHome
         Set-WinUtilRedesignLanguage -Language $sync.preferences.language
+
+        # The program catalog takes a moment to build. When the window starts on Home it is built
+        # now, behind the page that is showing, so the Programs tab is ready when it is opened.
+        if (-not $PARAM_OFFLINE -and $sync.currentTab -eq "Home") {
+            $null = $sync.Form.Dispatcher.BeginInvoke([System.Windows.Threading.DispatcherPriority]::Background, [action]{
+                Initialize-WinUtilTabContent -TabName "Install" -Yield
+            })
+        }
     } catch {
         $sync.RedesignShellReady = $false
         throw

@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WinUtil – Programmi (bozza finale)</title>
+<style>
+:root{--bg:#050d21;--bg2:#0a1a3a;--glass:rgba(16,38,82,.55);--card:#0d2147;--line:rgba(120,170,255,.16);--tx:#eaf2ff;--mu:#8ea8d6;--ac:#42b8ff;--ac2:#1d6fe0;--ok:#3ddca0;--r:16px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(1200px 600px at 70% -10%,#12306b55,transparent),#030813;color:var(--tx);font:14px/1.45 "Segoe UI Variable","Segoe UI",system-ui,sans-serif;min-height:100vh;display:grid;place-items:center;padding:20px}
+.win{width:min(1360px,100%);height:min(820px,94vh);display:grid;grid-template-columns:230px 1fr;background:linear-gradient(160deg,var(--bg2),var(--bg) 60%);border:1px solid var(--line);border-radius:18px;overflow:hidden;position:relative;box-shadow:0 30px 80px #000a}
+.side{background:#040b1c;border-right:1px solid var(--line);padding:18px 12px;display:flex;flex-direction:column;gap:2px}
+.logo{display:flex;align-items:center;gap:10px;padding:4px 10px 18px;font-weight:700;font-size:16px}
+.logo i{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--ac),var(--ac2));display:block}
+.side small{color:#5a78b4;font-size:10.5px;letter-spacing:1.4px;padding:16px 12px 6px;font-weight:600}
+.nav{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:11px;color:var(--mu);cursor:pointer;transition:.15s}
+.nav:hover{background:#0c2250;color:var(--tx)}
+.nav.on{background:linear-gradient(90deg,#14407d,#0f2f63);color:#fff;box-shadow:inset 0 0 0 1px #42b8ff66}
+.nav svg{width:18px;height:18px;flex:none}
+.sp{flex:1}
+.lang{margin:8px 4px 0;padding:10px 12px;border-radius:11px;background:#0a1d44;display:flex;justify-content:space-between;color:var(--mu);font-size:13px}
+.main{position:relative;overflow:auto;padding:26px 32px 120px;scroll-behavior:smooth}
+.main::-webkit-scrollbar{width:10px}.main::-webkit-scrollbar-thumb{background:#1b3566;border-radius:9px;border:2px solid transparent;background-clip:padding-box}
+h1{font-size:30px;letter-spacing:-.5px}.sub{color:var(--mu);margin:2px 0 18px}
+.search{display:flex;align-items:center;gap:10px;background:var(--glass);border:1px solid var(--line);border-radius:14px;padding:0 16px;height:48px;margin-bottom:22px;backdrop-filter:blur(10px);transition:.2s}
+.search:focus-within{border-color:var(--ac);box-shadow:0 0 0 4px #42b8ff22}
+.search input{flex:1;background:none;border:0;outline:0;color:var(--tx);font:inherit;font-size:15px}
+.search svg{width:18px;color:var(--mu)}
+h2{font-size:12px;letter-spacing:1.4px;color:var(--mu);font-weight:600;margin:0 0 12px}
+.kits{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:26px}
+.kit{position:relative;border-radius:var(--r);padding:18px;overflow:hidden;border:1px solid var(--line);cursor:default;transition:.25s;isolation:isolate}
+.kit::before{content:"";position:absolute;inset:0;background:var(--g);opacity:.9;z-index:-2}
+.kit::after{content:"";position:absolute;width:220px;height:220px;right:-70px;top:-90px;border-radius:50%;background:radial-gradient(#fff3,transparent 65%);z-index:-1}
+.kit:hover{transform:translateY(-3px);box-shadow:0 14px 30px #0008}
+.kit h3{font-size:18px}.kit p{color:#fffb;font-size:12.5px;margin:4px 0 14px;min-height:36px}
+.kit .row{display:flex;align-items:center;justify-content:space-between}
+.stack{display:flex}.stack .ic{width:32px;height:32px;border-radius:10px;margin-right:-8px;border:2px solid #0b1c40}
+.kbtn{border:0;border-radius:10px;padding:8px 14px;font:inherit;font-weight:600;cursor:pointer;background:#fff;color:#08224a;transition:.2s}
+.kbtn.on{background:#08224acc;color:#fff;box-shadow:inset 0 0 0 1px #fff6}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.chip{padding:7px 15px;border-radius:99px;background:var(--glass);border:1px solid var(--line);cursor:pointer;transition:.18s;color:var(--tx)}
+.chip:hover{border-color:var(--ac)}
+.chip.on{background:linear-gradient(135deg,var(--ac),#2b8cf0);color:#031a33;font-weight:700;border-color:transparent}
+.chip i{font-style:normal;opacity:.65;margin-left:6px;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.app{position:relative;background:linear-gradient(180deg,#0f2655,#0b1f46);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:grid;grid-template-columns:48px 1fr;gap:12px;cursor:pointer;transition:.2s;animation:in .35s both}
+@keyframes in{from{opacity:0;transform:translateY(8px)}}
+.app:hover{border-color:#42b8ff88;transform:translateY(-2px)}
+.app.sel{border-color:var(--ac);background:linear-gradient(180deg,#143a7a,#0e2a5c);box-shadow:0 0 0 1px var(--ac),0 10px 24px #1d6fe033}
+.ic{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;background:var(--c);box-shadow:inset 0 1px 0 #fff4,0 6px 14px #0006}
+.ic svg{width:24px;height:24px;color:#fff}
+.stack .ic svg{width:15px;height:15px}
+.app .t{font-weight:600;font-size:14.5px;padding-right:26px}
+.app .d{color:var(--mu);font-size:12.5px;margin-top:1px}
+.badge{display:inline-block;margin-top:7px;font-size:11px;padding:2px 9px;border-radius:99px;background:#123068;color:#9fc0ff}
+.badge.ok{background:#0e3b33;color:var(--ok)}
+.chk{position:absolute;top:13px;right:13px;width:22px;height:22px;border-radius:7px;border:2px solid #2b4a85;display:grid;place-items:center;transition:.2s}
+.sel .chk{background:var(--ac);border-color:var(--ac);transform:scale(1.05)}
+.chk svg{width:13px;opacity:0;color:#031a33;transition:.15s;transform:scale(.4)}.sel .chk svg{opacity:1;transform:none}
+.info{position:absolute;right:13px;bottom:12px;width:24px;height:24px;border-radius:8px;display:grid;place-items:center;color:var(--mu);opacity:0;transition:.2s}
+.app:hover .info{opacity:1}.info:hover{background:#1b3a7a;color:#fff}
+.info svg{width:15px}
+.empty{grid-column:1/-1;text-align:center;color:var(--mu);padding:40px}
+/* barra azioni */
+.dock{position:absolute;left:50%;bottom:22px;transform:translate(-50%,0);display:flex;align-items:center;gap:14px;padding:10px 12px 10px 20px;border-radius:18px;background:rgba(8,24,56,.78);border:1px solid var(--line);backdrop-filter:blur(18px);box-shadow:0 16px 40px #000a;transition:.3s;min-width:560px;z-index:5}
+.dock.empty-d{transform:translate(-50%,0);opacity:.92}
+.dock .cnt{flex:1}.dock .cnt b{font-size:15px}.dock .cnt span{display:block;color:var(--mu);font-size:12px}
+.bar{height:4px;border-radius:9px;background:#14305f;margin-top:6px;overflow:hidden;display:none}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ac),var(--ok));transition:width .3s}
+.btn{border:1px solid var(--line);background:#0e2556;color:var(--tx);padding:10px 16px;border-radius:12px;cursor:pointer;font:inherit;transition:.2s}
+.btn:hover{border-color:var(--ac)}
+.btn.p{background:linear-gradient(135deg,#45bcff,#2584ee);color:#031a33;font-weight:700;border:0;padding:11px 22px;box-shadow:0 8px 20px #2584ee55}
+.btn.p:disabled{opacity:.4;box-shadow:none;cursor:not-allowed}
+/* pannello dettaglio */
+.drawer{position:absolute;top:0;right:0;bottom:0;width:340px;background:rgba(5,15,38,.94);border-left:1px solid var(--line);backdrop-filter:blur(20px);padding:26px 22px;transform:translateX(100%);transition:.35s cubic-bezier(.2,.8,.2,1);z-index:10;overflow:auto}
+.drawer.open{transform:none}
+.drawer .x{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;cursor:pointer;color:var(--mu)}.drawer .x:hover{background:#12306b;color:#fff}
+.drawer .ic{width:64px;height:64px;border-radius:18px;margin-bottom:14px}.drawer .ic svg{width:32px;height:32px}
+.drawer h3{font-size:22px}.drawer p{color:var(--mu);margin:8px 0 16px}
+.kv{display:grid;grid-template-columns:100px 1fr;gap:8px;padding:12px 0;border-top:1px solid var(--line);font-size:13px}.kv span{color:var(--mu)}
+.drawer .btn.p{width:100%;margin-top:14px}
+.hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.hd h2{margin:0}
+.hd .acts{display:flex;gap:8px}.sm{padding:7px 13px;font-size:13px;border-radius:10px}
+.kits{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))!important}
+.kit.cu{border-style:dashed}.kit .tg{position:absolute;top:14px;right:14px;font-size:11px;padding:2px 9px;border-radius:99px;background:#0007;color:#fff}
+.kit .ka{display:flex;gap:6px;margin-top:10px}.kit .ka button{flex:1;border:1px solid #fff4;background:#0003;color:#fff;border-radius:9px;padding:6px;font:inherit;font-size:12px;cursor:pointer}.kit .ka button:hover{background:#0006}
+.mod{position:absolute;inset:0;background:#020917cc;backdrop-filter:blur(6px);display:none;place-items:center;z-index:20}.mod.open{display:grid}
+.box{width:460px;max-width:92%;background:#0a1d42;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 30px 60px #000a;animation:in .25s}
+.box h3{font-size:20px;margin-bottom:4px}.box>p{color:var(--mu);margin-bottom:14px;font-size:13px}
+.box label{display:block;font-size:12px;color:var(--mu);margin:12px 0 5px}
+.box input[type=text]{width:100%;background:#071634;border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--tx);font:inherit;outline:0}.box input[type=text]:focus{border-color:var(--ac)}
+.pl{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;max-height:96px;overflow:auto}.pl span{background:#123068;border-radius:99px;padding:3px 11px;font-size:12px}
+.cols{display:flex;gap:8px;margin-top:6px}.cols i{width:28px;height:28px;border-radius:9px;cursor:pointer;background:var(--g);border:2px solid transparent}.cols i.on{border-color:#fff}
+.mf{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+.tip{background:#0e2a58;border-radius:11px;padding:10px 12px;color:var(--mu);font-size:12.5px;margin-top:14px}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
+<symbol id="chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+<symbol id="code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></symbol>
+<symbol id="doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 13h6M9 17h6"/></symbol>
+<symbol id="game" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 10v5M4.5 12.5h5M16 11h.01M18 14h.01"/></symbol>
+<symbol id="play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l5 3.5-5 3.5z"/></symbol>
+<symbol id="tool" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6a4 4 0 0 0 5 5l-9 9a2.5 2.5 0 0 1-4-4l9-9"/><path d="M14 6l3-3 3 3"/></symbol>
+<symbol id="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></symbol>
+<symbol id="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/></symbol>
+<symbol id="s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+<symbol id="x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+<symbol id="home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 11l9-8 9 8v10H3z"/></symbol>
+<symbol id="dl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></symbol>
+<symbol id="spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/></symbol>
+<symbol id="sync" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 8a8 8 0 0 0-14-2M4 4v4h4M4 16a8 8 0 0 0 14 2M20 20v-4h-4"/></symbol>
+<symbol id="wrench" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6a4 4 0 0 0 5 5l-9 9a2.5 2.5 0 0 1-4-4l9-9"/></symbol>
+<symbol id="disc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/></symbol>
+</defs></svg>
+
+<div class="win">
+<aside class="side">
+ <div class="logo"><i></i>WinUtil</div>
+ <div class="nav"><svg><use href="#home"/></svg>Home</div>
+ <small>INSTALLA</small>
+ <div class="nav on"><svg><use href="#dl"/></svg>Programmi</div>
+ <small>OTTIMIZZA</small>
+ <div class="nav"><svg><use href="#spark"/></svg>Ottimizzazioni</div>
+ <div class="nav"><svg><use href="#doc"/></svg>Pulizia app Windows</div>
+ <small>MANUTENZIONE</small>
+ <div class="nav"><svg><use href="#sync"/></svg>Aggiornamenti</div>
+ <div class="nav"><svg><use href="#wrench"/></svg>Riparazioni</div>
+ <small>AVANZATE</small>
+ <div class="nav"><svg><use href="#disc"/></svg>Crea ISO</div>
+ <div class="sp"></div>
+ <div class="lang"><span>🌐 Lingua</span><b>IT · EN</b></div>
+</aside>
+
+<section class="main" id="main">
+ <h1>Programmi</h1>
+ <div class="sub">Parti da un kit pronto oppure scegli le app una per una.</div>
+ <label class="search"><svg width="18" height="18"><use href="#s"/></svg><input id="q" placeholder="Cerca un programma…"></label>
+ <div class="hd"><h2>KIT</h2><div class="acts"><button class="btn sm" id="imp">⬆ Importa kit</button><button class="btn sm" id="mk">＋ Crea kit dalla selezione</button><input type="file" id="fi" accept=".json" hidden></div></div>
+ <div class="kits" id="kits"></div>
+ <h2>CATALOGO</h2>
+ <div class="chips" id="chips"></div>
+ <div class="grid" id="grid"></div>
+</section>
+
+<div class="dock" id="dock">
+ <div class="cnt"><b id="cn">Nessun programma selezionato</b><span id="cs">Scegli un kit o clicca sulle app</span><div class="bar" id="bar"><i id="bi"></i></div></div>
+ <button class="btn" id="clr">Svuota</button>
+ <button class="btn p" id="go" disabled>Installa</button>
+</div>
+
+<aside class="drawer" id="dr"></aside>
+<div class="mod" id="mod"><div class="box">
+<h3>Nuovo kit personalizzato</h3><p>Salva queste app come kit per reinstallarle in un clic su altre postazioni.</p>
+<label>Nome del kit</label><input type="text" id="kn" placeholder="Es. Postazione Ufficio Tributi">
+<label>Descrizione (facoltativa)</label><input type="text" id="kd" placeholder="Es. App standard per il front-office">
+<label>Colore</label><div class="cols" id="kc"></div>
+<label>Programmi inclusi (<span id="kcnt">0</span>)</label><div class="pl" id="kl"></div>
+<div class="tip">💡 Esporta il kit in un file e importalo su un altro PC (anche da una cartella di rete): troverai gli stessi programmi, pronti da installare.</div>
+<div class="mf"><button class="btn" id="kx">Annulla</button><button class="btn p" id="ks">Salva kit</button></div>
+</div></div>
+</div>
+
+<script>
+const G=(a,b)=>`linear-gradient(135deg,${a},${b})`;
+const apps=[
+["Chrome","globe","Browser",G("#4c8df6","#2a5bd7"),"Il browser di Google, veloce e con tante estensioni.","Google",1],
+["Firefox","globe","Browser",G("#ff9a3c","#e0502a"),"Browser open source attento alla privacy.","Mozilla",0],
+["Brave","globe","Browser",G("#ff6a3d","#d6341a"),"Blocca pubblicità e tracker di default.","Brave",0],
+["Thunderbird","chat","Comunicazione",G("#4f8ff0","#2556c2"),"Client di posta elettronica gratuito.","Mozilla",1],
+["Discord","chat","Comunicazione",G("#7a85ff","#4752c4"),"Chat vocale e testuale per community.","Discord",0],
+["Teams","chat","Comunicazione",G("#7b7de0","#464a9e"),"Riunioni e chat di lavoro.","Microsoft",1],
+["Git","code","Sviluppo",G("#ff7a52","#d9411a"),"Sistema di controllo versione.","Git",0],
+["VS Code","code","Sviluppo",G("#3aa0ff","#1664c9"),"Editor di codice leggero ed estensibile.","Microsoft",1],
+["Python 3","code","Sviluppo",G("#4d8fc9","#2b5c8f"),"Linguaggio di programmazione.","PSF",0],
+["Node.js","code","Sviluppo",G("#6cc24a","#3c8a2a"),"Esegue JavaScript fuori dal browser.","OpenJS",0],
+["LibreOffice","doc","Documenti",G("#3fbf7f","#1f8a52"),"Suite per ufficio gratuita.","TDF",0],
+["Adobe Reader","doc","Documenti",G("#ee5252","#b52828"),"Lettore di file PDF.","Adobe",1],
+["Obsidian","doc","Documenti",G("#9a7cf0","#5f3fc2"),"Note collegate e archivio personale.","Obsidian",0],
+["Steam","game","Giochi",G("#2f4d78","#16273f"),"Negozio e launcher di giochi PC.","Valve",0],
+["Epic Games","game","Giochi",G("#4a4f5c","#22252d"),"Launcher con giochi gratuiti settimanali.","Epic",0],
+["VLC","play","Multimedia",G("#ffa73c","#e0701a"),"Riproduce quasi ogni formato video e audio.","VideoLAN",0],
+["OBS Studio","play","Multimedia",G("#58607a","#2b3040"),"Registrazione schermo e streaming.","OBS",0],
+["7-Zip","tool","Utilità",G("#5b6b86","#2d384d"),"Apre e crea archivi compressi.","7-Zip",1],
+["PowerToys","tool","Utilità",G("#4ab7d9","#1c7fa3"),"Strumenti extra per Windows.","Microsoft",0]
+];
+const kits=[
+["Ufficio","Documenti, PDF, posta e archivi: il necessario per lavorare.",G("#1d6fe0","#0c3a8a"),["LibreOffice","Adobe Reader","Thunderbird","7-Zip"]],
+["Sviluppo","Editor, Git e i linguaggi più usati, pronti all'uso.",G("#7a4be0","#3a1f8f"),["VS Code","Git","Python 3","Node.js"]],
+["Gaming","Launcher, chat e registrazione per giocare subito.",G("#e0457a","#8f1f4a"),["Steam","Epic Games","Discord","OBS Studio"]]
+];
+const cats=["Tutti","Browser","Comunicazione","Sviluppo","Documenti","Giochi","Multimedia","Utilità"];
+const sel=new Set();let cat="Tutti",qv="";
+const ICONS={"Chrome":["M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0zM1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29zm13.342 2.166a5.446 5.446 0 0 1 1.45 7.09l.002.001h-.002l-5.344 9.257c.206.01.413.016.621.016 6.627 0 12-5.373 12-12 0-1.54-.29-3.011-.818-4.364zM12 16.364a4.364 4.364 0 1 1 0-8.728 4.364 4.364 0 0 1 0 8.728Z","4285F4"],"Firefox":["M20.452 3.445a11.002 11.002 0 00-2.482-1.908C16.944.997 15.098.093 12.477.032c-.734-.017-1.457.03-2.174.144-.72.114-1.398.292-2.118.56-1.017.377-1.996.975-2.574 1.554.583-.349 1.476-.733 2.55-.992a10.083 10.083 0 013.729-.167c2.341.34 4.178 1.381 5.48 2.625a8.066 8.066 0 011.298 1.587c1.468 2.382 1.33 5.376.184 7.142-.85 1.312-2.67 2.544-4.37 2.53-.583-.023-1.438-.152-2.25-.566-2.629-1.343-3.021-4.688-1.118-6.306-.632-.136-1.82.13-2.646 1.363-.742 1.107-.7 2.816-.242 4.028a6.473 6.473 0 01-.59-1.895 7.695 7.695 0 01.416-3.845A8.212 8.212 0 019.45 5.399c.896-1.069 1.908-1.72 2.75-2.005-.54-.471-1.411-.738-2.421-.767C8.31 2.583 6.327 3.061 4.7 4.41a8.148 8.148 0 00-1.976 2.414c-.455.836-.691 1.659-.697 1.678.122-1.445.704-2.994 1.248-4.055-.79.413-1.827 1.668-2.41 3.042C.095 9.37-.2 11.608.14 13.989c.966 5.668 5.9 9.982 11.843 9.982C18.62 23.971 24 18.591 24 11.956a11.93 11.93 0 00-3.548-8.511z","FF7139"],"Brave":["M15.68 0l2.096 2.38s1.84-.512 2.709.358c.868.87 1.584 1.638 1.584 1.638l-.562 1.381.715 2.047s-2.104 7.98-2.35 8.955c-.486 1.919-.818 2.66-2.198 3.633-1.38.972-3.884 2.66-4.293 2.916-.409.256-.92.692-1.38.692-.46 0-.97-.436-1.38-.692a185.796 185.796 0 01-4.293-2.916c-1.38-.973-1.712-1.714-2.197-3.633-.247-.975-2.351-8.955-2.351-8.955l.715-2.047-.562-1.381s.716-.768 1.585-1.638c.868-.87 2.708-.358 2.708-.358L8.321 0h7.36zm-3.679 14.936c-.14 0-1.038.317-1.758.69-.72.373-1.242.637-1.409.742-.167.104-.065.301.087.409.152.107 2.194 1.69 2.393 1.866.198.175.489.464.687.464.198 0 .49-.29.688-.464.198-.175 2.24-1.759 2.392-1.866.152-.108.254-.305.087-.41-.167-.104-.689-.368-1.41-.741-.72-.373-1.617-.69-1.757-.69zm0-11.278s-.409.001-1.022.206-1.278.46-1.584.46c-.307 0-2.581-.434-2.581-.434S4.119 7.152 4.119 7.849c0 .697.339.881.68 1.243l2.02 2.149c.192.203.59.511.356 1.066-.235.555-.58 1.26-.196 1.977.384.716 1.042 1.194 1.464 1.115.421-.08 1.412-.598 1.776-.834.364-.237 1.518-1.19 1.518-1.554 0-.365-1.193-1.02-1.413-1.168-.22-.15-1.226-.725-1.247-.95-.02-.227-.012-.293.284-.851.297-.559.831-1.304.742-1.8-.089-.495-.95-.753-1.565-.986-.615-.232-1.799-.671-1.947-.74-.148-.068-.11-.133.339-.175.448-.043 1.719-.212 2.292-.052.573.16 1.552.403 1.632.532.079.13.149.134.067.579-.081.445-.5 2.581-.541 2.96-.04.38-.12.63.288.724.409.094 1.097.256 1.333.256s.924-.162 1.333-.256c.408-.093.329-.344.288-.723-.04-.38-.46-2.516-.541-2.961-.082-.445-.012-.45.067-.579.08-.129 1.059-.372 1.632-.532.573-.16 1.845.009 2.292.052.449.042.487.107.339.175-.148.069-1.332.508-1.947.74-.615.233-1.476.49-1.565.986-.09.496.445 1.241.742 1.8.297.558.304.624.284.85-.02.226-1.026.802-1.247.95-.22.15-1.413.804-1.413 1.169 0 .364 1.154 1.317 1.518 1.554.364.236 1.355.755 1.776.834.422.079 1.08-.4 1.464-1.115.384-.716.039-1.422-.195-1.977-.235-.555.163-.863.355-1.066l2.02-2.149c.341-.362.68-.546.68-1.243 0-.697-2.695-3.96-2.695-3.96s-2.274.436-2.58.436c-.307 0-.972-.256-1.585-.461-.613-.205-1.022-.206-1.022-.206z","FB542B"],"Thunderbird":["M9.948 4.444h-.005c-1.92.788-2.126 2.55-1.817 3.499v.02C9.236 7.18 10.658 6.76 12 6.76c3.26 0 5.902 2.156 5.902 4.815 0 2.66-2.643 4.816-5.902 4.816l-.083-.002c-.155-.006-.354-.013-.435.118-.096.156.116.397.238.536 1.274 1.441 3.123 1.622 3.608 1.67l.076.008c-4.281.414-9.304-2.32-9.306-7.076 0-1.12.414-2.073 1.075-2.83l-.005-.002h-.003C7.31 6.38 6.376 3.47 4.629 2.898c-.124-.04-.246.054-.262.183-.23 1.924-.727 2.59-1.264 3.31-.805 1.08-1.39 2.328-1.365 3.698a10.99 10.99 0 0 1-.705-1.91c-.024-.09-.17-.365-.333-.272-.13.072-.227.274-.296.485A12.137 12.137 0 0 0 0 11.489c0 6.536 5.475 12 12 12 6.627 0 12-5.372 12-12 0-2.526-.781-4.87-2.115-6.805l.167-.002c.518 0 1.024.045 1.51.129-.734-.816-1.724-1.475-2.877-1.904a8.54 8.54 0 0 1 2.494-.495c-1.426-1.166-3.508-1.9-5.827-1.9-3.355 0-6.648 1.29-7.404 3.93zm.682 9.166c-.87-.905-3.473-3.91-3.473-3.91l.202.01 4.075 3.042c.305.223.74.22 1.043-.004l3.996-3.034.212-.018s-2.518 2.935-3.483 3.9c-.964.968-1.703.919-2.572.014zm2.774-10.083s.055.625-.576.824c-.722.227-1.042-.38-1.042-.38s.09-.417.676-.61c.626-.206.942.166.942.166z","0A84FF"],"Discord":["M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z","5865F2"],"Git":["M13.09 23.549a1.54 1.54 0 0 1-2.18 0L.451 13.089a1.54 1.54 0 0 1 0-2.179l7.191-7.19 2.733 2.733a1.85 1.85 0 0 0 .964 2.326v6.66a1.849 1.849 0 1 0 1.54 0V8.957l2.508 2.508a1.85 1.85 0 1 0 1.09-1.09l-2.634-2.634a1.85 1.85 0 0 0-2.378-2.377L8.73 2.63 10.91.451a1.54 1.54 0 0 1 2.179 0l10.459 10.46a1.54 1.54 0 0 1 0 2.179z","F03C2E"],"Python 3":["M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98l-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95l.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25l-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z","3776AB"],"Node.js":["M11.998,24c-0.321,0-0.641-0.084-0.922-0.247l-2.936-1.737c-0.438-0.245-0.224-0.332-0.08-0.383 c0.585-0.203,0.703-0.25,1.328-0.604c0.065-0.037,0.151-0.023,0.218,0.017l2.256,1.339c0.082,0.045,0.197,0.045,0.272,0l8.795-5.076 c0.082-0.047,0.134-0.141,0.134-0.238V6.921c0-0.099-0.053-0.192-0.137-0.242l-8.791-5.072c-0.081-0.047-0.189-0.047-0.271,0 L3.075,6.68C2.99,6.729,2.936,6.825,2.936,6.921v10.15c0,0.097,0.054,0.189,0.139,0.235l2.409,1.392 c1.307,0.654,2.108-0.116,2.108-0.89V7.787c0-0.142,0.114-0.253,0.256-0.253h1.115c0.139,0,0.255,0.112,0.255,0.253v10.021 c0,1.745-0.95,2.745-2.604,2.745c-0.508,0-0.909,0-2.026-0.551L2.28,18.675c-0.57-0.329-0.922-0.945-0.922-1.604V6.921 c0-0.659,0.353-1.275,0.922-1.603l8.795-5.082c0.557-0.315,1.296-0.315,1.848,0l8.794,5.082c0.57,0.329,0.924,0.944,0.924,1.603 v10.15c0,0.659-0.354,1.273-0.924,1.604l-8.794,5.078C12.643,23.916,12.324,24,11.998,24z M19.099,13.993 c0-1.9-1.284-2.406-3.987-2.763c-2.731-0.361-3.009-0.548-3.009-1.187c0-0.528,0.235-1.233,2.258-1.233 c1.807,0,2.473,0.389,2.747,1.607c0.024,0.115,0.129,0.199,0.247,0.199h1.141c0.071,0,0.138-0.031,0.186-0.081 c0.048-0.054,0.074-0.123,0.067-0.196c-0.177-2.098-1.571-3.076-4.388-3.076c-2.508,0-4.004,1.058-4.004,2.833 c0,1.925,1.488,2.457,3.895,2.695c2.88,0.282,3.103,0.703,3.103,1.269c0,0.983-0.789,1.402-2.642,1.402 c-2.327,0-2.839-0.584-3.011-1.742c-0.02-0.124-0.126-0.215-0.253-0.215h-1.137c-0.141,0-0.254,0.112-0.254,0.253 c0,1.482,0.806,3.248,4.655,3.248C17.501,17.007,19.099,15.91,19.099,13.993z","5FA04E"],"LibreOffice":["M16.365 0a.597.597 0 00-.555.352.582.582 0 00.128.635l4.985 4.996a.605.605 0 00.635.133.59.59 0 00.363-.53V.577A.605.605 0 0021.335 0zM2.661 0a.59.59 0 00-.582.59v22.82a.59.59 0 00.582.59h18.67a.59.59 0 00.59-.59V8.716a.59.59 0 00-.17-.42L13.674.182a.59.59 0 00-.42-.181zm.59 1.184h9.754l7.733 7.77v13.863H3.251z","18A303"],"Obsidian":["M19.355 18.538a68.967 68.959 0 0 0 1.858-2.954.81.81 0 0 0-.062-.9c-.516-.685-1.504-2.075-2.042-3.362-.553-1.321-.636-3.375-.64-4.377a1.707 1.707 0 0 0-.358-1.05l-3.198-4.064a3.744 3.744 0 0 1-.076.543c-.106.503-.307 1.004-.536 1.5-.134.29-.29.6-.446.914l-.31.626c-.516 1.068-.997 2.227-1.132 3.59-.124 1.26.046 2.73.815 4.481.128.011.257.025.386.044a6.363 6.363 0 0 1 3.326 1.505c.916.79 1.744 1.922 2.415 3.5zM8.199 22.569c.073.012.146.02.22.02.78.024 2.095.092 3.16.29.87.16 2.593.64 4.01 1.055 1.083.316 2.198-.548 2.355-1.664.114-.814.33-1.735.725-2.58l-.01.005c-.67-1.87-1.522-3.078-2.416-3.849a5.295 5.295 0 0 0-2.778-1.257c-1.54-.216-2.952.19-3.84.45.532 2.218.368 4.829-1.425 7.531zM5.533 9.938c-.023.1-.056.197-.098.29L2.82 16.059a1.602 1.602 0 0 0 .313 1.772l4.116 4.24c2.103-3.101 1.796-6.02.836-8.3-.728-1.73-1.832-3.081-2.55-3.831zM9.32 14.01c.615-.183 1.606-.465 2.745-.534-.683-1.725-.848-3.233-.716-4.577.154-1.552.7-2.847 1.235-3.95.113-.235.223-.454.328-.664.149-.297.288-.577.419-.86.217-.47.379-.885.46-1.27.08-.38.08-.72-.014-1.043-.095-.325-.297-.675-.68-1.06a1.6 1.6 0 0 0-1.475.36l-4.95 4.452a1.602 1.602 0 0 0-.513.952l-.427 2.83c.672.59 2.328 2.316 3.335 4.711.09.21.175.43.253.653z","7C3AED"],"Steam":["M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z","000000"],"Epic Games":["M3.537 0C2.165 0 1.66.506 1.66 1.879V18.44a4.262 4.262 0 00.02.433c.031.3.037.59.316.92.027.033.311.245.311.245.153.075.258.13.43.2l8.335 3.491c.433.199.614.276.928.27h.002c.314.006.495-.071.928-.27l8.335-3.492c.172-.07.277-.124.43-.2 0 0 .284-.211.311-.243.28-.33.285-.621.316-.92a4.261 4.261 0 00.02-.434V1.879c0-1.373-.506-1.88-1.878-1.88zm13.366 3.11h.68c1.138 0 1.688.553 1.688 1.696v1.88h-1.374v-1.8c0-.369-.17-.54-.523-.54h-.235c-.367 0-.537.17-.537.539v5.81c0 .369.17.54.537.54h.262c.353 0 .523-.171.523-.54V8.619h1.373v2.143c0 1.144-.562 1.71-1.7 1.71h-.694c-1.138 0-1.7-.566-1.7-1.71V4.82c0-1.144.562-1.709 1.7-1.709zm-12.186.08h3.114v1.274H6.117v2.603h1.648v1.275H6.117v2.774h1.74v1.275h-3.14zm3.816 0h2.198c1.138 0 1.7.564 1.7 1.708v2.445c0 1.144-.562 1.71-1.7 1.71h-.799v3.338h-1.4zm4.53 0h1.4v9.201h-1.4zm-3.13 1.235v3.392h.575c.354 0 .523-.171.523-.54V4.965c0-.368-.17-.54-.523-.54zm-3.74 10.147a1.708 1.708 0 01.591.108 1.745 1.745 0 01.49.299l-.452.546a1.247 1.247 0 00-.308-.195.91.91 0 00-.363-.068.658.658 0 00-.28.06.703.703 0 00-.224.163.783.783 0 00-.151.243.799.799 0 00-.056.299v.008a.852.852 0 00.056.31.7.7 0 00.157.245.736.736 0 00.238.16.774.774 0 00.303.058.79.79 0 00.445-.116v-.339h-.548v-.565H7.37v1.255a2.019 2.019 0 01-.524.307 1.789 1.789 0 01-.683.123 1.642 1.642 0 01-.602-.107 1.46 1.46 0 01-.478-.3 1.371 1.371 0 01-.318-.455 1.438 1.438 0 01-.115-.58v-.008a1.426 1.426 0 01.113-.57 1.449 1.449 0 01.312-.46 1.418 1.418 0 01.474-.309 1.58 1.58 0 01.598-.111 1.708 1.708 0 01.045 0zm11.963.008a2.006 2.006 0 01.612.094 1.61 1.61 0 01.507.277l-.386.546a1.562 1.562 0 00-.39-.205 1.178 1.178 0 00-.388-.07.347.347 0 00-.208.052.154.154 0 00-.07.127v.008a.158.158 0 00.022.084.198.198 0 00.076.066.831.831 0 00.147.06c.062.02.14.04.236.061a3.389 3.389 0 01.43.122 1.292 1.292 0 01.328.17.678.678 0 01.207.24.739.739 0 01.071.337v.008a.865.865 0 01-.081.382.82.82 0 01-.229.285 1.032 1.032 0 01-.353.18 1.606 1.606 0 01-.46.061 2.16 2.16 0 01-.71-.116 1.718 1.718 0 01-.593-.346l.43-.514c.277.223.578.335.9.335a.457.457 0 00.236-.05.157.157 0 00.082-.142v-.008a.15.15 0 00-.02-.077.204.204 0 00-.073-.066.753.753 0 00-.143-.062 2.45 2.45 0 00-.233-.062 5.036 5.036 0 01-.413-.113 1.26 1.26 0 01-.331-.16.72.72 0 01-.222-.243.73.73 0 01-.082-.36v-.008a.863.863 0 01.074-.359.794.794 0 01.214-.283 1.007 1.007 0 01.34-.185 1.423 1.423 0 01.448-.066 2.006 2.006 0 01.025 0zm-9.358.025h.742l1.183 2.81h-.825l-.203-.499H8.623l-.198.498h-.81zm2.197.02h.814l.663 1.08.663-1.08h.814v2.79h-.766v-1.602l-.711 1.091h-.016l-.707-1.083v1.593h-.754zm3.469 0h2.235v.658h-1.473v.422h1.334v.61h-1.334v.442h1.493v.658h-2.255zm-5.3.897l-.315.793h.624zm-1.145 5.19h8.014l-4.09 1.348z","313131"],"VLC":["M12.0319 0c-.8823 0-1.0545.136-1.0545.136-.1738.056-.3556.255-.4105.43L9.683 3.3808c.4729.1729 1.3222.4266 2.2337.4266 1.0987 0 2.017-.3494 2.3763-.5075L13.4352.566c-.055-.1755-.237-.3707-.4067-.4374 0 0-.1142-.1286-.9966-.1286zm3.5645 7.455c-.3601.34-1.3276.9373-3.6797.9373-2.2929 0-3.189-.5678-3.5213-.9113l-1.3887 4.4227c.2272.3614 1.2539 1.5594 4.8847 1.5594 3.7569 0 4.8539-1.3467 5.0649-1.6737zm-8.5897 4.4487l-1.0025 3.1922H4.3428c-.2486 0-.5097.1932-.5826.4315l-2.334 7.6317a.3962.3962 0 0 0-.0169.1537c-.0008.0053-.002.0099-.002.016 0 .0839.0233.226.0233.226.0322.2456.2612.4452.5098.4452h20.1192c.2487 0 .4768-.1994.5098-.4453 0 0 .0234-.142.0234-.226a.0245.0245 0 0 0-.0025-.01.3201.3201 0 0 0 .0024-.0313.4096.4096 0 0 0-.019-.1282l-2.3339-7.6318c-.0729-.2383-.334-.4314-.5826-.4314h-1.6636l.2005.6391c-.2407.4854-1.4886 2.38-6.3027 2.38-4.6003 0-5.8288-1.73-6.1107-2.3072z","FF8800"],"OBS Studio":["M12,24C5.383,24,0,18.617,0,12S5.383,0,12,0s12,5.383,12,12S18.617,24,12,24z M12,1.109 C5.995,1.109,1.11,5.995,1.11,12C1.11,18.005,5.995,22.89,12,22.89S22.89,18.005,22.89,12C22.89,5.995,18.005,1.109,12,1.109z M6.182,5.99c0.352-1.698,1.503-3.229,3.05-3.996c-0.269,0.273-0.595,0.483-0.844,0.78c-1.02,1.1-1.48,2.692-1.199,4.156 c0.355,2.235,2.455,4.06,4.732,4.028c1.765,0.079,3.485-0.937,4.348-2.468c1.848,0.063,3.645,1.017,4.7,2.548 c0.54,0.799,0.962,1.736,0.991,2.711c-0.342-1.295-1.202-2.446-2.375-3.095c-1.135-0.639-2.529-0.802-3.772-0.425 c-1.56,0.448-2.849,1.723-3.293,3.293c-0.377,1.25-0.216,2.628,0.377,3.772c-0.825,1.429-2.315,2.449-3.932,2.756 c-1.244,0.261-2.551,0.059-3.709-0.464c1.036,0.302,2.161,0.355,3.191-0.011c1.381-0.457,2.522-1.567,3.024-2.935 c0.556-1.49,0.345-3.261-0.591-4.54c-0.7-1.007-1.803-1.717-3.002-1.969c-0.38-0.068-0.764-0.098-1.148-0.134 c-0.611-1.231-0.834-2.66-0.528-3.996L6.182,5.99z","302E31"],"7-Zip":["M0 18.858h24V8.181H10.717V5.142H0ZM2.021 7.271h6.657v1.994c-1.74 2.09-2.84 4.502-2.948 7.404H3.477c.09-2.501.353-4.954 2.283-6.994l.033-.033H2.021Zm8.45 1.253h13.215v10.143H10.47Zm6.01 1.213v6.871h1.482v-6.87Zm2.755.043v6.912h1.616v-2.42h1.029c.43-.001.754-.29.969-.716.427-.848.429-2.257-.024-3.092-.227-.419-.571-.697-1.033-.684zm-7.924.002v1.596h2.217l-2.304 3.736v1.54h4.287V15.1h-2.698l2.786-3.909v-1.41Zm9.452 1.512h.595c.164-.006.287.081.371.217.17.273.172.736.004.99a.364.364 0 0 1-.373.176l-.55.047z","000000"]};
+function shade(h,f){const n=parseInt(h,16),c=x=>Math.max(0,Math.min(255,Math.round(x*f)));return "#"+[n>>16,(n>>8)&255,n&255].map(c).map(v=>v.toString(16).padStart(2,"0")).join("")}
+const icon=a=>{const b=ICONS[a[0]];if(!b)return `<div class="ic" style="--c:${a[3]}"><svg><use href="#${a[1]}"/></svg></div>`;
+const lum=(parseInt(b[1].slice(0,2),16)*.3+parseInt(b[1].slice(2,4),16)*.6+parseInt(b[1].slice(4),16)*.1);const dark=lum<70;
+return `<div class="ic" style="--c:${dark?"linear-gradient(135deg,#3a4256,#1a1f2c)":`linear-gradient(135deg,#${b[1]},${shade(b[1],.72)})`}"><svg viewBox="0 0 24 24" fill="#fff"><path d="${b[0]}"/></svg></div>`};
+const byName=n=>apps.find(a=>a[0]===n);
+function renderKits(){kits_.innerHTML=kits.map((k,i)=>{const all=k[3].every(n=>sel.has(n));return `<div class="kit ${k[4]?"cu":""}" style="--g:${k[2]}">${k[4]?'<span class="tg">Personalizzato</span>':''}<h3>${k[0]}</h3><p>${k[1]||k[3].length+" programmi"}</p><div class="row"><div class="stack">${k[3].slice(0,4).map(n=>icon(byName(n))).join("")}</div><button class="kbtn ${all?"on":""}" data-k="${i}">${all?"✓ Aggiunto":"Aggiungi kit"}</button></div>${k[4]?`<div class="ka"><button data-ex="${i}">⬇ Esporta</button><button data-del="${i}">🗑 Elimina</button></div>`:""}</div>`}).join("")}
+function renderChips(){chips_.innerHTML=cats.map(c=>{const n=c==="Tutti"?apps.length:apps.filter(a=>a[2]===c).length;return `<span class="chip ${c===cat?"on":""}" data-c="${c}">${c}<i>${n}</i></span>`}).join("")}
+function renderGrid(){const l=apps.filter(a=>(cat==="Tutti"||a[2]===cat)&&a[0].toLowerCase().includes(qv));
+grid_.innerHTML=l.length?l.map((a,i)=>`<div class="app ${sel.has(a[0])?"sel":""}" data-n="${a[0]}" style="animation-delay:${i*18}ms">${icon(a)}<div><div class="t">${a[0]}</div><div class="d">${a[4].split(".")[0]}</div><span class="badge ${a[6]?"ok":""}">${a[6]?"Installato":a[2]}</span></div><div class="chk"><svg><use href="#check"/></svg></div><div class="info" data-i="${a[0]}"><svg><use href="#i"/></svg></div></div>`).join(""):`<div class="empty">Nessun programma trovato per “${qv}”.</div>`}
+function dock(){const n=sel.size;cn.textContent=n?`${n} ${n===1?"programma selezionato":"programmi selezionati"}`:"Nessun programma selezionato";cs.textContent=n?`Tempo stimato: circa ${Math.max(1,Math.round(n*1.2))} min · Download da WinGet`:"Scegli un kit o clicca sulle app";go.disabled=!n;go.textContent=n?`Installa ${n}`:"Installa"}
+function all(){renderKits();renderGrid();dock()}
+const kn=document.getElementById("kn"),kd=document.getElementById("kd"),kc=document.getElementById("kc"),kcnt=document.getElementById("kcnt"),kl=document.getElementById("kl"),fi=document.getElementById("fi");
+const kits_=document.getElementById("kits"),chips_=document.getElementById("chips"),grid_=document.getElementById("grid"),cn=document.getElementById("cn"),cs=document.getElementById("cs"),go=document.getElementById("go");
+kits_.onclick=e=>{const b=e.target.closest("[data-k]");if(!b)return;const k=kits[b.dataset.k],full=k[3].every(n=>sel.has(n));k[3].forEach(n=>full?sel.delete(n):sel.add(n));all()};
+chips_.onclick=e=>{const c=e.target.closest("[data-c]");if(!c)return;cat=c.dataset.c;renderChips();renderGrid()};
+document.getElementById("q").oninput=e=>{qv=e.target.value.toLowerCase();renderGrid()};
+grid_.onclick=e=>{const i=e.target.closest("[data-i]");if(i){openD(i.dataset.i);return}const c=e.target.closest(".app");if(!c)return;const n=c.dataset.n;sel.has(n)?sel.delete(n):sel.add(n);all()};
+document.getElementById("clr").onclick=()=>{sel.clear();all()};
+function openD(n){const a=byName(n);dr.innerHTML=`<div class="x" id="cl"><svg width="16" height="16"><use href="#x"/></svg></div>${icon(a)}<h3>${a[0]}</h3><span class="badge ${a[6]?"ok":""}">${a[6]?"Installato":"Non installato"}</span><p>${a[4]}</p><div class="kv"><span>Categoria</span>${a[2]}</div><div class="kv"><span>Autore</span>${a[5]}</div><div class="kv"><span>Fonte</span>WinGet</div><div class="kv"><span>Dimensione</span>circa 80 MB</div><button class="btn p" id="dsel">${sel.has(n)?"Rimuovi dalla selezione":"Aggiungi alla selezione"}</button>`;dr.classList.add("open");
+document.getElementById("cl").onclick=()=>dr.classList.remove("open");document.getElementById("dsel").onclick=()=>{sel.has(n)?sel.delete(n):sel.add(n);all();openD(n)}}
+const dr=document.getElementById("dr");
+go.onclick=()=>{const bar=document.getElementById("bar"),bi=document.getElementById("bi");bar.style.display="block";go.disabled=true;let p=0;const t=setInterval(()=>{p+=8;bi.style.width=Math.min(p,100)+"%";cs.textContent=`Installazione in corso… ${Math.min(p,100)}%`;if(p>=100){clearInterval(t);cn.textContent="Installazione completata";cs.textContent="Tutti i programmi sono pronti.";setTimeout(()=>{bar.style.display="none";bi.style.width=0;sel.clear();all()},1800)}},180)};
+const cols=[G("#1d6fe0","#0c3a8a"),G("#7a4be0","#3a1f8f"),G("#e0457a","#8f1f4a"),G("#18a47a","#0b5c47"),G("#e08a2b","#8f4a10")];let kcol=3;
+const mod=document.getElementById("mod");
+function drawCols(){kc.innerHTML=cols.map((c,i)=>`<i style="--g:${c}" class="${i===kcol?"on":""}" data-c="${i}"></i>`).join("")}
+kc.onclick=e=>{const c=e.target.closest("[data-c]");if(c){kcol=+c.dataset.c;drawCols()}};
+document.getElementById("mk").onclick=()=>{if(!sel.size){cs.textContent="Seleziona prima i programmi da includere nel kit";dock.classList&&0;flash();return}
+kn.value="";kd.value="";kcnt.textContent=sel.size;kl.innerHTML=[...sel].map(n=>`<span>${n}</span>`).join("");drawCols();mod.classList.add("open");kn.focus()};
+function flash(){const d=document.getElementById("dock");d.style.boxShadow="0 0 0 2px var(--ac),0 16px 40px #000a";setTimeout(()=>d.style.boxShadow="",900)}
+document.getElementById("kx").onclick=()=>mod.classList.remove("open");
+document.getElementById("ks").onclick=()=>{const n=kn.value.trim();if(!n){kn.style.borderColor="#ff6a6a";return}kits.push([n,kd.value.trim(),cols[kcol],[...sel],true]);mod.classList.remove("open");renderKits()};
+kits_.addEventListener("click",e=>{const x=e.target.closest("[data-ex]"),d=e.target.closest("[data-del]");
+if(x){const k=kits[x.dataset.ex],b=new Blob([JSON.stringify({formato:"winutil-kit",versione:1,nome:k[0],descrizione:k[1],programmi:k[3]},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=k[0].replace(/\W+/g,"-").toLowerCase()+".winutil-kit.json";a.click()}
+if(d){kits.splice(d.dataset.del,1);renderKits()}});
+document.getElementById("imp").onclick=()=>fi.click();
+fi.onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const j=JSON.parse(t);const ok=j.programmi.filter(byName);kits.push([j.nome||"Kit importato",j.descrizione||"",cols[1],ok,true]);renderKits();if(ok.length<j.programmi.length)cs.textContent=`${j.programmi.length-ok.length} programmi del kit non sono nel catalogo e sono stati saltati`}catch(_){cs.textContent="File kit non valido"}});fi.value=""};
+renderChips();all();
+</script></body></html>

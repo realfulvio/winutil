@@ -10,6 +10,7 @@ param (
 
 if ($Interface -eq 'Redesign') {
     . "$PSScriptRoot\ui\redesign\ConvertTo-WinUtilRedesignInterface.ps1"
+    . "$PSScriptRoot\ui\redesign\ConvertTo-WinUtilRedesignKitMode.ps1"
 }
 
 $OFS = "`r`n"
@@ -27,7 +28,7 @@ $functionSources = Get-ChildItem -Path functions -Recurse -File | ForEach-Object
 }
 if ($Interface -eq 'Redesign') {
     # The redesign wraps these upstream functions: upstream's becomes <Name>Upstream
-    $wrapped = @('Initialize-WinUtilTabContent', 'Find-TweaksByNameOrDescription', 'Invoke-WinUtilFontScaling')
+    $wrapped = @('Initialize-WinUtilTabContent', 'Find-TweaksByNameOrDescription', 'Invoke-WinUtilFontScaling', 'Find-AppsByNameOrDescription', 'Invoke-WPFTab')
     $functionSources = @($functionSources | ForEach-Object { Convert-WinUtilRedesignFunctionSource -Source $_ -Name $wrapped })
     foreach ($name in $wrapped) {
         if (-not ($functionSources -match "(?m)^function ${name}Upstream \{")) {
@@ -50,6 +51,13 @@ if ($Interface -eq 'Redesign') {
     }
     $script = $script -replace [regex]::Escape($upstreamScriptUrl), $ReleaseUrl
     $functionSources = @($functionSources | ForEach-Object { $_.Replace($upstreamAutorun, "irm $ReleaseUrl)") })
+
+    # -Kit and -Installa exist in the redesign build only; the default build keeps upstream's scripts as they are
+    $kitMode = ConvertTo-WinUtilRedesignKitMode `
+        -StartScript ($script -join "`n") `
+        -MainScript (Get-Content -Path scripts\main.ps1 -Raw) `
+        -KitBlock (Get-Content -Path ui\redesign\main-kit.ps1 -Raw)
+    $script = $kitMode.Start -split "`r?`n"
 }
 $script += $functionSources
 
@@ -75,11 +83,19 @@ Get-ChildItem config | ForEach-Object {
 }
 
 if ($Interface -eq 'Redesign') {
-    # UI dictionary (Italian/English). Non-ASCII characters are written as \uXXXX so the compiled
+    # UI dictionary (Italian/English), the program catalog extras (Italian descriptions, kits, icon
+    # slugs) and the brand icon outlines. Non-ASCII characters are written as \uXXXX so the compiled
     # script stays ASCII, whatever encoding the file is saved or run with.
-    $stringsJson = Get-Content -Path ui\redesign\strings.json -Raw -Encoding UTF8 | ConvertFrom-Json | ConvertTo-Json -Depth 10
-    $stringsJson = [regex]::Replace($stringsJson, '[^\u0000-\u007F]', { param($m) '\u{0:x4}' -f [int][char]$m.Value })
-    $script += "`$sync.configs.redesignstrings = @'`r`n$stringsJson`r`n'@ | ConvertFrom-Json"
+    $redesignData = [ordered]@{
+        redesignstrings  = 'strings.json'
+        redesignprograms = 'programs.json'
+        redesignicons    = 'icons.json'
+    }
+    foreach ($dataName in $redesignData.Keys) {
+        $dataJson = Get-Content -Path "ui\redesign\$($redesignData[$dataName])" -Raw -Encoding UTF8 | ConvertFrom-Json | ConvertTo-Json -Depth 10
+        $dataJson = [regex]::Replace($dataJson, '[^\u0000-\u007F]', { param($m) '\u{0:x4}' -f [int][char]$m.Value })
+        $script += "`$sync.configs.$dataName = @'`r`n$dataJson`r`n'@ | ConvertFrom-Json"
+    }
 }
 
 $xaml = Get-Content -Path xaml\inputXML.xaml -Raw
@@ -91,7 +107,11 @@ $script += "`$inputXML = @'`r`n$xaml`r`n'@"
 $autounattendXml = Get-Content -Path tools\autounattend.xml -Raw
 $script += "`$WinUtilAutounattendXml = @'`r`n$autounattendXml`r`n'@"
 
-$script += Get-Content -Path scripts\main.ps1 -Raw
+if ($Interface -eq 'Redesign') {
+    $script += $kitMode.Main
+} else {
+    $script += Get-Content -Path scripts\main.ps1 -Raw
+}
 
 Set-Content -Path winutil.ps1 -Value $script
 

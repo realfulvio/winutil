@@ -33,13 +33,19 @@ function Set-WinUtilRedesignLanguage {
     # Sidebar entries; the AppX tab (6) comes before Create ISO (5) in the sidebar
     $titles = @(& $text "navTitles")
     $subtitles = @(& $text "navSubs")
-    $tabNumbers = @(1, 2, 3, 4, 6, 5)
+    $tabNumbers = @(1, 2, 3, 4, 6, 5, 7)
     for ($position = 0; $position -lt $tabNumbers.Count; $position++) {
         $number = $tabNumbers[$position]
         $sync["WPFRedesignNavTitle$number"].Text = $titles[$position]
         $sync["WPFRedesignNavSub$number"].Text = $subtitles[$position]
         [System.Windows.Automation.AutomationProperties]::SetName($sync["WPFTab${number}BT"], [string]$titles[$position])
     }
+
+    $groups = @(& $text "navGroups")
+    for ($number = 1; $number -le $groups.Count; $number++) {
+        $sync["WPFRedesignGroup$number"].Text = ([string]$groups[$number - 1]).ToUpper()
+    }
+    Update-WinUtilRedesignHomeTexts
 
     $sync.WPFRedesignStatusNote.Text = & $text "statusNote"
     $sync.WPFRedesignSettingsText.Text = & $text "settings"
@@ -88,6 +94,9 @@ function Set-WinUtilRedesignLanguage {
 
     Update-WinUtilRedesignPageHeader
     Update-WinUtilRedesignStatus
+    if ($sync.RedesignProgramControlsWired) {
+        Update-WinUtilRedesignProgramTexts
+    }
     if ($sync.RedesignCardsReady) {
         Update-WinUtilRedesignCardTexts
         Update-WinUtilRedesignChipCounts
